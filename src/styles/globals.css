@@ -104,7 +104,7 @@ main {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background: url('../assets/wood/bg-1.jpg') no-repeat;
+  background: url('../../public/bg-1.jpg') no-repeat;
   background-position: center center;
   background-size: cover;
   height: var(--mainHeight);
@@ -152,18 +152,20 @@ main {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 100%;
+  width: 90%;
   gap: 5px;
-  text-align: center;
   margin: 20px;
-  background: url('../assets/papel.jpg') no-repeat;
-  background-position: center center;
-  background-size: cover;
+  text-align: center;
   color: var(--darkBrown);
 }
 
 .wrapper p {
   width: 100%;
+}
+
+.wrapper img {
+  max-width: 50%;
+  height: auto;
 }
 
 .row {

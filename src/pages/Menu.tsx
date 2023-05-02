@@ -1,4 +1,5 @@
 import React from 'react';
+import Portion from '@/components/Portion';
 
 const Menu = () => {
   return (
@@ -7,7 +8,7 @@ const Menu = () => {
         <div className="envelope">
           <h1>Cardápio do Dia</h1>
           <div className="wrapper">
-            blablabla
+            <Portion ingredient='Arroz'/>
           </div>
         </div>
       </div>
