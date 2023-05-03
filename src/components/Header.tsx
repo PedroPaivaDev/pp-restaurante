@@ -10,7 +10,7 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: var(--darkBrown);
+  background-color: var(--primaryColor);
   width: 100%;
   height: 60px;
   border-bottom: 3px solid black;
@@ -23,20 +23,17 @@ const Nav = styled.nav`
     text-align: center;
     vertical-align: middle;
     &:hover, &.active {
-      background: var(--lightBrown);
-      box-shadow: 0 0 10px 10px var(--lightBrown);
-      color: var(--darkBrown);
+      background: var(--tertiaryColor);
+      box-shadow: 0 0 10px 10px var(--tertiaryColor);
+      color: var(--primaryColor);
       text-shadow: none;
     }
   }
-`;
-
-const active = styled.nav`
-  a {
-    background: var(--lightBrown);
-      box-shadow: 0 0 10px 10px var(--lightBrown);
-      color: var(--darkBrown);
-      text-shadow: none;
+  .active {
+    background: var(--tertiaryColor);
+    box-shadow: 0 0 10px 10px var(--tertiaryColor);
+    color: var(--primaryColor);
+    text-shadow: none;
   }
 `;
 
