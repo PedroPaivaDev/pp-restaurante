@@ -5,7 +5,7 @@ import {
   GlobalStyleComponent
 } from 'styled-components';
 
-type GlobalStylesProps = {}
+type GlobalStylesProps = any
 
 const GlobalStyles: GlobalStyleComponent<
   GlobalStylesProps,
