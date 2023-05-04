@@ -10,29 +10,29 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: var(--primaryColor);
+  background-color: ${props => props.theme.colors.primaryColor};
   width: 100%;
   height: 60px;
-  border-bottom: 3px solid black;
-  border-top: 3px solid black;
+  border-bottom: 3px solid ${props => props.theme.colors.dark};
+  border-top: 3px solid ${props => props.theme.colors.dark};
   a {
     border-radius: 20px;
     transition: 0.3s;
-    text-shadow: 1px 1px 5px black;
+    text-shadow: 1px 1px 5px ${props => props.theme.colors.dark};
     line-height: 26px;
     text-align: center;
     vertical-align: middle;
     &:hover, &.active {
-      background: var(--tertiaryColor);
-      box-shadow: 0 0 10px 10px var(--tertiaryColor);
-      color: var(--primaryColor);
+      background: ${props => props.theme.colors.tertiaryColor};
+      box-shadow: 0 0 10px 10px ${props => props.theme.colors.tertiaryColor};
+      color: ${props => props.theme.colors.primaryColor};
       text-shadow: none;
     }
   }
   .active {
-    background: var(--tertiaryColor);
-    box-shadow: 0 0 10px 10px var(--tertiaryColor);
-    color: var(--primaryColor);
+    background: ${props => props.theme.colors.tertiaryColor};
+    box-shadow: 0 0 10px 10px ${props => props.theme.colors.tertiaryColor};
+    color: ${props => props.theme.colors.primaryColor};
     text-shadow: none;
   }
 `;

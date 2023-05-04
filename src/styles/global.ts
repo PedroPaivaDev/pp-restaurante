@@ -1,31 +1,21 @@
 import {
   createGlobalStyle,
-  css,
   DefaultTheme,
   GlobalStyleComponent
 } from 'styled-components';
 
-type GlobalStylesProps = any
+type GlobalStylesProps = any;
 
 const GlobalStyles: GlobalStyleComponent<
   GlobalStylesProps,
   DefaultTheme
 > = createGlobalStyle`
   :root {
-    --mainHeight: calc(100vh);
+    --mainHeight: 100vh;
     --mainWidth: 100vw;
     --HeaderHeigth: 60px;
     --FooterHeigth: 15px;
     --paddingIPhone: 85px;
-
-    --primaryColor: rgba(86,63,57);
-    --secondaryColor: #CC9132;
-    --tertiaryColor: #eeebeb;
-    --quaternaryColor: #FACA08;
-    --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
-      'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-      'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
-    --font-roboto: 'Roboto', sans-serif;
   }
 
   *, *:after, *:before {
@@ -38,21 +28,20 @@ const GlobalStyles: GlobalStyleComponent<
     padding: 0;
     border: none;
     outline: none;
-    font-weight: bold;
     box-sizing: border-box;
-    font-family: var(--font-roboto);
-    font-size: 16px;
+    font-family: ${(props) => props.theme.font.family};
+    font-weight: ${props => props.theme.font.bold};
+    font-size: ${props => props.theme.font.size.medium};
     vertical-align: middle;
-    color: var(--tertiaryColor);
-    /* text-shadow: 1px 1px 5px white; */
+    color: ${props => props.theme.colors.tertiaryColor};
   }  
 
   html, body {
-    margin: 0;  
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     display: flex;
     justify-content: center;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   code {
@@ -61,11 +50,6 @@ const GlobalStyles: GlobalStyleComponent<
 
   a {
     text-decoration: none;
-  }
-
-  p, label, option {
-    font-family: Arial, Helvetica, sans-serif;
-    text-shadow: none;
   }
 
   label {
@@ -86,7 +70,6 @@ const GlobalStyles: GlobalStyleComponent<
   }
 
   button {
-    background-color: transparent;
     cursor: pointer;
   }
 
@@ -99,13 +82,13 @@ const GlobalStyles: GlobalStyleComponent<
   }
 
   h1 {
-    font-size: 1.4rem;
+    font-size: ${props => props.theme.font.size.xlarge};
     margin-top: 10px;
     text-align: center;
   }
 
   h2 {
-    font-size: 1.2rem;
+    font-size: ${props => props.theme.font.size.large};
     margin-top: 10px;
     text-align: center;
   }
@@ -115,7 +98,7 @@ const GlobalStyles: GlobalStyleComponent<
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    background: url('./bg-1.jpg');
+    background: ${props => props.theme.colors.mainBg} no-repeat;
     background-position: center center;
     background-size: cover;
     height: var(--mainHeight);
@@ -167,7 +150,7 @@ const GlobalStyles: GlobalStyleComponent<
     gap: 5px;
     margin: 20px;
     text-align: center;
-    color: var(--primaryColor);
+    color: ${props => props.theme.colors.primaryColor};
   }
 
   .wrapper p {
@@ -222,8 +205,12 @@ const GlobalStyles: GlobalStyleComponent<
   }
 
   @media (max-width: 21rem), (max-height: 21rem) {
-    p, label, input, select, option, span, b {font-size: 0.75rem;}
-    h1, h2, h3, h4 {font-size: 1rem;}
+    p, label, input, select, option, span, b {
+      font-size: ${props => props.theme.font.size.xsmall};
+    }
+    h1, h2, h3, h4 {
+      font-size: ${props => props.theme.font.size.medium};
+    }
   }
 
   /* teste slider --------------------*/
@@ -308,12 +295,5 @@ const GlobalStyles: GlobalStyleComponent<
       transform: initial;
     }
   }
-
-  ${({theme}) => css`
-    html, body {
-      font-family: ${theme.fonts.text};
-      font-size: ${theme.fontSizes.medium};
-    }
-  `}
 `
 export default GlobalStyles;
