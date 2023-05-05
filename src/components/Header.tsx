@@ -29,12 +29,6 @@ const Nav = styled.nav`
       text-shadow: none;
     }
   }
-  .active {
-    background: ${props => props.theme.colors.tertiaryColor};
-    box-shadow: 0 0 10px 10px ${props => props.theme.colors.tertiaryColor};
-    color: ${props => props.theme.colors.primaryColor};
-    text-shadow: none;
-  }
 `;
 
 const Header = () => {

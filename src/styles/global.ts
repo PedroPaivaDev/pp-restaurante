@@ -93,6 +93,10 @@ const GlobalStyles: GlobalStyleComponent<
     text-align: center;
   }
 
+  p {
+    font-weight: ${props => props.theme.font.normal};
+  }
+
   main {
     display: flex;
     flex-direction: column;
@@ -137,7 +141,7 @@ const GlobalStyles: GlobalStyleComponent<
     align-items: center;
     width: 100%;
     max-width: 1200px;
-    padding: 0px 20px;
+    padding: 0px 10px;
     text-align: center;
   }
 
@@ -148,7 +152,7 @@ const GlobalStyles: GlobalStyleComponent<
     align-items: center;
     width: 90%;
     gap: 5px;
-    margin: 20px;
+    margin: 10px;
     text-align: center;
     color: ${props => props.theme.colors.primaryColor};
   }

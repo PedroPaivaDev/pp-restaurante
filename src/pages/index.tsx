@@ -1,15 +1,11 @@
 // import Slider from "@/components/Slider";
 
+import Contact from "@/components/Contact";
+
 export default function Home() {  
   return (
     <div className="page">
-      <div className="container">
-        <div className="envelope">
-          <div className="wrapper">
-            <h1>Contato</h1>
-          </div>
-        </div>
-      </div>
+      <Contact/>
     </div>
   )
 }
