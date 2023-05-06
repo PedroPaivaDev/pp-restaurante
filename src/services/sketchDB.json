@@ -1,0 +1,750 @@
+{
+  "cardapio": {
+    "title": "Cardápio",
+    "description1": "Escolha o que você deseja na sua marmita",
+    "description2": null,
+    "products": {
+      "bases": {
+        "title": "Base Alimentícia",
+        "description": "Carboidratos, vitaminas, minerais e fibras",
+        "products": {
+          "arroz":{
+            "title": "Arroz",
+            "description": "Arroz preparado de formas variadas",
+            "products": {
+              "arrozBranco": {
+                "type": "Arroz",
+                "id": "arrozBranco",
+                "name": "Arroz Branco",
+                "description": "Soltinho, branquinho e temperado no ponto certo",
+                "image": [
+                  "https://anamariabraga.globo.com/wp-content/uploads/2019/06/como-fazer-arroz-branco-1024x576.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "arrozAlho": {
+                "type": "Arroz",
+                "id": "arrozAlho",
+                "name": "Arroz ao Alho",
+                "description": "Soltinho, branquinho e temperado com pedaços de alho",
+                "image": [
+                  "https://clubedogordinho.com.br/wp-content/uploads/2013/03/Arroz-com-Salsa-e-Alho-750x350.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              }
+            }
+          },
+          "feijao": {
+            "title": "Feijão",
+            "description": "Feijão preparado de formas variadas",
+            "products": {
+              "feijaoTropeiro": {
+                "type": "Feijão",
+                "id": "feijaoTropeiro",
+                "name": "Feijão Tropeiro",
+                "description": "Feijão, ovo, couve, torresmo, linguiça e farinha",
+                "image": [
+                  "https://i0.wp.com/porkworld.com.br/wp-content/uploads/2022/10/feijao-tropeiro-mineiro-1080x720px.png",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "feijaoCaldo": {
+                "type": "Feijão",
+                "id": "feijaoCaldo",
+                "name": "Feijão de Caldo",
+                "description": "Feijão inteiro e com tempero no ponto certo",
+                "image": [
+                  "https://caldobom.com.br/uploads/como-preparar-o-caldo-de-feijao-b2e8eb5eee2b97eb8c21e26ba41dc2991658256363.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "feijaoTutu": {
+                "type": "Feijão",
+                "id": "feijaoTutu",
+                "name": "Tutu",
+                "description": "Feijão amassado e engrossado com farinha de mandioca",
+                "image": [
+                  "https://akdelicatessen.com.br/wp-content/uploads/2022/05/Tutu-de-Feijao-TC.png",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              }
+            }
+          },
+          "macarrao": {
+            "title": "Macarrão",
+            "description": "Massas de farinha de trigo",
+            "products": {
+              "macarraoVermelho": {
+                "type": "Macarrão",
+                "id": "macarraoVermelho",
+                "name": "Macarrão com Molho",
+                "description": "Macarrão ao molho de tomate",
+                "image": [
+                  "https://pubimg.band.uol.com.br/files/bf59e998cfaf7e690a7e.png",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "macarraoAlho": {
+                "type": "Macarrão",
+                "id": "macarraoAlho",
+                "name": "Macarrão ao Alho",
+                "description": "Macarrão temperado com alho",
+                "image": [
+                  "https://static.itdg.com.br/images/1200-675/b738131b402ba33d58befa56415ba106/324571-original.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              }
+            }
+          }
+        }
+      },
+      "hortalicas": {
+        "title": "Hortaliças",
+        "description": "Fibras, vitaminas e minerais",
+        "products": {
+          "tuberculos": {
+            "title": "Tubérculos",
+            "description": "Raízes cozidas e temperadas",
+            "products": {
+              "beterraba": {
+                "type": "Tubérculo",
+                "id": "beterraba",
+                "name": "Beterraba",
+                "description": "Beterraba cozida",
+                "image": [
+                  "https://receitanatureba.com/wp-content/uploads/2022/01/como-cozinhar-beterraba-1024x1024.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "cenoura": {
+                "type": "Tubérculo",
+                "id": "cenoura",
+                "name": "Cenoura",
+                "description": "Cenoura cozida",
+                "image": [
+                  "https://saborcongelado.com.br/wp-content/uploads/2020/09/8815189832_7ed9bbd2dd6cfed0fc7cc24652a849ce.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "batata": {
+                "type": "Tubérculo",
+                "id": "batata",
+                "name": "Batata",
+                "description": "Batata cozida",
+                "image": [
+                  "https://s3-sa-east-1.amazonaws.com/deliveryon-uploads/products/valencagrill/82_5e08d7df02893.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "cara": {
+                "type": "Tubérculo",
+                "id": "cara",
+                "name": "Cará",
+                "description": "Cará cozinhado",
+                "image": [
+                  "https://receitanatureba.com/wp-content/uploads/2022/01/Como-cozinhar-inhame-facil-1024x1024.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "mandioca": {
+                "type": "Tubérculo",
+                "id": "mandioca",
+                "name": "Mandioca",
+                "description": "Mandioca cozida",
+                "image": [
+                  "https://st1.uvnimg.com/dims4/default/596fdb4/2147483647/thumbnail/1024x576%3E/quality/75/?url=http%3A%2F%2Fuvn-brightspot.s3.amazonaws.com%2Fa6%2F7a%2Fd1e39d4544768ed87bdbb72d196b%2Fprato-mandioca-cozida-0822-1400x800.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              }
+            }
+          },
+          "legumes": {
+            "title": "Legumes",
+            "description": "Leguminosas cozidas e suculentas",
+            "products": {
+              "moranga": {
+                "type": "Legume",
+                "id": "moranga",
+                "name": "Moranga",
+                "description": "Moranga cozinhada",
+                "image": [
+                  "https://leticiasilvestrini.com.br/wp-content/uploads/2020/08/moranga-da-nutri-768x1012.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "chuchu": {
+                "type": "Legume",
+                "id": "chuchu",
+                "name": "Chuchu",
+                "description": "Chuchu cozido",
+                "image": [
+                  "https://www.saborbrasil.it/wp-content/uploads/2021/06/Chuchu-refogado-1024x768.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              }
+            }
+          },
+          "frutas": {
+            "title": "Frutas",
+            "description": "Frutos crus e fatiados",
+            "products": {
+              "tomate": {
+                "type": "Fruta",
+                "id": "tomate",
+                "name": "Tomate",
+                "description": "Tomate cru e fatiado",
+                "image": [
+                  "https://www.altoastral.com.br/media/uploads/legacy/2016/08/tomate.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "manga": {
+                "type": "Fruta",
+                "id": "manga",
+                "name": "Manga",
+                "description": "Manga fatiada",
+                "image": [
+                  "https://live.staticflickr.com/1033/5181669415_163c287a97_h.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "uva": {
+                "type": "Fruta",
+                "id": "uva",
+                "name": "Uva",
+                "description": "Uva sem semente",
+                "image": [
+                  "https://carrefourbrfood.vtexassets.com/arquivos/ids/200466/8211493_2.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "abacaxi": {
+                "type": "Fruta",
+                "id": "abacaxi",
+                "name": "Abacaxi",
+                "description": "Abacaxi fatiado",
+                "image": [
+                  "https://www.receitade.blog.br/wp-content/uploads/2021/12/FATIE-O-ABACAXI.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "morango": {
+                "type": "Fruta",
+                "id": "morango",
+                "name": "Morango",
+                "description": "Morango fatiado",
+                "image": [
+                  "http://www.verduraslegumesprocessados.com.br/wp-content/uploads/2014/06/MORANGO-FATIADO.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "laranja": {
+                "type": "Fruta",
+                "id": "laranja",
+                "name": "Laranja",
+                "description": "Laranja fatiada",
+                "image": [
+                  "https://3.bp.blogspot.com/-1QGgsZNHYvE/VYyg3yc0cII/AAAAAAAAbpA/jVumz1n6soo/s400/alaranjw3.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "melancia": {
+                "type": "Fruta",
+                "id": "melancia",
+                "name": "Melancia",
+                "description": "Melancia fatiada",
+                "image": [
+                  "https://static1.minhavida.com.br/articles/90/28/d0/81/melancia-cortada-em-triangulos-article-1.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              }
+            }
+          },
+          "verduras": {
+            "title": "Verduras",
+            "description": "Folhosas cruas",
+            "products": {
+              "alface": {
+                "type": "Verdura",
+                "id": "alface",
+                "name": "Alface",
+                "description": "Alface americana rasgada",
+                "image": [
+                  "https://ifolha.temmais.com/wp-content/uploads/2022/04/tipos-de-alface-crespa.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "repolho": {
+                "type": "Verdura",
+                "id": "repolho",
+                "name": "Repolho",
+                "description": "Repolho cru picado",
+                "image": [
+                  "https://img.freepik.com/fotos-premium/repolho-picado-repolho-ou-wombok-isolado-em-um-fundo-de-madeira-repolho-verde-fresco-fatiado-salat-composicao-de-vista-superior-com-repolho-cortado-em-uma-mesa-de-madeira_759200-281.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "couve": {
+                "type": "Verdura",
+                "id": "couve",
+                "name": "Couve",
+                "description": "Couve cru picada",
+                "image": [
+                  "https://www.varanda.com.br/media/catalog/product/cache/1/image/855x/9df78eab33525d08d6e5fb8d27136e95/c/o/couve-manteiga-picada.png",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              }
+            }
+          }
+        }
+      },
+      "acompanhamentos": {
+        "title": "Acompanhamentos",
+        "description": "Preparos típicos da culinária mineira",
+        "products": {
+          "preparos": {
+            "title": "Preparos",
+            "description": "Preparos variados",
+            "products": {
+              "farofaAbobrinha": {
+                "type": "Preparo",
+                "id": "farofaAbobrinha",
+                "name": "Farofa de Abobrinha",
+                "description": "Abobrinha japonesa, ovo e farinha de mandioca",
+                "image": [
+                  "https://i0.wp.com/domanjericao.com.br/wp-content/uploads/2022/10/viradinhodeabobrinha.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "fritas": {
+                "type": "Preparo",
+                "id": "fritas",
+                "name": "Batata Frita",
+                "description": "Batata roxa, picada e frita na hora (não é industrializada)",
+                "image": [
+                  "https://segredosdacomida.com.br/wp-content/uploads/2022/11/Como-fazer-batata-frita-no-forno.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "maionese": {
+                "type": "Preparo",
+                "id": "maionese",
+                "name": "Maionese",
+                "description": "Batata, cenoura, chuchu, maionese e cebolinha",
+                "image": [
+                  "https://i0.wp.com/porkworld.com.br/wp-content/uploads/2022/12/snapshot-684.png",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "ovoCodorna": {
+                "type": "Preparo",
+                "id": "ovoCodorna",
+                "name": "Ovo de Codorna",
+                "description": "Ovo de codorna cozido",
+                "image": [
+                  "https://guiadacozinha.com.br/wp-content/uploads/2020/07/como-cozinhar-ovo-de-codorna.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "torresmo": {
+                "type": "Preparo",
+                "id": "torresmo",
+                "name": "Torresmo",
+                "description": "Pele de porco frita",
+                "image": [
+                  "https://consultoriamult.com.br/blog/wp-content/uploads/2020/06/torresmo-1-e1590770621562-768x458.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              }
+            }
+          }
+        }
+      },
+      "carnes": {
+        "title": "Carnes",
+        "description": "Variedades de carnes preparadas com métodos tradicionais da culinária mineira",
+        "products": {
+          "boi": {
+            "title": "Boi",
+            "description": "Preparos feitos a base de carne de gado",
+            "products": {
+              "farofaCarne": {
+                "type": "Carne",
+                "id": "farofaCarne",
+                "name": "Farofa de Carne",
+                "description": "Carne de gado com farinha de mandioca",
+                "image": [
+                  "https://1.bp.blogspot.com/-QPjRycN2ees/XatA-hfiABI/AAAAAAAAoQQ/dde4PHb2KzgBIM-3GQ2hj-SgWX54vxTXACLcBGAsYHQ/s1600/DSCF7291.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "carnePanela": {
+                "type": "Carne",
+                "id": "carnePanela",
+                "name": "Carne de Panela",
+                "description": "Carne de gado cozida",
+                "image": [
+                  "https://i0.wp.com/xtudoreceitas.com/wp-content/uploads/Receita-de-Carne-na-Cerveja.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              }
+            }
+          },
+          "porco": {
+            "title": "Porco",
+            "description": "Preparos feitos a base de carne suína",
+            "products": {
+              "feijoada": {
+                "type": "Carne",
+                "id": "feijoada",
+                "name": "Feijoada",
+                "description": "Feijão preto, diversas partes do porco e linguiça",
+                "image": [
+                  "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhKJLW2KBDbchrNuK0LTpwE5D-rF1FGo-swhD2U8xiHzR0dPOk0gZy0-qfmqS8fVkzplRWNfMXKefke6VZx2QqhctpIvQcWoijVYSbVTFIBx4zRg8xw46wGLZCFSozqkSsVSQEPd59BPYpo-7DAIAP7XphVkoEPXSWrStfWzFHfMaXENS7sYHHay6dq/s2000/receita-de-feijoada-f%C3%A1cil-1.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "linguica": {
+                "type": "Carne",
+                "id": "linguica",
+                "name": "Linguiça",
+                "description": "Linguiça suina assada na brasa",
+                "image": [
+                  "https://espetinhodesucesso.com.br/wp-content/uploads/2021/07/o-que-combina-com-linguica-frita.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "bifePorco": {
+                "type": "Carne",
+                "id": "bifePorco",
+                "name": "Bife de Porco",
+                "description": "Bife suíno assado na brasa",
+                "image": [
+                  "https://acarnequeomundoprefere.com.br/uploads/media/image/Thumb_YT_File-Mignon-Suino.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "costelinha": {
+                "type": "Carne",
+                "id": "costelinha",
+                "name": "Costelinha",
+                "description": "Costela suína cozida e conservada na gordura",
+                "image": [
+                  "https://i.pinimg.com/originals/16/0e/6f/160e6f3b43ae4551cd509a63acbfc6fe.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "carneLata": {
+                "type": "Carne",
+                "id": "carneLata",
+                "name": "Carne na Lata",
+                "description": "Carne suína conservada na gordura",
+                "image": [
+                  "https://i.ytimg.com/vi/1hWZ6_mN9tY/maxresdefault.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              }
+            }
+          },
+          "frango": {
+            "title": "Frango",
+            "description": "Preparos feitos a base de carne de frango",
+            "products": {
+              "strogonoff": {
+                "type": "Carne",
+                "id": "strogonoff",
+                "name": "Strogonoff",
+                "description": "Peito de frango fatiado, molho de tomate e creme de leite",
+                "image": [
+                  "https://j6t2y8j5.rocketcdn.me/wp-content/uploads/2022/04/strogonoff-de-frango-receita-tradicional-960x610.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "sobrecoxa": {
+                "type": "Carne",
+                "id": "sobrecoxa",
+                "name": "Sobrecoxa",
+                "description": "Sobrecoxa de frango, assada na brasa",
+                "image": [
+                  "https://www.hojetemfrango.com.br/wp-content/uploads/2019/03/shutterstock_767657137.jpg",
+                  "https://static.itdg.com.br/images/640-420/0ddf4359e991bf0a6ee39d78b2e67082/343249-original.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "medalhao": {
+                "type": "Carne",
+                "id": "medalhao",
+                "name": "Medalhão",
+                "description": "Filé de frango envolto com uma fatia de bacon",
+                "image": [
+                  "https://nacolher.com/wp-content/uploads/2022/10/medalhao-de-frango-com-bacon-1024x1024.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "fileFrango": {
+                "type": "Carne",
+                "id": "fileFrango",
+                "name": "Bife de Filé",
+                "description": "Bife de filé de frango preparado na chapa",
+                "image": [
+                  "https://cdn0.tudoreceitas.com/pt/posts/3/5/2/peito_de_frango_grelhado_na_frigideira_8253_paso_2_orig.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "ovoFrito": {
+                "type": "Carne",
+                "id": "ovoFrito",
+                "name": "Ovo Frito",
+                "description": "Ovo de galinha frito",
+                "image": [
+                  "https://j6t2y8j5.rocketcdn.me/wp-content/uploads/2017/03/receita-de-como-fazer-ovo-frito-sem-oleo-usando-apenas-agua-960x540.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              },
+              "frangoCaipira": {
+                "type": "Carne",
+                "id": "frangoCaipira",
+                "name": "Frango Caipira",
+                "description": "Frango Caipira preparado de forma tradicional",
+                "image": [
+                  "https://static.itdg.com.br/images/1200-675/2b077d8793d1a6236afcdad25d15e64c/246837-original.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              }
+            }
+          },
+          "peixe": {
+            "title": "Peixe",
+            "description": "Preparos feitos a base de carne de peixe",
+            "products": {
+              "piramutaba": {
+                "type": "Carne",
+                "id": "piramutaba",
+                "name": "Piramutaba",
+                "description": "Peixe piramutaba, sem espinhos, empanado e frito",
+                "image": [
+                  "https://i.ytimg.com/vi/CHr4XDqNZZ4/maxresdefault.jpg",
+                  "https://fastly.4sqi.net/img/general/width960/ddoONirJBB0qV4x5JDrSDHfosHFuKQ0cRpi87uUk8cg.jpg"
+                ],
+                "sizes": null,
+                "flavors": null,
+                "options": null,
+                "additionals": null,
+                "minQuantity": null
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
