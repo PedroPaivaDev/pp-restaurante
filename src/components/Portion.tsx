@@ -3,10 +3,6 @@ import styled from 'styled-components';
 
 import Button from './Button';
 
-interface BgProps {
-  bgImage: string;
-}
-
 const PortionDetail = styled.div`
   display: flex;
   flex-direction: column;
@@ -43,15 +39,7 @@ const DivImage = styled.div<BgProps>`
   background-size: cover;
 `;
 
-interface Portions {
-  type: string,
-  id: string,
-  name: string,
-  description: string,
-  image: string[]
-}
-
-const Portion = ({ingredient}: {ingredient: Portions}) => {
+const Portion = ({ingredient}: {ingredient: Portion}) => {
   return (
     <PortionDetail>
       <div className='portionHeader'>

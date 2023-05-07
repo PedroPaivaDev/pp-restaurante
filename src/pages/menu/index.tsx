@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import Link from 'next/link';
 // import { useRouter } from 'next/router';
 
-import { getProducts } from '../services/firebase';
-import Portion from '@/components/Portion';
+import { getProducts } from '../../services/firebase';
+import Products from './[Products]';
 
 const SubNavBar = styled.nav`
   display: flex;
@@ -44,25 +44,21 @@ const SubNavBar = styled.nav`
   }
 `;
 
-interface Portions {
-  type: string,
-  id: string,
-  name: string,
-  description: string,
-  image: string[]
-}
-
 const Menu = () => {
   // const {pathname} = useRouter();
-  // const [category, setCategory] = React.useState();
-  const [base, setBase] = React.useState<Portions>();
+  // const [category, setCategory] = React.useState<string>();
+  const [base, setBase] = React.useState<Category>();
   // const [hortalicas, setHortalicas] = React.useState();
   // const [acompanhamentos, setAcompanhamentos] = React.useState();
   // const [carnes, setCarnes] = React.useState();
 
   React.useEffect(() => {
-    getProducts('bases/products/arroz/products/arrozAlho', setBase as React.Dispatch<React.SetStateAction<Portions>>);
+    getProducts('bases', setBase as React.Dispatch<React.SetStateAction<Category>>);
   },[]);
+
+  // React.useEffect(() => {
+  //   setCategory(pathname);
+  // }, [pathname])
 
   return (
     <div className='page animeleft'>
@@ -75,9 +71,9 @@ const Menu = () => {
         </div>
       </SubNavBar>
       <div className="products">
-        {/* {category==='/menu' && */}
-          {base && <Portion ingredient={base}/>}
-        {/* } */}
+        {/* category==='/menu' && */ base &&
+          <Products category={base}/>
+        }
       </div>
     </div>
   )

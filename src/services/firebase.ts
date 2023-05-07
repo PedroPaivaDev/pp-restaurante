@@ -74,14 +74,7 @@ const db = getDatabase(app);
 //   }, {onlyOnce: true})
 // }
 //Para buscar os produtos no DB
-interface Portions {
-  type: string,
-  id: string,
-  name: string,
-  description: string,
-  image: string[]
-}
-export function getProducts(path:string, setState:React.Dispatch<React.SetStateAction<Portions>>) {
+export function getProducts(path:string, setState:React.Dispatch<React.SetStateAction<Category>>) {
   const productsRef = ref(db, `cardapio/products/${path}`);
   onValue(
     productsRef,
