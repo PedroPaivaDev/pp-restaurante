@@ -36,10 +36,3 @@ interface Portion {
 interface BgProps {
   bgImage: string;
 }
-
-interface GridTest {
-  xs?: string;
-  sm?: string;
-  md?: string;
-  lg?: string;
-}

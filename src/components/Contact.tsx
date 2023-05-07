@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const DivLink = styled.div`
-  margin-top: 20px;
+  margin-top: 10px;
   border-radius: 20px;
   transition: 0.3s;
   a {
@@ -18,7 +18,6 @@ const DivLink = styled.div`
     }
   }
   animation: pulse 2s infinite;
-
   @keyframes pulse {
   0% {
     width: 130px;
@@ -38,10 +37,27 @@ const DivLink = styled.div`
   }
 `;
 
+const BgPaper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: ${props => props.theme.colors.portionBg};
+  background-position: center center;
+  background-size: cover;
+  border: 2px solid ${props => props.theme.colors.primaryColor};
+  box-shadow: 0px 7px 20px 0px ${props => props.theme.colors.dark};
+  margin: 20px;
+  padding: 10px;
+  * {
+    color: ${props => props.theme.colors.primaryColor};    
+  }
+`;
+
 const Contact = () => {
   return (    
     <div className="container">
-      <div className="envelope">
+      <BgPaper>
         <div className="wrapper">
           <h2>Horários de Funcionamento</h2>
           <p><span>Almoço:</span> Terça a Domingo: 11:00h às 14:00h</p>
@@ -50,7 +66,7 @@ const Contact = () => {
         </div>
         <div className="wrapper">
           <h2>Monte seu almoço</h2>
-          <p>Faça seu pedido selecionando as porções e monte o seu almoço:</p>
+          <p>Faça seu pedido selecionando as porções e monte o sua marmita:</p>
           <DivLink>
             <Link href='/menu'>Marmitex</Link>
           </DivLink>
@@ -61,7 +77,7 @@ const Contact = () => {
           <p>Número 1790, Bairro Novo São José</p>
           <p>Bom Despacho / MG</p>
         </div>
-      </div>
+      </BgPaper>
     </div>
   )
 }

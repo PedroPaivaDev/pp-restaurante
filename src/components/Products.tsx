@@ -5,8 +5,8 @@ import Portion from '@/components/Portion';
 
 const Products = ({menu, category}:{menu:MenuProducts,category:string}) => {
   return (
-    <div className={`container animeLeft`}>
-      {menu[category] && <div className='envelope'>
+    <div key={category} className={`container`}>
+      {menu[category] && <div className='envelope animeLeft'>
         <h1>{menu[category].title}</h1>
         <p>{menu[category].description}</p>
         {Object.keys(menu[category].products).map(type => 
@@ -18,7 +18,7 @@ const Products = ({menu, category}:{menu:MenuProducts,category:string}) => {
                 Object.keys(menu[category].products[type].products).map((item) => (
                   <Grid
                     key={menu[category].products[type].products[item].id}
-                    xs='12' sm='6' md='4' lg='3'
+                    xs={12} sm={6} md={4} lg={3}
                   >
                     <Portion ingredient={menu[category].products[type].products[item]}/>
                   </Grid>
