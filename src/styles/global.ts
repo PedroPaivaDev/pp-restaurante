@@ -150,9 +150,10 @@ const GlobalStyles: GlobalStyleComponent<
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: 90%;
+    width: 100%;
     gap: 5px;
-    margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     text-align: center;
     color: ${props => props.theme.colors.primaryColor};
   }
@@ -161,18 +162,12 @@ const GlobalStyles: GlobalStyleComponent<
     width: 100%;
   }
 
-  .wrapper img {
-    max-width: 50%;
-    height: auto;
-  }
-
   .row {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     flex-wrap: wrap;
-    gap: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
   }

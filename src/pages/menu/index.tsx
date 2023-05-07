@@ -32,16 +32,6 @@ const SubNavBar = styled.nav`
   .activeProducts, a:hover {
       color: ${props => props.theme.colors.primaryColor};
   }
-
-  .products {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-  }
 `;
 
 const Menu = () => {
@@ -53,7 +43,7 @@ const Menu = () => {
   // const [carnes, setCarnes] = React.useState();
 
   React.useEffect(() => {
-    getProducts('bases', setBase as React.Dispatch<React.SetStateAction<Category>>);
+    getProducts('hortalicas', setBase as React.Dispatch<React.SetStateAction<Category>>);
   },[]);
 
   // React.useEffect(() => {
@@ -70,11 +60,9 @@ const Menu = () => {
           <Link href="/menu/carnes">Carnes</Link>
         </div>
       </SubNavBar>
-      <div className="products">
-        {/* category==='/menu' && */ base &&
-          <Products category={base}/>
-        }
-      </div>
+      {/* category==='/menu' && */ base &&
+        <Products category={base}/>
+      }
     </div>
   )
 };

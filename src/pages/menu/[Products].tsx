@@ -1,5 +1,7 @@
-import Portion from '@/components/Portion';
 import React from 'react';
+
+import Grid from '@/components/Grid';
+import Portion from '@/components/Portion';
 
 const Products = ({category}: {category: Category}) => {
 
@@ -15,7 +17,12 @@ const Products = ({category}: {category: Category}) => {
             <div className='row'>
               { category.products[type].products &&
                 Object.keys(category.products[type].products).map((item) => (
-                  <Portion key={category.products[type].products[item].name} ingredient={category.products[type].products[item]}/>
+                  <Grid
+                    key={category.products[type].products[item].id}
+                    xs='12' sm='6' md='4' lg='3'
+                  >
+                    <Portion ingredient={category.products[type].products[item]}/>
+                  </Grid>
                 ))
               }
             </div>
