@@ -1,3 +1,14 @@
+interface Menu {
+  title: string;
+  description1?: string;
+  description2?: string;
+  products: MenuProducts;
+}
+
+interface MenuProducts {
+  [key: string]: Category;
+}
+
 interface Category {
   title: string;
   description: string;

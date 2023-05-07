@@ -74,8 +74,8 @@ const db = getDatabase(app);
 //   }, {onlyOnce: true})
 // }
 //Para buscar os produtos no DB
-export function getProducts(path:string, setState:React.Dispatch<React.SetStateAction<Category>>) {
-  const productsRef = ref(db, `cardapio/products/${path}`);
+export function getProducts(path:string, setState:React.Dispatch<React.SetStateAction<Menu>>) {
+  const productsRef = ref(db, path);
   onValue(
     productsRef,
     (snapshot) => setState(snapshot.val()),
