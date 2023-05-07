@@ -6,6 +6,8 @@ export default {
     tertiaryColor: '#eeebeb',
     quaternaryColor: '#FACA08',
     quintenaryColor: '#fcdf6a',
+    sucess: '#1AB912',
+    error: '#f31',
     mainBg: "url('./bg-1.jpg')",
     portionBg: "url('./papel.jpg')"
   },

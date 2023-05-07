@@ -22,7 +22,7 @@ const PortionDetail = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     h3 {
       color: ${props => props.theme.colors.primaryColor};
     }

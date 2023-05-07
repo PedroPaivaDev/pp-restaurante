@@ -7,32 +7,32 @@ const DivLink = styled.div`
   border-radius: 20px;
   transition: 0.3s;
   a {
-    color: ${props => props.theme.colors.primaryColor};
+    color: ${props => props.theme.colors.tertiaryColor};
     line-height: 26px;
     text-align: center;
     vertical-align: middle;
     transition: 0.3s;
     &:hover {
-      color: ${props => props.theme.colors.tertiaryColor};
+      color: ${props => props.theme.colors.primaryColor};
       text-shadow: none;
     }
   }
   animation: pulse 2s infinite;
   @keyframes pulse {
   0% {
-    width: 130px;
-    background: rgba(252,223,106,0.7);
-    box-shadow: 0 0 10px 10px rgba(252,223,106,0.7);
+    width: 160px;
+    background: rgba(86,63,57,0.7);
+    box-shadow: 0 0 10px 10px rgba(86,63,57,0.7);
   }
   50% {
-    width: 100px;
-    background: rgba(252,223,106,0.6);
-    box-shadow: 0 0 10px 10px rgba(252,223,106,0.6);
+    width: 130px;
+    background: rgba(86,63,57,0.6);
+    box-shadow: 0 0 10px 10px rgba(86,63,57,0.6);
   }
   100% {
-    width: 130px;
-    background: rgba(252,223,106,0.7);
-    box-shadow: 0 0 10px 10px rgba(252,223,106,0.7);
+    width: 160px;
+    background: rgba(86,63,57,0.7);
+    box-shadow: 0 0 10px 10px rgba(86,63,57,0.7);
   }
   }
 `;
@@ -68,7 +68,7 @@ const Contact = () => {
           <h2>Monte seu almoço</h2>
           <p>Faça seu pedido selecionando as porções e monte o sua marmita:</p>
           <DivLink>
-            <Link href='/menu'>Marmitex</Link>
+            <Link href='/menu'>Pedir Marmitex</Link>
           </DivLink>
         </div>
         <div className="wrapper">
