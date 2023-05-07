@@ -43,14 +43,22 @@ const DivImage = styled.div<BgProps>`
   background-size: cover;
 `;
 
-const Portion = ({ingredient}: {ingredient: string}) => {
+interface Portions {
+  type: string,
+  id: string,
+  name: string,
+  description: string,
+  image: string[]
+}
+
+const Portion = ({ingredient}: {ingredient: Portions}) => {
   return (
     <PortionDetail>
       <div className='portionHeader'>
-        <h3>{ingredient}</h3>
+        <h3>{ingredient.name}</h3>
         <Button label='Adicionar'/>
       </div>
-      <DivImage bgImage='./arroz.jpg'/>
+      <DivImage bgImage={ingredient.image[0]}/>
     </PortionDetail>
   )
 }
