@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+// import {useMarmita} from '@/contexts/MarmitaContext';
 
 import Button from './Button';
 
@@ -38,12 +39,37 @@ const DivImage = styled.div<BgProps>`
   background-size: cover;
 `;
 
-const Portion = ({ingredient}: {ingredient: Portion}) => {
+interface PropsPortion {
+  ingredient: Portion;
+  marmita: {[key: string]: string[]};
+  setMarmita: React.Dispatch<React.SetStateAction<{[key:string]: string[]}>>;
+}
+const Portion = ({ingredient, marmita, setMarmita}:PropsPortion) => {
+  // const [statusSubmit, setStatusSubmit] = React.useState<StatusSubmit>();
+  // const {marmita, setMarmita} = useMarmita();
+  function handleClick() {
+    console.log('clicou')
+    if(marmita[ingredient.type]) {
+      setMarmita({
+        ...marmita,
+        [ingredient.type]: [
+          ...marmita[ingredient.type],
+          ingredient.name
+        ]
+      })
+    } else {
+      setMarmita({
+        ...marmita,
+        [ingredient.type]: [ingredient.name]
+      })
+    }
+  }
+
   return (
     <PortionDetail>
       <div className='portionHeader'>
         <h3>{ingredient.name}</h3>
-        <Button label='Adicionar'/>
+        <Button label='Adicionar' onClick={handleClick}/>
       </div>
       <DivImage bgImage={ingredient.image[0]}/>
     </PortionDetail>

@@ -43,10 +43,7 @@ interface PropsButton {
 
 const Button = ({label='Adicionar', submitError, submitSucess,...props}:PropsButton) => {
   function handleBg() {
-    if(label==='Adicionar') {
-      return '#FACA08';
-    }
-    else if(label==='Remover') {
+    if(label==='Remover') {
       return '#f31';
     }
   }

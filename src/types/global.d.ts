@@ -36,3 +36,8 @@ interface Portion {
 interface BgProps {
   bgImage: string;
 }
+
+interface StatusSubmit {
+  status: string;
+  msg: string;
+}

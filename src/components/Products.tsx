@@ -3,7 +3,13 @@ import React from 'react';
 import Grid from '@/components/Grid';
 import Portion from '@/components/Portion';
 
-const Products = ({menu, category}:{menu:MenuProducts,category:string}) => {
+interface PropsProducts {
+  menu:MenuProducts;
+  category:string;
+  marmita: {[key: string]: string[]};
+  setMarmita: React.Dispatch<React.SetStateAction<{[key:string]: string[]}>>;
+}
+const Products = ({menu, category, marmita, setMarmita}:PropsProducts) => {
   return (
     <div key={category} className={`container`}>
       {menu[category] && <div className='envelope animeLeft'>
@@ -20,7 +26,10 @@ const Products = ({menu, category}:{menu:MenuProducts,category:string}) => {
                     key={menu[category].products[type].products[item].id}
                     xs={12} sm={6} md={4} lg={3}
                   >
-                    <Portion ingredient={menu[category].products[type].products[item]}/>
+                    <Portion
+                      ingredient={menu[category].products[type].products[item]}
+                      marmita={marmita} setMarmita={setMarmita}
+                    />
                   </Grid>
                 ))
               }
