@@ -44,6 +44,8 @@ const Button = ({label, statusSubmit, setStatusSubmit, className, ...props}:Prop
   function handleBg() {
     if(label==='Remover') {
       return '#f31';
+    } else if(label==='Concluir Marmita') {
+      return '#1AB912';
     }
   }
   React.useEffect(() => {

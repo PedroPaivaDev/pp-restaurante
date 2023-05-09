@@ -19,21 +19,21 @@ const DivLink = styled.div`
   }
   animation: pulse 2s infinite;
   @keyframes pulse {
-  0% {
-    width: 160px;
-    background: rgba(86,63,57,0.7);
-    box-shadow: 0 0 10px 10px rgba(86,63,57,0.7);
-  }
-  50% {
-    width: 130px;
-    background: rgba(86,63,57,0.6);
-    box-shadow: 0 0 10px 10px rgba(86,63,57,0.6);
-  }
-  100% {
-    width: 160px;
-    background: rgba(86,63,57,0.7);
-    box-shadow: 0 0 10px 10px rgba(86,63,57,0.7);
-  }
+    0% {
+      width: 160px;
+      background: rgba(86,63,57,0.7);
+      box-shadow: 0 0 10px 10px rgba(86,63,57,0.7);
+    }
+    50% {
+      width: 130px;
+      background: rgba(86,63,57,0.6);
+      box-shadow: 0 0 10px 10px rgba(86,63,57,0.6);
+    }
+    100% {
+      width: 160px;
+      background: rgba(86,63,57,0.7);
+      box-shadow: 0 0 10px 10px rgba(86,63,57,0.7);
+    }
   }
 `;
 
@@ -68,7 +68,7 @@ const Contact = () => {
           <h2>Monte seu almoço</h2>
           <p>Faça seu pedido selecionando as porções e monte o sua marmita:</p>
           <DivLink>
-            <Link href='/menu'>Pedir Marmitex</Link>
+            <Link href='/Menu'>Pedir Marmitex</Link>
           </DivLink>
         </div>
         <div className="wrapper">

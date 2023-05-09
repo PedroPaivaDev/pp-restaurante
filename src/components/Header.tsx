@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -29,6 +28,15 @@ const Nav = styled.nav`
       text-shadow: none;
     }
   }
+  .logoImg {
+    border-radius: 20px;
+    transition: 0.3s;
+    cursor: pointer;    
+    &:hover {
+      background: ${props => props.theme.colors.tertiaryColor};
+      box-shadow: 0 0 10px 10px ${props => props.theme.colors.tertiaryColor};
+    }
+  }
 `;
 
 const Header = () => {
@@ -40,11 +48,12 @@ const Header = () => {
       <Nav>
         <Link href='/Menu' className={pathname==='/Menu' ? 'active' : ''}>Cardápio</Link>
         <Link href='/' className={pathname==='/' ? 'active' : ''}>
-          <Image
+          <img
               src="/logo.png"
               alt="LogoPP"
               width={100}
               height={50}
+              className='logoImg'
           />
         </Link>
         <Link href='/Entrega' className={pathname==='/Entrega' ? 'active' : ''}>Entrega</Link>
