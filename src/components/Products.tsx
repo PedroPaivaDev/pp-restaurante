@@ -13,7 +13,7 @@ const Products = ({menu, category, marmita, setMarmita}:PropsProducts) => {
   return (
     <div key={category} className={`container`}>
       {menu[category] && <div className='envelope animeLeft'>
-        <h1>{menu[category].title}</h1>
+        <h1 style={{marginTop: '40px'}}>{menu[category].title}</h1>
         <p>{menu[category].description}</p>
         {Object.keys(menu[category].products).map(type => 
           <div key={menu[category].products[type].title} className='wrapper'>

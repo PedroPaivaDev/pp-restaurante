@@ -34,23 +34,33 @@ const ContainerButton = styled.div`
   }
 `;
 
-interface PropsButton {
+interface PropsButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
-  submitError?: boolean;
-  submitSucess?: boolean;
-  onClick?: () => void;
+  statusSubmit?: StatusSubmit;
+  setStatusSubmit?: React.Dispatch<React.SetStateAction<StatusSubmit>>;
 }
 
-const Button = ({label='Adicionar', submitError, submitSucess,...props}:PropsButton) => {
+const Button = ({label, statusSubmit, setStatusSubmit, className, ...props}:PropsButton) => {
   function handleBg() {
     if(label==='Remover') {
       return '#f31';
     }
   }
+  React.useEffect(() => {
+    if(statusSubmit?.status) {
+      setTimeout(() => {
+        setStatusSubmit && setStatusSubmit({
+          ...statusSubmit,
+          status: null,
+          msg: null
+        })
+      }, 2000);
+    }
+  }, [statusSubmit, setStatusSubmit]);
+
   return (
-    <ContainerButton>
-      {submitError && <h6 className='status error'>Você só pode adicionar duas carnes</h6>}
-      {submitSucess && <h6 className='status sucess'>Adicionado com sucesso!</h6>}
+    <ContainerButton className={className}>
+      {statusSubmit?.status && <h6 className={`status ${statusSubmit.status}`}>{statusSubmit.msg}</h6>}
       <button style={{backgroundColor:handleBg()}} {...props}>{label}</button>
     </ContainerButton>
   )

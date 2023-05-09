@@ -38,7 +38,7 @@ const Header = () => {
   return (
     <header style={{width: '100%'}}>
       <Nav>
-        <Link href='/menu' className={pathname==='/menu' ? 'active' : ''}>Cardápio</Link>
+        <Link href='/Menu' className={pathname==='/Menu' ? 'active' : ''}>Cardápio</Link>
         <Link href='/' className={pathname==='/' ? 'active' : ''}>
           <Image
               src="/logo.png"
@@ -47,7 +47,7 @@ const Header = () => {
               height={50}
           />
         </Link>
-        <Link href='/entrega' className={pathname==='/entrega' ? 'active' : ''}>Entrega</Link>
+        <Link href='/Entrega' className={pathname==='/Entrega' ? 'active' : ''}>Entrega</Link>
       </Nav>
     </header>
   )
