@@ -40,7 +40,7 @@ const SubNavBar = ({categories, path}:PropsSubNavBar) => {
         {categories.map(category =>
           <Link
             key={category}
-            href={`/Menu?categoria=${category}`}
+            href={`/menu?categoria=${category}`}
             className={path===category ? 'active' : ''}
           >
             {category}

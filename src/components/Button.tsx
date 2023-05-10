@@ -6,7 +6,7 @@ const ContainerButton = styled.div`
     background-color: ${props => props.theme.colors.quaternaryColor};
     padding: 0px 10px;
     line-height: 26px;
-    border: 1px solid ${props => props.theme.colors.quaternaryColor};
+    border: 1px solid ${props => props.theme.colors.quintenaryColor};
     border-radius: 10px;
     color: ${props => props.theme.colors.primaryColor};
     box-shadow: 0px 1px 5px 0px ${props => props.theme.colors.dark};
@@ -63,7 +63,9 @@ const Button = ({label, statusSubmit, setStatusSubmit, className, ...props}:Prop
   return (
     <ContainerButton className={className}>
       {statusSubmit?.status && <h6 className={`status ${statusSubmit.status}`}>{statusSubmit.msg}</h6>}
-      <button style={{backgroundColor:handleBg()}} {...props}>{label}</button>
+      <button style={{backgroundColor:handleBg()}} {...props}>
+        {label}
+      </button>
     </ContainerButton>
   )
 }

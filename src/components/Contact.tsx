@@ -68,7 +68,7 @@ const Contact = () => {
           <h2>Monte seu almoço</h2>
           <p>Faça seu pedido selecionando as porções e monte o sua marmita:</p>
           <DivLink>
-            <Link href='/Menu'>Pedir Marmitex</Link>
+            <Link href='/menu'>Pedir Marmitex</Link>
           </DivLink>
         </div>
         <div className="wrapper">

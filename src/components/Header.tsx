@@ -55,13 +55,13 @@ const Header = () => {
   return (
     <HeaderTag style={{width: '100%'}}>
       <nav>
-        <Link href='/Menu' className={pathname==='/Menu' ? 'active' : ''}>
+        <Link href='/menu' className={pathname==='/menu' ? 'active' : ''}>
           Cardápio
         </Link>
         <div className={`logoImg ${pathname==='/' ? 'active' : ''}`} onClick={() => push('/')}>
           <img src="/logo.png" alt="LogoPP" height='50px'/>
         </div>
-        <Link href='/Entrega' className={pathname==='/Entrega' ? 'active' : ''}>
+        <Link href='/entrega' className={pathname==='/entrega' ? 'active' : ''}>
           Entrega
         </Link>
       </nav>
