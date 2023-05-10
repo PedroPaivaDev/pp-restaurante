@@ -1,13 +1,13 @@
 import React from 'react';
+import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 import { getProducts } from '@/services/firebase';
+import useLocalStorage from '@/hooks/useLocalStorage';
 
 import Products from '../components/Products';
 import SubNavBar from '@/components/SubNavBar';
 import Button from '@/components/Button';
-import useLocalStorage from '@/hooks/useLocalStorage';
-import styled from 'styled-components';
 
 const ButtonDiv = styled.div`
   position: absolute;
@@ -16,7 +16,7 @@ const ButtonDiv = styled.div`
   max-width: 900px;
   .submitButton {
     position: absolute;
-    top: 5px;
+    top: 10px;
     left: 10px;
     z-index: 10;
     button {
@@ -40,7 +40,7 @@ const Menu = () => {
   }
 
   function handleSubmit() {
-    console.log('Marmita armazenada')
+    push('/menu');
   }
 
   React.useEffect(() => {
@@ -49,7 +49,7 @@ const Menu = () => {
     } else {
       setSubmitMarmita(false);
     }
-  })
+  },[marmita])
 
   return (
     <div className='page animeleft'>
@@ -57,14 +57,16 @@ const Menu = () => {
         categories={Object.keys(menu?.products)}
         path={query.categoria as string}
       />}
-      {submitMarmita && <ButtonDiv>
-        <Button
-          label='Concluir Marmita'
-          className='submitButton'
-          onClick={handleSubmit}
-        />
-      </ButtonDiv>}
-      {query.categoria===undefined && menu && 
+      {query.categoria && submitMarmita && 
+        <ButtonDiv>
+          <Button
+            label='Concluir Marmita'
+            className='submitButton'
+            onClick={handleSubmit}
+          />
+        </ButtonDiv>
+      }
+      {query.categoria===undefined && menu && !submitMarmita && 
         <div className='wrapper'>
           <h1>{menu.title}</h1>
           <p>{menu.description1}</p>

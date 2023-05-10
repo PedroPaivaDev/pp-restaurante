@@ -50,32 +50,60 @@ const Portion = ({ingredient, marmita, setMarmita}:PropsPortion) => {
     msg: null
   });
 
+  React.useEffect(() => {
+    if(marmita) {
+      const verifyMarmita = Object.keys(marmita).includes(ingredient.type);      
+      if(verifyMarmita) {
+        const verifyPortion = marmita[ingredient.type].includes(ingredient.name);     
+        verifyPortion && setStatusSubmit({
+          ...statusSubmit,
+          label: 'Remover'
+        });
+      }
+    }
+  },[marmita])
+
   function handleClick() {
     if(statusSubmit.label==='Adicionar') {
+      if(marmita[ingredient.type]) {
+        setMarmita({
+          ...marmita,
+          [ingredient.type]: [
+            ...marmita[ingredient.type],
+            ingredient.name
+          ]
+        });
+        console.log('Adiciona item na chave', marmita)
+      } else {
+        setMarmita({
+          ...marmita,
+          [ingredient.type]: [ingredient.name]
+        });
+        console.log('Adiciona chave e item', marmita)
+      }
       setStatusSubmit({
         label: 'Remover',
         status: 'sucess',
         msg: 'Adicionado com sucesso!'
       })
-    } else {
+    } else if(statusSubmit.label==='Remover') {
+      if(marmita[ingredient.type].length>1) {
+        setMarmita({
+          ...marmita,
+          [ingredient.type]: marmita[ingredient.type].filter(name => name !== ingredient.name)
+        });
+        console.log('Remove item', marmita)
+      } else {
+        setMarmita({
+          ...marmita,
+          [ingredient.type]: []
+        });
+        console.log('Remove chave', marmita)
+      }
       setStatusSubmit({
         label: 'Adicionar',
         status: 'sucess',
         msg: 'Removido da marmita'
-      })
-    }
-    if(marmita[ingredient.type]) {
-      setMarmita({
-        ...marmita,
-        [ingredient.type]: [
-          ...marmita[ingredient.type],
-          ingredient.name
-        ]
-      })
-    } else {
-      setMarmita({
-        ...marmita,
-        [ingredient.type]: [ingredient.name]
       })
     }
   }
