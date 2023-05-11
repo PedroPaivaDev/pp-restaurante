@@ -47,3 +47,8 @@ interface StatusSubmit {
 interface Marmita {
   [key: string]: string[];
 }
+
+interface PropsHeader {
+  marmitaCount: number;
+  bag: number;
+}

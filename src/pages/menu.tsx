@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import { getProducts } from '@/services/firebase';
 import useLocalStorage from '@/hooks/useLocalStorage';
+import { MarmitaContext } from '@/contexts/MarmitaContext';
 
 import Products from '../components/Products';
 import SubNavBar from '@/components/SubNavBar';
@@ -30,7 +31,7 @@ const Menu = () => {
   const {query, push} = useRouter();
   const [menu, setMenu] = React.useState<Menu>();
   const [marmita, setMarmita] = useLocalStorage<Marmita>('marmita', {});
-  const [submitMarmita, setSubmitMarmita] = React.useState<string[]>();
+  const {marmitaCount, setMarmitaCount} = React.useContext(MarmitaContext);
 
   React.useEffect(() => {
     getProducts('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>);
@@ -47,7 +48,7 @@ const Menu = () => {
           ]
         )
       );
-      setSubmitMarmita(portionsArray);
+      setMarmitaCount(portionsArray);
     }
   },[marmita]);
 
@@ -57,7 +58,7 @@ const Menu = () => {
         categories={Object.keys(menu?.products)}
         path={query.categoria as string}
       />}
-      {query.categoria && ((submitMarmita?.length as number) > 2) && 
+      {query.categoria && ((marmitaCount?.length as number) > 2) && 
         <ButtonDiv>
           <Button
             label='Concluir Marmita'
@@ -66,7 +67,7 @@ const Menu = () => {
           />
         </ButtonDiv>
       }
-      {query.categoria===undefined && menu && !submitMarmita?.length && 
+      {query.categoria===undefined && menu && !marmitaCount?.length && 
         <div className='wrapper'>
           <h1>{menu.title}</h1>
           <p>{menu.description1}</p>
@@ -76,7 +77,7 @@ const Menu = () => {
           />
         </div>
       }
-      {query.categoria===undefined && submitMarmita?.length &&
+      {query.categoria===undefined && marmitaCount?.length &&
         <div className='container'>
           <div className="envelope animeLeft">
             <div className="wrapper">
@@ -84,7 +85,11 @@ const Menu = () => {
                 label='Concluir Marmita'
                 onClick={() => push('/entrega')}
               />
-              <h1>Ou continue montando sua marmita</h1>
+              <h1>Ou</h1>
+              <Button
+                label='Continuar Montando'
+                onClick={() => push('/menu?categoria=bases')}
+              />
               <Marmita menu={menu as Menu} marmita={marmita} setMarmita={setMarmita} />
             </div>
           </div>
