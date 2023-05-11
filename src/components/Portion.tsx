@@ -40,7 +40,7 @@ const DivImage = styled.div<BgProps>`
 
 interface PropsPortion {
   ingredient: Portion;
-  marmita: {[key: string]: string[]};
+  marmita: Marmita;
   setMarmita: React.Dispatch<React.SetStateAction<{[key:string]: string[]}>>;
 }
 const Portion = ({ingredient, marmita, setMarmita}:PropsPortion) => {
@@ -52,9 +52,9 @@ const Portion = ({ingredient, marmita, setMarmita}:PropsPortion) => {
 
   React.useEffect(() => {
     if(marmita) {
-      const verifyMarmita = Object.keys(marmita).includes(ingredient.type);      
+      const verifyMarmita = Object.keys(marmita).includes(ingredient.category);      
       if(verifyMarmita) {
-        const verifyPortion = marmita[ingredient.type].includes(ingredient.name);     
+        const verifyPortion = marmita[ingredient.category].includes(ingredient.id);     
         verifyPortion && setStatusSubmit({
           ...statusSubmit,
           label: 'Remover'
@@ -65,21 +65,19 @@ const Portion = ({ingredient, marmita, setMarmita}:PropsPortion) => {
 
   function handleClick() {
     if(statusSubmit.label==='Adicionar') {
-      if(marmita[ingredient.type]) {
+      if(marmita[ingredient.category]) {
         setMarmita({
           ...marmita,
-          [ingredient.type]: [
-            ...marmita[ingredient.type],
-            ingredient.name
+          [ingredient.category]: [
+            ...marmita[ingredient.category],
+            ingredient.id
           ]
         });
-        console.log('Adiciona item na chave', marmita)
       } else {
         setMarmita({
           ...marmita,
-          [ingredient.type]: [ingredient.name]
+          [ingredient.category]: [ingredient.id]
         });
-        console.log('Adiciona chave e item', marmita)
       }
       setStatusSubmit({
         label: 'Remover',
@@ -87,18 +85,16 @@ const Portion = ({ingredient, marmita, setMarmita}:PropsPortion) => {
         msg: 'Adicionado com sucesso!'
       })
     } else if(statusSubmit.label==='Remover') {
-      if(marmita[ingredient.type].length>1) {
+      if(marmita[ingredient.category].length>1) {
         setMarmita({
           ...marmita,
-          [ingredient.type]: marmita[ingredient.type].filter(name => name !== ingredient.name)
+          [ingredient.category]: marmita[ingredient.category].filter(id => id !== ingredient.id)
         });
-        console.log('Remove item', marmita)
       } else {
         setMarmita({
           ...marmita,
-          [ingredient.type]: []
+          [ingredient.category]: []
         });
-        console.log('Remove chave', marmita)
       }
       setStatusSubmit({
         label: 'Adicionar',

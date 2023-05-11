@@ -26,6 +26,7 @@ interface Portions {
 }
 
 interface Portion {
+  category: string;
   type: string;
   id: string;
   name: string;
@@ -41,4 +42,8 @@ interface StatusSubmit {
   label: string;
   status: string | null;
   msg: string | null;
+}
+
+interface Marmita {
+  [key: string]: string[];
 }

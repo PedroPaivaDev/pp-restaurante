@@ -21,18 +21,18 @@ const DivLink = styled.div`
   @keyframes pulse {
     0% {
       width: 160px;
-      background: rgba(86,63,57,0.7);
-      box-shadow: 0 0 10px 10px rgba(86,63,57,0.7);
+      background: ${props => props.theme.colors.secondaryColor};
+      box-shadow: 0 0 10px 10px ${props => props.theme.colors.secondaryColor};
     }
     50% {
       width: 130px;
-      background: rgba(86,63,57,0.6);
-      box-shadow: 0 0 10px 10px rgba(86,63,57,0.6);
+      background: ${props => props.theme.colors.secondaryColor};
+      box-shadow: 0 0 10px 10px ${props => props.theme.colors.secondaryColor};
     }
     100% {
       width: 160px;
-      background: rgba(86,63,57,0.7);
-      box-shadow: 0 0 10px 10px rgba(86,63,57,0.7);
+      background: ${props => props.theme.colors.secondaryColor};
+      box-shadow: 0 0 10px 10px ${props => props.theme.colors.secondaryColor};
     }
   }
 `;

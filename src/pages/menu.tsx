@@ -8,6 +8,7 @@ import useLocalStorage from '@/hooks/useLocalStorage';
 import Products from '../components/Products';
 import SubNavBar from '@/components/SubNavBar';
 import Button from '@/components/Button';
+import Marmita from '@/components/Marmita';
 
 const ButtonDiv = styled.div`
   position: absolute;
@@ -28,28 +29,27 @@ const ButtonDiv = styled.div`
 const Menu = () => {
   const {query, push} = useRouter();
   const [menu, setMenu] = React.useState<Menu>();
-  const [marmita, setMarmita] = useLocalStorage<{[key: string]: string[]}>('marmita', {});
-  const [submitMarmita, setSubmitMarmita] = React.useState<boolean>();
+  const [marmita, setMarmita] = useLocalStorage<Marmita>('marmita', {});
+  const [submitMarmita, setSubmitMarmita] = React.useState<string[]>();
 
   React.useEffect(() => {
     getProducts('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>);
   },[]);
 
-  function handleClick() {
-    push('/menu?categoria=bases');
-  }
-
-  function handleSubmit() {
-    push('/menu');
-  }
-
   React.useEffect(() => {
-    if(Object.keys(marmita).length>2) {
-      setSubmitMarmita(true);
-    } else {
-      setSubmitMarmita(false);
+    if(marmita) {
+      let portionsArray:string[] = [];
+      Object.keys(marmita).forEach(category =>
+        marmita[category].forEach(portion =>
+          portionsArray = [
+            ...portionsArray,
+            portion
+          ]
+        )
+      );
+      setSubmitMarmita(portionsArray);
     }
-  },[marmita])
+  },[marmita]);
 
   return (
     <div className='page animeleft'>
@@ -57,20 +57,37 @@ const Menu = () => {
         categories={Object.keys(menu?.products)}
         path={query.categoria as string}
       />}
-      {query.categoria && submitMarmita && 
+      {query.categoria && ((submitMarmita?.length as number) > 2) && 
         <ButtonDiv>
           <Button
             label='Concluir Marmita'
             className='submitButton'
-            onClick={handleSubmit}
+            onClick={() => push('/menu')}
           />
         </ButtonDiv>
       }
-      {query.categoria===undefined && menu && !submitMarmita && 
+      {query.categoria===undefined && menu && !submitMarmita?.length && 
         <div className='wrapper'>
           <h1>{menu.title}</h1>
           <p>{menu.description1}</p>
-          <Button label='Montar Marmita' onClick={handleClick}/>
+          <Button
+            label='Montar Marmita'
+            onClick={() => push('/menu?categoria=bases')}
+          />
+        </div>
+      }
+      {query.categoria===undefined && submitMarmita?.length &&
+        <div className='container'>
+          <div className="envelope animeLeft">
+            <div className="wrapper">
+              <Button
+                label='Concluir Marmita'
+                onClick={() => push('/entrega')}
+              />
+              <h1>Ou continue montando sua marmita</h1>
+              <Marmita menu={menu as Menu} marmita={marmita} setMarmita={setMarmita} />
+            </div>
+          </div>
         </div>
       }
       {query.categoria && menu &&
