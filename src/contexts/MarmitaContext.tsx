@@ -1,23 +1,32 @@
+import useLocalStorage from '@/hooks/useLocalStorage';
 import React from 'react';
 
 interface PropsMarmitaContext {
-  marmitaCount: string[];
-  setMarmitaCount: React.Dispatch<React.SetStateAction<string[]>>;
+  marmitaStorage: Marmita;
+  setMarmitaStorage: React.Dispatch<React.SetStateAction<Marmita>>;
+  bagStorage: Marmita;
+  setBagStorage: React.Dispatch<React.SetStateAction<Marmita>>;
+
 }
 
 const defaultContext = {
-  marmitaCount: [],
-  setMarmitaCount: () => []
+  marmitaStorage: {},
+  setMarmitaStorage: () => ({}),
+  bagStorage: {},
+  setBagStorage: () => ({})
 }
 
 export const MarmitaContext = React.createContext<PropsMarmitaContext>(defaultContext);
 
-const MarmitaProvider = ({children}:{children:React.ReactNode;}) => {
-  const [marmitaCount, setMarmitaCount] = React.useState<string[]>();
+const MarmitaProvider = ({children}:{children:React.ReactNode;}) => {  
+  const [marmitaStorage, setMarmitaStorage] = useLocalStorage<Marmita>('marmita', {});
+  const [bagStorage, setBagStorage] = useLocalStorage<Marmita>('bag', {});
   return (
     <MarmitaContext.Provider value={{
-      marmitaCount:marmitaCount as string[],
-      setMarmitaCount: setMarmitaCount as React.Dispatch<React.SetStateAction<string[]>>
+      marmitaStorage: marmitaStorage as Marmita,
+      setMarmitaStorage: setMarmitaStorage as React.Dispatch<React.SetStateAction<Marmita>>,
+      bagStorage: bagStorage as Marmita,
+      setBagStorage: setBagStorage as React.Dispatch<React.SetStateAction<Marmita>>
     }}>
       {children}
     </MarmitaContext.Provider>

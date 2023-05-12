@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ContainerButton = styled.div`
+  display: flex;
+  justify-content: flex-end;
   button {
     background-color: ${props => props.theme.colors.quaternaryColor};
     padding: 0px 10px;
@@ -17,14 +19,12 @@ const ContainerButton = styled.div`
   }
   .status {
     position: absolute;
-    right: 5px;
-    width: 100%;
     top: -20px;
-    align-self: flex-end;
     font-size: ${props => props.theme.font.size.medium};
     font-family: ${props => props.theme.font.family};
     text-align: right;
     text-shadow: 1px 1px 5px ${props => props.theme.colors.dark};
+    width: 270px;
   }
   .error {
     color: ${props => props.theme.colors.error};
@@ -35,7 +35,7 @@ const ContainerButton = styled.div`
 `;
 
 interface PropsButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  label: string;
+  label?: string;
   statusSubmit?: StatusSubmit;
   setStatusSubmit?: React.Dispatch<React.SetStateAction<StatusSubmit>>;
 }
@@ -64,7 +64,7 @@ const Button = ({label, statusSubmit, setStatusSubmit, className, ...props}:Prop
     <ContainerButton className={className}>
       {statusSubmit?.status && <h6 className={`status ${statusSubmit.status}`}>{statusSubmit.msg}</h6>}
       <button style={{backgroundColor:handleBg()}} {...props}>
-        {label}
+        {statusSubmit?.label ? statusSubmit.label : label}
       </button>
     </ContainerButton>
   )

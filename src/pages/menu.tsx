@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 import { getProducts } from '@/services/firebase';
-import useLocalStorage from '@/hooks/useLocalStorage';
 import { MarmitaContext } from '@/contexts/MarmitaContext';
 
 import Products from '../components/Products';
 import SubNavBar from '@/components/SubNavBar';
 import Button from '@/components/Button';
 import Marmita from '@/components/Marmita';
+import getPortions from '@/Helpers/getPortions';
 
 const ButtonDiv = styled.div`
   position: absolute;
@@ -27,30 +27,70 @@ const ButtonDiv = styled.div`
   }
 `;
 
+const ButtonDivFinish = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  .finishButton {
+    justify-content: center;
+    position: relative;
+    margin-top: 20px;
+    h6 {
+    text-align: center;
+    }
+  }
+`;
+
 const Menu = () => {
   const {query, push} = useRouter();
   const [menu, setMenu] = React.useState<Menu>();
-  const [marmita, setMarmita] = useLocalStorage<Marmita>('marmita', {});
-  const {marmitaCount, setMarmitaCount} = React.useContext(MarmitaContext);
+  const {marmitaStorage, setMarmitaStorage, bagStorage, setBagStorage} = React.useContext(MarmitaContext);
+  const [marmitaPortions, setMarmitaPortions] = React.useState<string[]>();
+  const [statusSubmit, setStatusSubmit] = React.useState<StatusSubmit>({
+    label: 'Concluir Marmita',
+    status: null,
+    msg: null
+  });
+
+  function finishMarmita() {
+    if(getPortions(marmitaStorage).length>2) {
+      setBagStorage({
+        ...bagStorage,
+        [Date.now()]: getPortions(marmitaStorage)
+      });
+      setMarmitaStorage({});
+      setMarmitaPortions([]);
+      push('/entrega');
+      console.log('mandou')
+    } else {
+      console.log('não mandou')
+      setStatusSubmit({
+        label: 'Concluir Marmita',
+        status: 'error',
+        msg: 'Escolha pelo menos 3 opções'
+      })
+      return;
+    }
+  }
 
   React.useEffect(() => {
     getProducts('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>);
   },[]);
 
   React.useEffect(() => {
-    if(marmita) {
+    if(marmitaStorage) {
       let portionsArray:string[] = [];
-      Object.keys(marmita).forEach(category =>
-        marmita[category].forEach(portion =>
+      Object.keys(marmitaStorage).forEach(category =>
+        marmitaStorage[category].forEach(portion =>
           portionsArray = [
             ...portionsArray,
             portion
           ]
         )
       );
-      setMarmitaCount(portionsArray);
+      setMarmitaPortions(portionsArray);
     }
-  },[marmita]);
+  },[marmitaStorage]);
 
   return (
     <div className='page animeleft'>
@@ -58,7 +98,7 @@ const Menu = () => {
         categories={Object.keys(menu?.products)}
         path={query.categoria as string}
       />}
-      {query.categoria && ((marmitaCount?.length as number) > 2) && 
+      {query.categoria && ((marmitaPortions?.length as number) > 2) && 
         <ButtonDiv>
           <Button
             label='Concluir Marmita'
@@ -67,7 +107,7 @@ const Menu = () => {
           />
         </ButtonDiv>
       }
-      {query.categoria===undefined && menu && !marmitaCount?.length && 
+      {query.categoria===undefined && menu && !marmitaPortions?.length && 
         <div className='wrapper'>
           <h1>{menu.title}</h1>
           <p>{menu.description1}</p>
@@ -77,20 +117,24 @@ const Menu = () => {
           />
         </div>
       }
-      {query.categoria===undefined && marmitaCount?.length &&
+      {query.categoria===undefined && marmitaPortions?.length &&
         <div className='container'>
           <div className="envelope animeLeft">
             <div className="wrapper">
-              <Button
-                label='Concluir Marmita'
-                onClick={() => push('/entrega')}
-              />
-              <h1>Ou</h1>
+              <ButtonDivFinish>
+                <Button
+                  label={statusSubmit.label}
+                  onClick={finishMarmita}
+                  statusSubmit={statusSubmit} setStatusSubmit={setStatusSubmit}
+                  className='finishButton'
+                />
+              </ButtonDivFinish>
+              <h3>ou</h3>
               <Button
                 label='Continuar Montando'
                 onClick={() => push('/menu?categoria=bases')}
               />
-              <Marmita menu={menu as Menu} marmita={marmita} setMarmita={setMarmita} />
+              <Marmita menu={menu as Menu} marmita={marmitaStorage} setMarmita={setMarmitaStorage} />
             </div>
           </div>
         </div>
@@ -99,7 +143,7 @@ const Menu = () => {
         <Products
           menu={menu?.products as MenuProducts}
           category={`${query.categoria}`}
-          marmita={marmita} setMarmita={setMarmita}
+          marmita={marmitaStorage} setMarmita={setMarmitaStorage}
         />
       }
     </div>
