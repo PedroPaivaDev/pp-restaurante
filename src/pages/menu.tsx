@@ -9,7 +9,7 @@ import Products from '../components/Products';
 import SubNavBar from '@/components/SubNavBar';
 import Button from '@/components/Button';
 import Marmita from '@/components/Marmita';
-import getPortions from '@/Helpers/getPortions';
+import getPortions from '@/helpers/getPortions';
 
 const ButtonDiv = styled.div`
   position: absolute;
@@ -98,7 +98,7 @@ const Menu = () => {
         categories={Object.keys(menu?.products)}
         path={query.categoria as string}
       />}
-      {query.categoria && ((marmitaPortions?.length as number) > 2) && 
+      {query.categoria && (marmitaPortions && marmitaPortions?.length>2) && 
         <ButtonDiv>
           <Button
             label='Concluir Marmita'
@@ -117,7 +117,7 @@ const Menu = () => {
           />
         </div>
       }
-      {query.categoria===undefined && marmitaPortions?.length &&
+      {query.categoria===undefined && (marmitaPortions && marmitaPortions.length>=1) &&
         <div className='container'>
           <div className="envelope animeLeft">
             <div className="wrapper">
@@ -134,7 +134,10 @@ const Menu = () => {
                 label='Continuar Montando'
                 onClick={() => push('/menu?categoria=bases')}
               />
-              <Marmita menu={menu as Menu} marmita={marmitaStorage} setMarmita={setMarmitaStorage} />
+              <Marmita
+                menu={menu as Menu}
+                marmita={marmitaStorage} setMarmita={setMarmitaStorage}
+              />
             </div>
           </div>
         </div>

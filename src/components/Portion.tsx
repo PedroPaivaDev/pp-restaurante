@@ -41,7 +41,7 @@ const DivImage = styled.div<BgProps>`
 interface PropsPortion {
   ingredient: Portion;
   marmita: Marmita;
-  setMarmita: React.Dispatch<React.SetStateAction<{[key:string]: string[]}>>;
+  setMarmita: React.Dispatch<React.SetStateAction<Marmita>>;
 }
 const Portion = ({ingredient, marmita, setMarmita}:PropsPortion) => {
   const [statusSubmit, setStatusSubmit] = React.useState<StatusSubmit>({
