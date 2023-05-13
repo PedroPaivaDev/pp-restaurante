@@ -6,8 +6,8 @@ import Portion from '@/components/Portion';
 interface PropsProducts {
   menu:MenuProducts;
   category:string;
-  marmita: Marmita;
-  setMarmita: React.Dispatch<React.SetStateAction<Marmita>>;
+  marmita: ObjectWithStringArrays;
+  setMarmita: React.Dispatch<React.SetStateAction<ObjectWithStringArrays>>;
 }
 const Products = ({menu, category, marmita, setMarmita}:PropsProducts) => {
   return (

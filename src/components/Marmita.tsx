@@ -4,8 +4,8 @@ import Portion from './Portion';
 
 interface PropsMarmita {
   menu: Menu;
-  marmita: Marmita;
-  setMarmita: React.Dispatch<React.SetStateAction<Marmita>>;
+  marmita: ObjectWithStringArrays;
+  setMarmita: React.Dispatch<React.SetStateAction<ObjectWithStringArrays>>;
 }
 const Marmita = ({menu, marmita, setMarmita}: PropsMarmita) => {
 

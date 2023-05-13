@@ -44,7 +44,7 @@ interface StatusSubmit {
   msg: string | null;
 }
 
-interface Marmita {
+interface ObjectWithStringArrays {
   [key: string]: string[];
 }
 

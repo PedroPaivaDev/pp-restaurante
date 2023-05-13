@@ -4,12 +4,12 @@ import { useRouter } from 'next/router';
 
 import { getProducts } from '@/services/firebase';
 import { MarmitaContext } from '@/contexts/MarmitaContext';
+import getPortions from '@/helper/getPortions';
 
 import Products from '../components/Products';
 import SubNavBar from '@/components/SubNavBar';
 import Button from '@/components/Button';
 import Marmita from '@/components/Marmita';
-import getPortions from '@/helpers/getPortions';
 
 const ButtonDiv = styled.div`
   position: absolute;
@@ -60,7 +60,7 @@ const Menu = () => {
       });
       setMarmitaStorage({});
       setMarmitaPortions([]);
-      push('/entrega');
+      push('/entregar');
       console.log('mandou')
     } else {
       console.log('não mandou')

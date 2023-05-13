@@ -40,8 +40,8 @@ const DivImage = styled.div<BgProps>`
 
 interface PropsPortion {
   ingredient: Portion;
-  marmita: Marmita;
-  setMarmita: React.Dispatch<React.SetStateAction<Marmita>>;
+  marmita: ObjectWithStringArrays;
+  setMarmita: React.Dispatch<React.SetStateAction<ObjectWithStringArrays>>;
 }
 const Portion = ({ingredient, marmita, setMarmita}:PropsPortion) => {
   const [statusSubmit, setStatusSubmit] = React.useState<StatusSubmit>({
@@ -91,10 +91,9 @@ const Portion = ({ingredient, marmita, setMarmita}:PropsPortion) => {
           [ingredient.category]: marmita[ingredient.category].filter(id => id !== ingredient.id)
         });
       } else {
-        setMarmita({
-          ...marmita,
-          [ingredient.category]: []
-        });
+        const newMarmita = JSON.parse(JSON.stringify(marmita));
+        delete newMarmita[ingredient.category];
+        setMarmita(newMarmita);
       }
       setStatusSubmit({
         label: 'Adicionar',

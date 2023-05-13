@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { MarmitaContext } from '@/contexts/MarmitaContext';
-import getPortions from '@/helpers/getPortions';
+import getPortions from '@/helper/getPortions';
 
 const HeaderTag = styled.nav`
   position: fixed;
@@ -98,7 +98,7 @@ const Header = () => {
         <div className={`logoImg ${pathname==='/' ? 'active' : ''}`} onClick={() => push('/')}>
           <img src="/logo.png" alt="LogoPP" height='50px'/>
         </div>
-        <Link href='/entrega' className={pathname==='/entrega' ? 'active' : ''}>
+        <Link href='/entregar' className={pathname==='/entregar' ? 'active' : ''}>
           {bagCount && bagCount.length>=1 &&
             <span className='bagCount'>{bagCount.length}</span>
           }

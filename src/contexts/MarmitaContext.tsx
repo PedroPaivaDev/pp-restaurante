@@ -1,12 +1,12 @@
 import useLocalStorage from '@/hooks/useLocalStorage';
 import React from 'react';
 
-type PropsSetState = React.Dispatch<React.SetStateAction<Marmita>>;
+type PropsSetState = React.Dispatch<React.SetStateAction<ObjectWithStringArrays>>;
 
 interface PropsMarmitaContext {
-  marmitaStorage: Marmita;
+  marmitaStorage: ObjectWithStringArrays;
   setMarmitaStorage: PropsSetState;
-  bagStorage: Marmita;
+  bagStorage: ObjectWithStringArrays;
   setBagStorage: PropsSetState;
 }
 
@@ -20,13 +20,13 @@ const defaultContext = {
 export const MarmitaContext = React.createContext<PropsMarmitaContext>(defaultContext);
 
 const MarmitaProvider = ({children}:{children:React.ReactNode;}) => {  
-  const [marmitaStorage, setMarmitaStorage] = useLocalStorage<Marmita>('marmita', {});
-  const [bagStorage, setBagStorage] = useLocalStorage<Marmita>('bag', {});
+  const [marmitaStorage, setMarmitaStorage] = useLocalStorage<ObjectWithStringArrays>('marmita', {});
+  const [bagStorage, setBagStorage] = useLocalStorage<ObjectWithStringArrays>('bag', {});
   return (
     <MarmitaContext.Provider value={{
-      marmitaStorage: marmitaStorage as Marmita,
+      marmitaStorage: marmitaStorage as ObjectWithStringArrays,
       setMarmitaStorage: setMarmitaStorage as PropsSetState,
-      bagStorage: bagStorage as Marmita,
+      bagStorage: bagStorage as ObjectWithStringArrays,
       setBagStorage: setBagStorage as PropsSetState
     }}>
       {children}
