@@ -11,16 +11,16 @@ interface PropsMarmitaContext {
 
 const defaultContext = {
   marmitaStorage: {},
-  setMarmitaStorage: () => ({}),
+  setMarmitaStorage: () => null,
   bagStorage: {},
-  setBagStorage: () => ({})
+  setBagStorage: () => null
 }
 
 export const MarmitaContext = React.createContext<PropsMarmitaContext>(defaultContext);
 
 const MarmitaProvider = ({children}:{children:React.ReactNode;}) => {  
-  const [marmitaStorage, setMarmitaStorage] = useLocalStorage<Marmita>('marmita', {});
-  const [bagStorage, setBagStorage] = useLocalStorage<Marmita>('bag', {});
+  const [marmitaStorage, setMarmitaStorage] = useLocalStorage<Marmita|string>('marmita', '');
+  const [bagStorage, setBagStorage] = useLocalStorage<Marmita|string>('bag', '');
   return (
     <MarmitaContext.Provider value={{
       marmitaStorage: marmitaStorage as Marmita,

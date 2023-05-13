@@ -74,23 +74,23 @@ const HeaderTag = styled.nav`
 const Header = () => {
   const {marmitaStorage, bagStorage} = React.useContext(MarmitaContext);
   const {pathname, push} = useRouter();
-  const [marmitaCount, setMarmitaCount] = React.useState<number>();
-  const [bagCount, setBagCount] = React.useState<number>();
+  const [marmitaCount, setMarmitaCount] = React.useState<string[]>();
+  const [bagCount, setBagCount] = React.useState<string[]>();
 
   React.useEffect(() => {
-    bagStorage && setBagCount(Object.keys(bagStorage).length)
+    bagStorage && setBagCount(Object.keys(bagStorage))
   },[bagStorage]);
 
   React.useEffect(() => {
-    marmitaStorage && setMarmitaCount(getPortions(marmitaStorage).length)
-  },[marmitaStorage])
+    marmitaStorage && setMarmitaCount(getPortions(marmitaStorage))
+  },[marmitaStorage]);
 
   return (
     <HeaderTag style={{width: '100%'}}>
       <nav>
         <Link href='/menu' className={pathname==='/menu' ? 'active' : ''}>
-          {marmitaCount && marmitaCount>0 &&
-            <span className='bagCount'>{marmitaCount}</span>
+          {marmitaCount && marmitaCount.length>0 &&
+            <span className='bagCount'>{marmitaCount.length}</span>
           }
           <object className='icon' data='/bowlfood.svg'/>
           Marmita
@@ -99,8 +99,8 @@ const Header = () => {
           <img src="/logo.png" alt="LogoPP" height='50px'/>
         </div>
         <Link href='/entrega' className={pathname==='/entrega' ? 'active' : ''}>
-          {bagCount && bagCount>0 &&
-            <span className='bagCount'>{bagCount}</span>
+          {bagCount && bagCount.length>0 &&
+            <span className='bagCount'>{bagCount.length}</span>
           }
           <object className='icon' data='/handbag.svg'/>
           Entrega
