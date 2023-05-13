@@ -56,7 +56,7 @@ const Menu = () => {
     if(getPortions(marmitaStorage).length>2) {
       setBagStorage({
         ...bagStorage,
-        [Date.now()]: getPortions(marmitaStorage)
+        [Date.now()]: marmitaStorage
       });
       setMarmitaStorage({});
       setMarmitaPortions([]);
@@ -112,7 +112,7 @@ const Menu = () => {
           <h1>{menu.title}</h1>
           <p>{menu.description1}</p>
           <Button
-            label='Montar Marmita'
+            label='Começar a Montar'
             onClick={() => push('/menu?categoria=bases')}
           />
         </div>

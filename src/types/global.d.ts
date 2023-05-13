@@ -44,11 +44,15 @@ interface StatusSubmit {
   msg: string | null;
 }
 
-interface ObjectWithStringArrays {
-  [key: string]: string[];
-}
-
 interface PropsHeader {
   marmitaCount: number;
   bag: number;
+}
+
+interface Marmita {
+  [key: string]: string[];
+}
+
+interface Bag {
+  [key: string]: Marmita;
 }
