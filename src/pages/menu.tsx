@@ -8,8 +8,9 @@ import getPortions from '@/helper/getPortions';
 
 import Products from '../components/Products';
 import SubNavBar from '@/components/SubNavBar';
-import Button from '@/components/Button';
+import Button from '@/components/Forms/Button';
 import Marmita from '@/components/Marmita';
+import InputRadio from '@/components/Forms/InputRadio';
 
 const ButtonDiv = styled.div`
   position: absolute;
@@ -41,6 +42,16 @@ const ButtonDivFinish = styled.div`
   }
 `;
 
+const SizeOptions = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  .inputsOptions {
+    display: flex;
+    gap: 20px;
+  }
+`;
+
 const Menu = () => {
   const {query, push} = useRouter();
   const [menu, setMenu] = React.useState<Menu>();
@@ -51,17 +62,30 @@ const Menu = () => {
     status: null,
     msg: null
   });
+  const [size, setSize] = React.useState<string | null>(null);
 
   function finishMarmita() {
-    if(getPortions(marmitaStorage).length>2) {
+    if(getPortions(marmitaStorage).length > 2 && size) {
       setBagStorage({
         ...bagStorage,
-        [Date.now()]: marmitaStorage
+        [Date.now()]: {
+          portions: marmitaStorage,
+          size: size,
+          id: Date.now()
+        }
       });
       setMarmitaStorage({});
       setMarmitaPortions([]);
       push('/entregar');
       console.log('mandou')
+    } else if(!size) {
+      console.log('escolher tamanho')
+      setStatusSubmit({
+        label: 'Concluir Marmita',
+        status: 'error',
+        msg: 'Escolha uma opção de tamanho'
+      })
+      return;
     } else {
       console.log('não mandou')
       setStatusSubmit({
@@ -92,6 +116,10 @@ const Menu = () => {
     }
   },[marmitaStorage]);
 
+  React.useEffect(() => {
+    console.log(size)
+  })
+
   return (
     <div className='page animeleft'>
       {menu && <SubNavBar 
@@ -101,7 +129,7 @@ const Menu = () => {
       {query.categoria && (marmitaPortions && marmitaPortions?.length>2) && 
         <ButtonDiv>
           <Button
-            label='Concluir Marmita'
+            label='Revisar Marmita'
             className='submitButton'
             onClick={() => push('/menu')}
           />
@@ -121,6 +149,17 @@ const Menu = () => {
         <div className='container'>
           <div className="envelope animeLeft">
             <div className="wrapper">
+              <SizeOptions>
+                <h2>Escolha um tamanho:</h2>
+                <div className='inputsOptions'>
+                  <InputRadio option={18} name={'Marmitex'}
+                    state={size} setState={setSize as React.Dispatch<React.SetStateAction<string | null>>}
+                  />
+                  <InputRadio option={15} name={'Marmitinha'}
+                    state={size} setState={setSize as React.Dispatch<React.SetStateAction<string | null>>}
+                  />
+                </div>
+              </SizeOptions>
               <ButtonDivFinish>
                 <Button
                   label={statusSubmit.label}

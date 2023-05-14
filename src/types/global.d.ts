@@ -53,6 +53,12 @@ interface Marmita {
   [key: string]: string[];
 }
 
+interface BagMarmita {
+  portions: Marmita;
+  id: string;
+  size: string;
+}
+
 interface Bag {
-  [key: string]: Marmita;
+  [key: string]: BagMarmita;
 }

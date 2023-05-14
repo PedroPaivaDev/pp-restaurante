@@ -1,10 +1,19 @@
 import React from 'react';
-import { MarmitaContext } from '@/contexts/MarmitaContext';
+import styled from 'styled-components';
 
-import MarmitaDetails from '@/components/MarmitaDetails';
-import Grid from '@/components/Grid';
+import { MarmitaContext } from '@/contexts/MarmitaContext';
 import { getProducts } from '@/services/firebase';
 import getNameById from '@/helper/getNameById';
+
+import MarmitaDetails from '@/components/MarmitaDetails';
+
+const DivMarmitas = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+`;
 
 const Entrega = () => {
   const {bagStorage} = React.useContext(MarmitaContext);
@@ -21,7 +30,10 @@ const Entrega = () => {
       Object.keys(bagStorage).forEach(marmita => {
         newBag = {
           ...newBag,
-          [marmita]: getNameById(bagStorage[marmita], menu.products)
+          [marmita]: {
+            ...bagStorage[marmita],
+            portions: getNameById(bagStorage[marmita].portions, menu.products),
+          }
         }        
       })
       setMarmitasWithNames(newBag)
@@ -34,15 +46,13 @@ const Entrega = () => {
         <div className='envelope'>
           <h1>Finalizar Pedido</h1>
           <div className='wrapper'>
-            <div className="row">
-              {marmitasWithNames && Object.keys(marmitasWithNames).map(marmitaId => 
-                <Grid key={marmitaId} xs={12} sm={6} md={4} lg={3}>
-                  <MarmitaDetails
-                    marmita={marmitasWithNames[marmitaId]}
-                  />
-                </Grid>
+            <DivMarmitas>
+              {marmitasWithNames && Object.keys(marmitasWithNames).map(marmitaId =>
+                <MarmitaDetails key={marmitaId}
+                  marmita={marmitasWithNames[marmitaId]} id={marmitaId}
+                />
               )}
-            </div>
+            </DivMarmitas>
           </div>
         </div>
       </div>
