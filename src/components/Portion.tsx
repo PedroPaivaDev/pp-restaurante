@@ -65,7 +65,7 @@ const Portion = ({ingredient, marmita, setMarmita}:PropsPortion) => {
 
   function handleClick() {
     if(statusSubmit.label==='Adicionar') {
-      if(marmita[ingredient.category]) {
+      if(marmita[ingredient.category] && marmita.carnes.length < 2) {
         setMarmita({
           ...marmita,
           [ingredient.category]: [
@@ -73,6 +73,13 @@ const Portion = ({ingredient, marmita, setMarmita}:PropsPortion) => {
             ingredient.id
           ]
         });
+      } else if(marmita.carnes.length === 2) {
+        setStatusSubmit({
+          label: 'Adicionar',
+          status: 'error',
+          msg: 'Você já escolheu duas carnes'
+        })
+        return;
       } else {
         setMarmita({
           ...marmita,

@@ -45,7 +45,7 @@ const ButtonDivFinish = styled.div`
 const SizeOptions = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 25px;
   .inputsOptions {
     display: flex;
     gap: 20px;
@@ -91,7 +91,7 @@ const Menu = () => {
       setStatusSubmit({
         label: 'Concluir Marmita',
         status: 'error',
-        msg: 'Escolha pelo menos 3 opções'
+        msg: 'Escolha pelo menos 3 ingredientes'
       })
       return;
     }
@@ -115,10 +115,6 @@ const Menu = () => {
       setMarmitaPortions(portionsArray);
     }
   },[marmitaStorage]);
-
-  React.useEffect(() => {
-    console.log(size)
-  })
 
   return (
     <div className='page animeleft'>

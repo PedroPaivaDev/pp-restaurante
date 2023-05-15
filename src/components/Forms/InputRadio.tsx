@@ -2,19 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 
 const DivInputRadio = styled.div`
-  height: 50px;
   & label {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
-    opacity: 0.5;
+    opacity: 0.4;
     background-color: ${props => props.theme.colors.primaryColor};
     padding: 5px 10px;
     min-width: 110px;
     border-radius: 10px;
     cursor: pointer;
     transition: 0.3s;
+  }
+
+  & input {
+    display: none;
   }
 
   & label span {
