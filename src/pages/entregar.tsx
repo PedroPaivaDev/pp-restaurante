@@ -16,7 +16,7 @@ const DivMarmitas = styled.div`
 `;
 
 const Entrega = () => {
-  const {bagStorage} = React.useContext(MarmitaContext);
+  const {bagStorage, setBagStorage} = React.useContext(MarmitaContext);
   const [marmitasWithNames, setMarmitasWithNames] = React.useState<Bag>();
   const [menu, setMenu] = React.useState<Menu>();
 
@@ -45,11 +45,13 @@ const Entrega = () => {
       <div className='container'>
         <div className='envelope'>
           <h1>Finalizar Pedido</h1>
+          <p>{`Confira com atenção todos os itens, preencha seu endereço de entrega e clique no botão "enviar" ao final.`}</p>
           <div className='wrapper'>
             <DivMarmitas>
               {marmitasWithNames && Object.keys(marmitasWithNames).map(marmitaId =>
                 <MarmitaDetails key={marmitaId}
                   marmita={marmitasWithNames[marmitaId]} id={marmitaId}
+                  bag={bagStorage} setBag={setBagStorage}
                 />
               )}
             </DivMarmitas>

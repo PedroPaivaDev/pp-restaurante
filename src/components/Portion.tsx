@@ -61,11 +61,28 @@ const Portion = ({ingredient, marmita, setMarmita}:PropsPortion) => {
         });
       }
     }
-  },[marmita])
+  },[marmita]);
+
+  function verifyTwoMeats() {
+    if(ingredient.category==='carnes') {
+      if(marmita.carnes) {
+        if(marmita.carnes.length<2) {
+          return true
+        } else {
+          setStatusSubmit({
+            label: 'Adicionar',
+            status: 'error',
+            msg: 'Você já escolheu duas carnes'
+          })
+          return;
+        }
+      } else return true;
+    } else return true;
+  }
 
   function handleClick() {
-    if(statusSubmit.label==='Adicionar') {
-      if(marmita[ingredient.category] && marmita.carnes.length < 2) {
+    if(statusSubmit.label==='Adicionar' && verifyTwoMeats()) {
+      if(marmita[ingredient.category]) {
         setMarmita({
           ...marmita,
           [ingredient.category]: [
@@ -73,13 +90,6 @@ const Portion = ({ingredient, marmita, setMarmita}:PropsPortion) => {
             ingredient.id
           ]
         });
-      } else if(marmita.carnes.length === 2) {
-        setStatusSubmit({
-          label: 'Adicionar',
-          status: 'error',
-          msg: 'Você já escolheu duas carnes'
-        })
-        return;
       } else {
         setMarmita({
           ...marmita,

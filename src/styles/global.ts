@@ -203,14 +203,14 @@ const GlobalStyles: GlobalStyleComponent<
     }
   }
 
-  @media (max-width: 21rem), (max-height: 21rem) {
+  /* @media (max-width: 21rem), (max-height: 21rem) {
     p, label, input, select, option, span, b {
       font-size: ${props => props.theme.font.size.xsmall};
     }
     h1, h2, h3, h4 {
       font-size: ${props => props.theme.font.size.medium};
     }
-  }
+  } */
 
   /* teste slider --------------------*/
   body.paused { /* propriedades para impedir a seleção de textos durante o pause do slide */
