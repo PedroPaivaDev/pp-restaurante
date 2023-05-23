@@ -51,10 +51,10 @@ const Portion = ({ingredient, marmita, setMarmita}:PropsPortion) => {
   });
 
   React.useEffect(() => {
-    if(marmita) {
-      const verifyMarmita = Object.keys(marmita).includes(ingredient.category);      
+    if(marmita.portions) {
+      const verifyMarmita = Object.keys(marmita.portions).includes(ingredient.category);
       if(verifyMarmita) {
-        const verifyPortion = marmita[ingredient.category].includes(ingredient.id);     
+        const verifyPortion = marmita.portions[ingredient.category].includes(ingredient.id);     
         verifyPortion && setStatusSubmit({
           ...statusSubmit,
           label: 'Remover'
@@ -65,8 +65,8 @@ const Portion = ({ingredient, marmita, setMarmita}:PropsPortion) => {
 
   function verifyTwoMeats() {
     if(ingredient.category==='carnes') {
-      if(marmita.carnes) {
-        if(marmita.carnes.length<2) {
+      if(marmita.portions?.carnes) {
+        if(marmita.portions.carnes.length<2) {
           return true
         } else {
           setStatusSubmit({
@@ -82,18 +82,24 @@ const Portion = ({ingredient, marmita, setMarmita}:PropsPortion) => {
 
   function handleClick() {
     if(statusSubmit.label==='Adicionar' && verifyTwoMeats()) {
-      if(marmita[ingredient.category]) {
+      if(marmita.portions && marmita.portions[ingredient.category]) {
         setMarmita({
           ...marmita,
-          [ingredient.category]: [
-            ...marmita[ingredient.category],
-            ingredient.id
-          ]
+          portions: {
+            ...marmita.portions,
+            [ingredient.category]: [
+              ...marmita.portions[ingredient.category],
+              ingredient.id
+            ]
+          }
         });
       } else {
         setMarmita({
           ...marmita,
-          [ingredient.category]: [ingredient.id]
+          portions: {
+            ...marmita.portions,
+            [ingredient.category]: [ingredient.id]
+          }
         });
       }
       setStatusSubmit({
@@ -102,14 +108,17 @@ const Portion = ({ingredient, marmita, setMarmita}:PropsPortion) => {
         msg: 'Adicionado com sucesso!'
       })
     } else if(statusSubmit.label==='Remover') {
-      if(marmita[ingredient.category].length>1) {
+      if(marmita.portions && marmita.portions[ingredient.category].length>1) {
         setMarmita({
           ...marmita,
-          [ingredient.category]: marmita[ingredient.category].filter(id => id !== ingredient.id)
+          portions: {
+            ...marmita.portions,
+            [ingredient.category]: marmita.portions[ingredient.category].filter(id => id !== ingredient.id)
+          }
         });
       } else {
-        const newMarmita = JSON.parse(JSON.stringify(marmita));
-        delete newMarmita[ingredient.category];
+        const newMarmita:Marmita = JSON.parse(JSON.stringify(marmita));
+        newMarmita.portions && delete newMarmita.portions[ingredient.category];
         setMarmita(newMarmita);
       }
       setStatusSubmit({

@@ -16,8 +16,8 @@ const Marmita = ({menu, marmita, setMarmita}: PropsMarmita) => {
 
   return (
     <div className='row'>
-      {marmita && menu && Object.keys(marmita).map(category =>
-        marmita[category].map(portionId =>
+      {marmita.portions && menu && Object.keys(marmita.portions).map(category =>
+        marmita.portions && marmita.portions[category].map(portionId =>
           <Grid xs={12} sm={6} md={4} lg={3} key={portionId}>
             <Portion
               ingredient={menu?.products[category].products[splitId(portionId)[0]].products[portionId] as Portion}

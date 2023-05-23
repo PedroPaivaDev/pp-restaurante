@@ -1,6 +1,6 @@
-export default function getNameById(marmita:Marmita, menuProducts:MenuProducts) {
+export default function getNameById(marmita:MarmitaPortions, menuProducts:MenuProducts) {
 
-  let newMarmita:Marmita = {};
+  let newMarmita:MarmitaPortions = {};
 
   Object.keys(marmita).forEach(category => {
     marmita[category].forEach(portionId => {

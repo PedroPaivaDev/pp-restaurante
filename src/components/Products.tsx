@@ -20,7 +20,7 @@ const Products = ({menu, category, marmita, setMarmita}:PropsProducts) => {
             <h2>{menu[category].products[type].title}</h2>
             <p>{menu[category].products[type].description}</p>
             <div className='row'>
-              { menu[category].products[type].products &&
+              {menu[category].products[type].products &&
                 Object.keys(menu[category].products[type].products).map((item) => (
                   <Grid
                     key={menu[category].products[type].products[item].id}

@@ -49,16 +49,17 @@ interface PropsHeader {
   bag: number;
 }
 
-interface Marmita {
+interface MarmitaPortions {
   [key: string]: string[];
 }
 
-interface BagMarmita {
-  portions: Marmita;
-  id: string;
-  size: string;
+interface Marmita {
+  id?: string;
+  size?: string;
+  portions?: MarmitaPortions;
+  portionsId?: MarmitaPortions
 }
 
 interface Bag {
-  [key: string]: BagMarmita;
+  [key: string]: Marmita;
 }

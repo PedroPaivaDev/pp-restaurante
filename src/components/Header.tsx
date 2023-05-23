@@ -78,11 +78,19 @@ const Header = () => {
   const [bagCount, setBagCount] = React.useState<string[]>();
 
   React.useEffect(() => {
-    bagStorage && setBagCount(Object.keys(bagStorage))
+    if(bagStorage) {
+      setBagCount(Object.keys(bagStorage))
+    } else {
+      setBagCount([])
+    }
   },[bagStorage]);
 
   React.useEffect(() => {
-    marmitaStorage && setMarmitaCount(getPortions(marmitaStorage))
+    if(marmitaStorage.portions) {
+      setMarmitaCount(getPortions(marmitaStorage.portions))
+    } else {
+      setMarmitaCount([])
+    }
   },[marmitaStorage]);
 
   return (

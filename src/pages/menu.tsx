@@ -65,11 +65,11 @@ const Menu = () => {
   const [size, setSize] = React.useState<string | null>(null);
 
   function finishMarmita() {
-    if(getPortions(marmitaStorage).length > 2 && size) {
+    if(marmitaStorage.portions && getPortions(marmitaStorage.portions).length > 2 && size) {
       setBagStorage({
         ...bagStorage,
         [Date.now()]: {
-          portions: marmitaStorage,
+          portions: marmitaStorage.portions,
           size: size,
           id: Date.now()
         }
@@ -77,9 +77,7 @@ const Menu = () => {
       setMarmitaStorage({});
       setMarmitaPortions([]);
       push('/entregar');
-      console.log('mandou')
     } else if(!size) {
-      console.log('escolher tamanho')
       setStatusSubmit({
         label: 'Concluir Marmita',
         status: 'error',
@@ -87,7 +85,6 @@ const Menu = () => {
       })
       return;
     } else {
-      console.log('não mandou')
       setStatusSubmit({
         label: 'Concluir Marmita',
         status: 'error',
@@ -102,10 +99,11 @@ const Menu = () => {
   },[]);
 
   React.useEffect(() => {
-    if(marmitaStorage) {
+    if(marmitaStorage.portions) {
+      const marmitaStoragePortions = marmitaStorage.portions;
       let portionsArray:string[] = [];
-      Object.keys(marmitaStorage).forEach(category =>
-        marmitaStorage[category].forEach(portion =>
+      Object.keys(marmitaStoragePortions).forEach(category =>
+        marmitaStoragePortions[category].forEach((portion:string) =>
           portionsArray = [
             ...portionsArray,
             portion
@@ -171,7 +169,8 @@ const Menu = () => {
               />
               <Marmita
                 menu={menu as Menu}
-                marmita={marmitaStorage} setMarmita={setMarmitaStorage}
+                marmita={marmitaStorage}
+                setMarmita={setMarmitaStorage}
               />
             </div>
           </div>
@@ -181,7 +180,8 @@ const Menu = () => {
         <Products
           menu={menu?.products as MenuProducts}
           category={`${query.categoria}`}
-          marmita={marmitaStorage} setMarmita={setMarmitaStorage}
+          marmita={marmitaStorage}
+          setMarmita={setMarmitaStorage}
         />
       }
     </div>

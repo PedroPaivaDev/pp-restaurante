@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 
 import getPortions from '@/helper/getPortions';
 import Button from './Forms/Button';
+import { MarmitaContext } from '@/contexts/MarmitaContext';
+import getNameById from '@/helper/getNameById';
 
 const DivMarmitaDetails = styled.div`
   display: flex;
@@ -35,25 +37,41 @@ const DivMarmitaDetails = styled.div`
   }
 `;
 interface PropsMarmitaDetails {
-  marmita: BagMarmita;
+  marmita: Marmita;
   id: string;
   bag: Bag;
   setBag: React.Dispatch<React.SetStateAction<Bag>>;
+  setMarmitaStorage: React.Dispatch<React.SetStateAction<Marmita>>;
+  menu: Menu;
 }
-const MarmitaDetails = ({marmita, id, bag, setBag}:PropsMarmitaDetails) => {
+const OrderMarmita = ({marmita, id, bag, setBag, menu}:PropsMarmitaDetails) => {
   const {push} = useRouter();
+  const {marmitaStorage, setMarmitaStorage} = React.useContext(MarmitaContext)
+
   function handleRemove() {
     if(confirm(`Tem certeza que você deseja remover esta marmita?`)) {
       const newBag = JSON.parse(JSON.stringify(bag));
       delete newBag[id];
-      setBag({newBag});
+      setBag(newBag);
     } else return
   }
   
   function handleEdit() {
-    if(confirm(`ATENÇÃO! Você já estava montando uma marmita. Caso você queira continuar montando a marmita, clique em "Cancelar". Caso você queira descartar a marmita que estava sendo montada e editar esta, clique em "OK"`)) {
+    if(marmitaStorage.portions && Object.keys(marmitaStorage.portions).length>0) {
+      if(confirm(`ATENÇÃO! Você já estava montando uma marmita. Caso você queira continuar montando a marmita, clique em "Cancelar". Caso você queira descartar a marmita que estava sendo montada e editar esta, clique em "OK"`)) {
+        setMarmitaStorage(marmita)
+        const newBag = JSON.parse(JSON.stringify(bag));
+        delete newBag[id];
+        setBag(newBag);
+        push('/menu');
+      } else return
+    } else {
+      setMarmitaStorage(marmita)
+      const newBag:Bag = JSON.parse(JSON.stringify(bag));
+      delete newBag[id];
+      setBag(newBag);
       push('/menu');
-    } else return
+    }
   }
 
   return (
@@ -64,10 +82,15 @@ const MarmitaDetails = ({marmita, id, bag, setBag}:PropsMarmitaDetails) => {
           <Button label='Remover' onClick={handleRemove}/>
         </div>
         <span>{marmita.size}: {id.substring(4)}</span>
-        {getPortions(marmita.portions).map(item => <p key={item}>{item}</p>)}
+        {
+          marmita.portions &&
+          getPortions(getNameById(marmita.portions as MarmitaPortions, menu.products)).map(itemName => 
+            <p key={itemName}>{itemName}</p>
+          )
+        }
       </div>
     </DivMarmitaDetails>
   )
 }
 
-export default MarmitaDetails;
+export default OrderMarmita;
