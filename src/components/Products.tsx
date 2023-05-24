@@ -2,6 +2,7 @@ import React from 'react';
 
 import Grid from '@/components/Grid';
 import Portion from '@/components/Portion';
+import Arrow from './Arrow';
 
 interface PropsProducts {
   menu:MenuProducts;
@@ -12,6 +13,7 @@ interface PropsProducts {
 const Products = ({menu, category, marmita, setMarmita}:PropsProducts) => {
   return (
     <div key={category} className={`container`}>
+      <Arrow menu={menu}/>
       <div className='envelope animeLeft'>
         <h1 style={{marginTop: '40px'}}>{menu[category].title}</h1>
         <p>{menu[category].description}</p>
