@@ -34,11 +34,12 @@ interface PropsSelect {
   selectedOption: string;
   setSelectedOption: React.Dispatch<React.SetStateAction<string>>;
   label: string;
+  name: string;
+  value?: string[];
   className?: string;
-  value?: string;
 }
 
-const Select = ({initial, options, selectedOption, setSelectedOption, className, label, value}:PropsSelect) => {
+const Select = ({initial, options, selectedOption, setSelectedOption, className, label, name, value}:PropsSelect) => {
 
   function handleChange({target}:{target:HTMLSelectElement}) {
     setSelectedOption(target.value)
@@ -47,7 +48,7 @@ const Select = ({initial, options, selectedOption, setSelectedOption, className,
   return (
     <SelectContainer className={className}>
       <label htmlFor={label}>{label}</label>
-      <select id={label} value={selectedOption} onChange={handleChange} className='select'>
+      <select name={name} id={label} value={selectedOption} onChange={handleChange} className='select'>
         <option value="" disabled>{initial}</option>
         {options.map((option, index) => (
           value ?
