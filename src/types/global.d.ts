@@ -63,3 +63,7 @@ interface Marmita {
 interface Bag {
   [key: string]: Marmita;
 }
+
+interface OptionsObject {
+  [key: string]: number | null;
+}

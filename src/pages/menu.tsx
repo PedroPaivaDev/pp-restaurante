@@ -62,26 +62,26 @@ const Menu = () => {
     status: null,
     msg: null
   });
-  const [size, setSize] = React.useState<{[key:string]: number | null}>({});
+  const [size, setSize] = React.useState<OptionsObject|null>(null);
 
   function finishMarmita() {
     if(
       marmitaStorage.portions &&
       getPortions(marmitaStorage.portions).length > 2 &&
-      Object.keys(size).length > 0
+      size
     ) {
       setBagStorage({
         ...bagStorage,
         [Date.now()]: {
           portions: marmitaStorage.portions,
-          size: Object.keys(size),
+          size: Object.keys(size as object),
           id: Date.now()
         }
       });
       setMarmitaStorage({});
       setMarmitaPortions([]);
       push('/entregar');
-    } else if(Object.keys(size).length < 1) {
+    } else if(!size) {
       setStatusSubmit({
         label: 'Concluir Marmita',
         status: 'error',

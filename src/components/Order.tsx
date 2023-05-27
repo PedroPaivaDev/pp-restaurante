@@ -20,11 +20,28 @@ const OrderContainer = styled.div`
   }
 `;
 
-const Order = () => {
+const Order = () => {  
   const client = useForm('client', '');
   const contact = useForm('contact', '', 'contact');
-  const [payment, setPayment] = useLocalStorage<string>('payment', '');
+  const [payment, setPayment] = useLocalStorage<OptionsObject|null>('payment', {});
+  const [installmentCard, setInstallmentCard] = React.useState<OptionsObject|null>({});
   const [delivery, setDelivery] = useLocalStorage<string[]>('delivery', []);
+
+  const paymentsForms = {
+    "Transferência": null,
+    "Pix": null,
+    "Cartão de Débito": null,
+    "Dinheiro": null,
+    "Cartão de Crédito": null
+  }
+
+  const installmentCardPayment = {
+    "1x": 0,
+    "2x": 0.065,
+    "3x": 0.073,
+    "4x": 0.08,
+    "5x": 0.087
+  }
 
   return (
     <OrderContainer>
@@ -37,12 +54,21 @@ const Order = () => {
           placeholder={"(37) 9 9999-9999"} {...contact}
         />
         <Select
+          name="payment"
           label="Pagamento:"
           initial="Escolha a forma"
-          options={["Transferência", "Pix", "Cartão de Débito", "Dinheiro", "Cartão de Crédito (parcelado)"]}
-          name="payment"
+          options={paymentsForms}
           selectedOption={payment} setSelectedOption={setPayment}
         />
+        {payment && Object.keys(payment)[0]==="Cartão de Crédito" &&
+          <Select
+            name='installment'
+            label={"Parcelas:"}
+            initial="Selecione aqui"
+            options={installmentCardPayment}
+            selectedOption={installmentCard} setSelectedOption={setInstallmentCard}
+          />
+        }
       </form>
       <div className='payment'>
         <Checkbox

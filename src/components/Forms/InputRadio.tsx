@@ -35,9 +35,9 @@ const DivInputRadio = styled.div`
 `;
 
 interface PropsInputRadio {
-  options: {[key:string]: number | null};
-  state: {[key:string]: number | null};
-  setState: React.Dispatch<React.SetStateAction<{[key:string]: number | null}>>;
+  options: OptionsObject | null;
+  state: OptionsObject | null;
+  setState: React.Dispatch<React.SetStateAction<OptionsObject | null>>;
   name: string;
   className?: string;
 }
@@ -51,24 +51,16 @@ function InputRadio({
 }:PropsInputRadio) {
 
   function handleChecked(option:string) {
-    if(Object.keys(state).includes(option)) {
+    if(state && Object.keys(state).includes(option)) {
       return true;
     } else {
       return false
     }
   }
 
-  function getValue(option: string | null): number | null {
-    if(option) {
-      return options[option];
-    } else {
-      return null;
-    }
-  }
-
   return (
     <DivInputRadio className={className}>
-      {Object.keys(options).map(option => 
+      {options && Object.keys(options).map(option => 
         <div key={option} className='inputGroup'>
           <input
             id={`${name + option}`}
@@ -80,8 +72,8 @@ function InputRadio({
           />
           <label htmlFor={`${name + option}`}>
             <span>{option}</span>
-            {getValue(option) && <span className='price'>
-              R${getValue(option)?.toFixed(2)}
+            {options[option] && <span className='price'>
+              R${options[option]?.toFixed(2)}
             </span>}
           </label>
         </div>

@@ -30,29 +30,39 @@ const SelectContainer = styled.div`
 
 interface PropsSelect {
   initial: string;
-  options: string[];
-  selectedOption: string;
-  setSelectedOption: React.Dispatch<React.SetStateAction<string>>;
+  options: OptionsObject | null;
+  selectedOption: OptionsObject | null;
+  setSelectedOption: React.Dispatch<React.SetStateAction<OptionsObject | null>>;
   label: string;
   name: string;
-  value?: string[];
   className?: string;
 }
 
-const Select = ({initial, options, selectedOption, setSelectedOption, className, label, name, value, ...props}:PropsSelect) => {
+const Select = ({initial, options, selectedOption, setSelectedOption, className, label, name, ...props}:PropsSelect) => {
+
+  function handleValue() {
+    if(selectedOption && Object.keys(selectedOption).length > 0) {
+      return Object.keys(selectedOption);
+    } else {
+      return '';
+    }
+  }
 
   function handleChange({target}:{target:HTMLSelectElement}) {
-    setSelectedOption(target.value)
+    options && setSelectedOption({[target.value]: options[target.value]})
   }
 
   return (
     <SelectContainer className={className}>
       <label htmlFor={label}>{label}</label>
-      <select name={name} id={label} value={selectedOption} onChange={handleChange} className='select' {...props}>
+      <select
+        name={name} id={label}
+        value={handleValue()}
+        onChange={handleChange}
+        className='select' {...props}
+      >
         <option value="" disabled>{initial}</option>
-        {options.map((option, index) => (
-          value ?
-          <option key={option} value={value[index]}>{option}</option> :
+        {options && Object.keys(options).map((option) => (
           <option key={option} value={option}>{option}</option>
         ))}
       </select>
