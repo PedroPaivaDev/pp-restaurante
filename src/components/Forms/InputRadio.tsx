@@ -24,7 +24,7 @@ const DivInputRadio = styled.div`
     color: ${props => props.theme.colors.tertiaryColor};
   }
 
-  & label .option {
+  & label .price {
     position: absolute;
     top: -20px;
   }
@@ -35,32 +35,57 @@ const DivInputRadio = styled.div`
 `;
 
 interface PropsInputRadio {
-  option?: number;
-  state: string | null;
-  setState: React.Dispatch<React.SetStateAction<string | null>>;
+  options: {[key:string]: number | null};
+  state: {[key:string]: number | null};
+  setState: React.Dispatch<React.SetStateAction<{[key:string]: number | null}>>;
   name: string;
   className?: string;
 }
 
+/**
+* @param options deve ser um objeto, que cada chave é uma string, que pode ou não ter um valor (preço) definido.
+* @returns um input do tipo 'radio' e um span com o valor da opção, caso esse valor seja fornecido no objeto. O valor armazenado no estado será um objeto com a chave(opção) e valor(preço).
+*/
 function InputRadio({
-  option, state, setState, name, className, ...props
+  options, state, setState, name, className, ...props
 }:PropsInputRadio) {
+
+  function handleChecked(option:string) {
+    if(Object.keys(state).includes(option)) {
+      return true;
+    } else {
+      return false
+    }
+  }
+
+  function getValue(option: string | null): number | null {
+    if(option) {
+      return options[option];
+    } else {
+      return null;
+    }
+  }
+
   return (
-    <DivInputRadio>
-      <input
-        id={`${name + option}`}
-        value={name}
-        checked={state === name}
-        onChange={(event:React.ChangeEvent<HTMLInputElement>) =>
-          setState(event.target.value)
-        }
-        type="radio"
-        {...props}
-      />
-      <label htmlFor={`${name + option}`}>
-        <span className={className}>{name}</span>
-        {option && <span className='option'>R${option.toFixed(2)}</span>}
-      </label>
+    <DivInputRadio className={className}>
+      {Object.keys(options).map(option => 
+        <div key={option} className='inputGroup'>
+          <input
+            id={`${name + option}`}
+            value={option}
+            checked={handleChecked(option)}
+            onChange={({target}) => setState({[target.value]: options[target.value]})}
+            type="radio"
+            {...props}
+          />
+          <label htmlFor={`${name + option}`}>
+            <span>{option}</span>
+            {getValue(option) && <span className='price'>
+              R${getValue(option)?.toFixed(2)}
+            </span>}
+          </label>
+        </div>
+      )}
     </DivInputRadio>
   )
 }

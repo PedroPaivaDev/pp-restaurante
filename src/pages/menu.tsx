@@ -62,22 +62,26 @@ const Menu = () => {
     status: null,
     msg: null
   });
-  const [size, setSize] = React.useState<string | null>(null);
+  const [size, setSize] = React.useState<{[key:string]: number | null}>({});
 
   function finishMarmita() {
-    if(marmitaStorage.portions && getPortions(marmitaStorage.portions).length > 2 && size) {
+    if(
+      marmitaStorage.portions &&
+      getPortions(marmitaStorage.portions).length > 2 &&
+      Object.keys(size).length > 0
+    ) {
       setBagStorage({
         ...bagStorage,
         [Date.now()]: {
           portions: marmitaStorage.portions,
-          size: size,
+          size: Object.keys(size),
           id: Date.now()
         }
       });
       setMarmitaStorage({});
       setMarmitaPortions([]);
       push('/entregar');
-    } else if(!size) {
+    } else if(Object.keys(size).length < 1) {
       setStatusSubmit({
         label: 'Concluir Marmita',
         status: 'error',
@@ -92,6 +96,11 @@ const Menu = () => {
       })
       return;
     }
+  }
+
+  const MarmitaSizes = {
+    Marmitex: 18,
+    Marmitinha: 15
   }
 
   React.useEffect(() => {
@@ -145,14 +154,10 @@ const Menu = () => {
             <div className="wrapper">
               <SizeOptions>
                 <h2>Escolha um tamanho:</h2>
-                <div className='inputsOptions'>
-                  <InputRadio option={18} name={'Marmitex'}
-                    state={size} setState={setSize as React.Dispatch<React.SetStateAction<string | null>>}
-                  />
-                  <InputRadio option={15} name={'Marmitinha'}
-                    state={size} setState={setSize as React.Dispatch<React.SetStateAction<string | null>>}
-                  />
-                </div>
+                <InputRadio options={MarmitaSizes} name={'marmitaSize'}
+                  state={size} setState={setSize}
+                  className='inputsOptions'
+                />
               </SizeOptions>
               <ButtonDivFinish>
                 <Button
