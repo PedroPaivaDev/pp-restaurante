@@ -6,6 +6,7 @@ import InputText from './Forms/InputText';
 import Select from './Forms/Select';
 import styled from 'styled-components';
 import Checkbox from './Forms/Checkbox';
+import getOption from '@/helper/getOption';
 
 const OrderContainer = styled.div`
   form {
@@ -20,12 +21,18 @@ const OrderContainer = styled.div`
   }
 `;
 
-const Order = () => {  
+const Order = ({bag}:{bag:Bag}) => {  
+  const [totalPrice, setTotalPrice] = React.useState(0);
+
   const client = useForm('client', '');
   const contact = useForm('contact', '', 'contact');
-  const [payment, setPayment] = useLocalStorage<OptionsObject|null>('payment', {});
-  const [installmentCard, setInstallmentCard] = React.useState<OptionsObject|null>({});
+  const [payment, setPayment] = useLocalStorage<OptionsObject|null>('payment', null);
+  const [installmentCard, setInstallmentCard] = React.useState<OptionsObject|null>(null);
   const [delivery, setDelivery] = useLocalStorage<string[]>('delivery', []);
+  const street = useForm('street', '');
+  const number = useForm('number', '');
+  const neighborhood = useForm('neighborhood', '');
+  const reference = useForm('reference', '');
 
   const paymentsForms = {
     "Transferência": null,
@@ -42,6 +49,28 @@ const Order = () => {
     "4x": 0.08,
     "5x": 0.087
   }
+
+  function numberfyInstallment(installment:string) {
+    const split = installment.split("x");
+    return Number(split[0]);
+  }
+
+  React.useEffect(() => {
+    let sumPrices = delivery.includes("Pagar pela entrega (+R$5,00)") ? 5 : 0;
+    if(payment && installmentCard && getOption(payment)==="Cartão de Crédito") {
+      Object.keys(bag).length>0 && Object.keys(bag).forEach(marmitaId => {
+        sumPrices = sumPrices + bag[marmitaId].price;
+      })
+      setTotalPrice(
+        sumPrices + sumPrices * (installmentCard[getOption(installmentCard)] as number)
+      );
+    } else {
+      Object.keys(bag).length>0 && Object.keys(bag).forEach(marmitaId => {
+        sumPrices = sumPrices + bag[marmitaId].price;
+      })
+      setTotalPrice(sumPrices);
+    }
+  }, [bag, payment, installmentCard, delivery])
 
   return (
     <OrderContainer>
@@ -60,7 +89,7 @@ const Order = () => {
           options={paymentsForms}
           selectedOption={payment} setSelectedOption={setPayment}
         />
-        {payment && Object.keys(payment)[0]==="Cartão de Crédito" &&
+        {payment && getOption(payment)==="Cartão de Crédito" &&
           <Select
             name='installment'
             label={"Parcelas:"}
@@ -77,6 +106,28 @@ const Order = () => {
           setState={setDelivery}
           name="delivery"
         />
+        {delivery.includes("Pagar pela entrega (+R$5,00)") &&
+          <div className='deliveryAddress'>
+            <InputText label="Rua/Av:" type="text" name="street"
+              placeholder={"Informe a rua"} {...street}
+            />
+            <InputText label="Nº:" type="text" name="number"
+              placeholder={"Informe o número"} {...number}
+            />
+            <InputText label="Bairro:" type="text" name="neighborhood"
+              placeholder={"Informe o bairro"} {...neighborhood}
+            />
+            <InputText label="Ref.:" type="text" name="reference"
+              placeholder={"Ponto de referência"} {...reference}
+            />
+          </div>
+        }
+        {(installmentCard && payment && getOption(payment)==="Cartão de Crédito") ?
+          <h1 className='price'>
+            {numberfyInstallment(getOption(installmentCard))} Parcelas de <span>R${(totalPrice/numberfyInstallment(getOption(installmentCard))).toFixed(2)}</span>
+          </h1> :
+          <h1 className='price'>Preço Total: <span>R${totalPrice.toFixed(2)}</span></h1>
+        }
       </div>
     </OrderContainer>
   )

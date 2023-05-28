@@ -54,14 +54,18 @@ interface MarmitaPortions {
 }
 
 interface Marmita {
-  id?: string;
-  size?: string;
   portions?: MarmitaPortions;
-  portionsId?: MarmitaPortions
+}
+
+interface MarmitaOnBag {
+  id: string;
+  size: string;
+  portions: MarmitaPortions;
+  price: number;
 }
 
 interface Bag {
-  [key: string]: Marmita;
+  [key: string]: MarmitaOnBag;
 }
 
 interface OptionsObject {

@@ -75,7 +75,8 @@ const Menu = () => {
         [Date.now()]: {
           portions: marmitaStorage.portions,
           size: Object.keys(size as object),
-          id: Date.now()
+          price: size[Object.keys(size as object)[0]],
+          id: Date.now(),
         }
       });
       setMarmitaStorage({});

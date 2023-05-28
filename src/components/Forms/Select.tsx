@@ -42,7 +42,7 @@ const Select = ({initial, options, selectedOption, setSelectedOption, className,
 
   function handleValue() {
     if(selectedOption && Object.keys(selectedOption).length > 0) {
-      return Object.keys(selectedOption);
+      return Object.keys(selectedOption)[0];
     } else {
       return '';
     }

@@ -73,7 +73,7 @@ const Entrega = () => {
             </DivEmpty>
           }
           {bagWithMarmita &&
-            <Order/>
+            <Order bag={bagStorage}/>
           }
         </div>
       </div>

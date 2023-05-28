@@ -4,6 +4,7 @@ import {
   GlobalStyleComponent
 } from 'styled-components';
 
+// eslint-disable-next-line
 type GlobalStylesProps = any;
 
 const GlobalStyles: GlobalStyleComponent<

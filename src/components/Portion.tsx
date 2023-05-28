@@ -61,6 +61,7 @@ const Portion = ({ingredient, marmita, setMarmita}:PropsPortion) => {
         });
       }
     }
+    // eslint-disable-next-line
   },[marmita]);
 
   function verifyTwoMeats() {

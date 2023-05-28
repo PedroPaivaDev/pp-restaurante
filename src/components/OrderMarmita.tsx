@@ -9,25 +9,21 @@ import getNameById from '@/helper/getNameById';
 
 const DivMarmitaDetails = styled.div`
   display: flex;
-  gap: 10px;
-  .bgPapel {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    background: ${props => props.theme.colors.portionBg};
-    background-position: center center;
-    background-size: cover;
-    border: 2px solid ${props => props.theme.colors.primaryColor};
-    box-shadow: 0px 7px 20px 0px ${props => props.theme.colors.dark};
-    padding: 10px;  
-    width: 250px;
-    height: 100%;
-    padding: 10px 10px 10px 10px;
-    * {
-      color: ${props => props.theme.colors.primaryColor};    
-    }
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background: ${props => props.theme.colors.portionBg};
+  background-position: center center;
+  background-size: cover;
+  border: 2px solid ${props => props.theme.colors.primaryColor};
+  box-shadow: 0px 7px 20px 0px ${props => props.theme.colors.dark};
+  padding: 10px;  
+  width: 250px;
+  height: 100%;
+  padding: 10px 10px 10px 10px;
+  * {
+    color: ${props => props.theme.colors.primaryColor};    
   }
   .detailsButtons {
     display: flex;
@@ -35,9 +31,13 @@ const DivMarmitaDetails = styled.div`
     width: 100%;
     margin-bottom: 5px;
   }
+  h3 {
+    width: 100%;
+    text-align: right;
+  }
 `;
 interface PropsMarmitaDetails {
-  marmita: Marmita;
+  marmita: MarmitaOnBag;
   id: string;
   bag: Bag;
   setBag: React.Dispatch<React.SetStateAction<Bag>>;
@@ -76,19 +76,18 @@ const OrderMarmita = ({marmita, id, bag, setBag, menu}:PropsMarmitaDetails) => {
 
   return (
     <DivMarmitaDetails>
-      <div className='bgPapel'>
-        <div className='detailsButtons'>
-          <Button label='Editar' onClick={handleEdit}/>
-          <Button label='Remover' onClick={handleRemove}/>
-        </div>
-        <span>{marmita.size}: {id.substring(4)}</span>
-        {
-          marmita.portions &&
-          getPortions(getNameById(marmita.portions as MarmitaPortions, menu.products)).map(itemName => 
-            <p key={itemName}>{itemName}</p>
-          )
-        }
+      <div className='detailsButtons'>
+        <Button label='Editar' onClick={handleEdit}/>
+        <Button label='Remover' onClick={handleRemove}/>
       </div>
+      <span>{marmita.size}: {id.substring(4)}</span>
+      {
+        marmita.portions &&
+        getPortions(getNameById(marmita.portions as MarmitaPortions, menu.products)).map(itemName => 
+          <p key={itemName}>{itemName}</p>
+        )
+      }
+      <h3>R${marmita.price.toFixed(2)}</h3>
     </DivMarmitaDetails>
   )
 }

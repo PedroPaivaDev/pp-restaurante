@@ -104,6 +104,7 @@ const Header = () => {
           Marmita
         </Link>
         <div className={`logoImg ${pathname==='/' ? 'active' : ''}`} onClick={() => push('/')}>
+          {/* eslint-disable-next-line */}
           <img src="/logo.png" alt="LogoPP" height='50px'/>
         </div>
         <Link href='/entregar' className={pathname==='/entregar' ? 'active' : ''}>
