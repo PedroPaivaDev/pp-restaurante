@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 import { MarmitaContext } from '@/contexts/MarmitaContext';
 import { getProducts } from '@/services/firebase';
 
 import OrderMarmita from '@/components/OrderMarmita';
-import Button from '@/components/Forms/Button';
-import { useRouter } from 'next/router';
 import Order from '@/components/Order';
 import Grid from '@/components/Grid';
+import Button from '@/components/Forms/Button';
 
 const DivEnvelope = styled.div`
   .empty {
@@ -18,12 +18,6 @@ const DivEnvelope = styled.div`
     margin-top: 20px;
     .buttonMenu {
       justify-content: center;
-    }
-  }
-  .buttonSubmit {
-    justify-content: center;
-    button {
-      background-color: ${props => props.theme.colors.sucess};
     }
   }
 `;
@@ -56,7 +50,7 @@ const Entrega = () => {
               <p>{`Confira com atenção todos os itens, preencha seu endereço de entrega e clique no botão "enviar" ao final.`}</p>
               <div className='row'>
                 {bagStorage && menu && Object.keys(bagStorage).map(marmitaId =>
-                  <Grid key={marmitaId} xs={12} sm={6} md={4} lg={3}>
+                  <Grid key={marmitaId} xs={12} sm={6} md={4} lg={4}>
                     <OrderMarmita
                       marmita={bagStorage[marmitaId]} id={marmitaId}
                       bag={bagStorage} setBag={setBagStorage}
@@ -78,7 +72,6 @@ const Entrega = () => {
           {bagWithMarmita &&
             <Order bag={bagStorage}/>
           }
-          <Button label='Enviar Pedido' className='buttonSubmit'/>
         </DivEnvelope>
       </div>
     </div>

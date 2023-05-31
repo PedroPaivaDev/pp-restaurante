@@ -1,51 +1,69 @@
 import React from 'react';
+import styled from 'styled-components';
+
 import useLocalStorage from '@/hooks/useLocalStorage';
 import useForm from '@/hooks/useForm';
+import getOption from '@/helper/getOption';
 
 import InputText from './Forms/InputText';
 import Select from './Forms/Select';
-import styled from 'styled-components';
 import Checkbox from './Forms/Checkbox';
-import getOption from '@/helper/getOption';
+import Button from './Forms/Button';
 
 const OrderContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 25px;
-  width: 100%;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  text-align: center;
-  .form, .payment, .deliveryAddress {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    gap: 25px;
-    .price {
-      font-size: 1.25rem;
-      text-align: end;
-      margin-top: 0px;
-      span {
-        font-size: 1.5rem;
-        vertical-align: baseline;
+  .form {
+    .buttonSubmit {
+      position: relative;
+      justify-content: center;
+      button {
+        background-color: ${props => props.theme.colors.sucess};
       }
     }
-  }
-  @media (max-width:640px) {
-    & {
-      flex-direction: column;
+    .formInputs {
+      display: flex;
       justify-content: center;
+      align-items: flex-start;
+      gap: 25px;
+      width: 100%;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      text-align: center;
+      .clientData, .deliveryAndPrice, .deliveryAddress {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        gap: 25px;
+        .price {
+          font-size: 1.25rem;
+          text-align: end;
+          margin-top: 0px;
+          span {
+            font-size: 1.5rem;
+            vertical-align: baseline;
+          }
+        }
+      }
     }
-    .form, .payment, .deliveryAddress {
-      justify-content: flex-end;
-      width: 280px;
+    @media (max-width:640px) {
+      .formInputs {
+        flex-direction: column;
+        align-items: center;
+      }
+      .clientData, .deliveryAndPrice, .deliveryAddress {
+        justify-content: flex-end;
+        width: 280px;
+      }
     }
   }
 `;
 
 const Order = ({bag}:{bag:Bag}) => {  
   const [totalPrice, setTotalPrice] = React.useState(0);
+  const [statusSubmit, setStatusSubmit] = React.useState<StatusSubmit>({
+    label: 'Enviar Pedido',
+    status: null,
+    msg: null
+  });
 
   const client = useForm('client', '');
   const contact = useForm('contact', '', 'contact');
@@ -78,6 +96,26 @@ const Order = ({bag}:{bag:Bag}) => {
     return Number(split[0]);
   }
 
+  function handleSubmit(event:React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const formDataEntries = Array.from(formData.entries())
+    console.log(formDataEntries)
+
+    if(client.value.length<=0 || contact.value.length<=0 || client.error || contact.error || totalPrice===0 || !payment || (getOption(payment)==="Cartão de Crédito" && !installmentCard) || (delivery && (street.value.length<=0 || number.value.length<=0 || neighborhood.value.length<=0))) {
+      setStatusSubmit({
+        label: 'Enviar Pedido',
+        status: 'error',
+        msg: 'Preencha os campos corretamente'
+      })
+      console.log('erro')
+      return;
+    } else {
+      console.log('enviado')
+    }
+
+  }
+
   React.useEffect(() => {
     let sumPrices = delivery.includes("Solicitar entrega (+R$5,00)") ? 5 : 0;
     if(payment && installmentCard && getOption(payment)==="Cartão de Crédito") {
@@ -97,61 +135,70 @@ const Order = ({bag}:{bag:Bag}) => {
 
   return (
     <OrderContainer>
-      <form className='form'>
-        <InputText
-          label="Nome:" type="text" name="client"
-          placeholder={"Digite seu nome"} {...client}
-        />
-        <InputText label="Contato:" type="text" name="contact"
-          placeholder={"(37) 9 9999-9999"} {...contact}
-        />
-        <Select
-          name="payment"
-          label="Pagamento:"
-          initial="Escolha a forma"
-          options={paymentsForms}
-          selectedOption={payment} setSelectedOption={setPayment}
-        />
-        {payment && getOption(payment)==="Cartão de Crédito" &&
-          <Select
-            name='installment'
-            label={"Parcelas:"}
-            initial="Selecione aqui"
-            options={installmentCardPayment}
-            selectedOption={installmentCard} setSelectedOption={setInstallmentCard}
-          />
-        }
-        <Checkbox
-          options={["Solicitar entrega (+R$5,00)"]}
-          state={delivery}
-          setState={setDelivery}
-          name="delivery"
-        />
-      </form>
-      <div className='payment'>
-        {delivery.includes("Solicitar entrega (+R$5,00)") &&
-          <div className='deliveryAddress'>
-            <InputText label="Rua/Av:" type="text" name="street"
-              placeholder={"Informe a rua"} {...street}
+      <form className='form' onSubmit={handleSubmit}>
+        <div className='formInputs'>
+          <div className='clientData'>
+            <InputText
+              label="Nome:" type="text" name="client"
+              placeholder={"Digite seu nome"} {...client}
             />
-            <InputText label="Nº:" type="text" name="number"
-              placeholder={"Informe o número"} {...number}
+            <InputText label="Contato:" type="text" name="contact"
+              placeholder={"(37) 9 9999-9999"} {...contact}
             />
-            <InputText label="Bairro:" type="text" name="neighborhood"
-              placeholder={"Informe o bairro"} {...neighborhood}
+            <Select
+              name="payment"
+              label="Pagamento:"
+              initial="Escolha a forma"
+              options={paymentsForms}
+              selectedOption={payment} setSelectedOption={setPayment}
             />
-            <InputText label="Ref.:" type="text" name="reference"
-              placeholder={"Ponto de referência"} {...reference}
+            {payment && getOption(payment)==="Cartão de Crédito" &&
+              <Select
+                name='installment'
+                label={"Parcelas:"}
+                initial="Selecione aqui"
+                options={installmentCardPayment}
+                selectedOption={installmentCard} setSelectedOption={setInstallmentCard}
+              />
+            }
+            <Checkbox
+              options={["Solicitar entrega (+R$5,00)"]}
+              state={delivery}
+              setState={setDelivery}
+              name="delivery"
             />
           </div>
-        }
-        {(installmentCard && payment && getOption(payment)==="Cartão de Crédito") ?
-          <h1 className='price'>
-            {numberfyInstallment(getOption(installmentCard))} Parcelas de <span>R${(totalPrice/numberfyInstallment(getOption(installmentCard))).toFixed(2)}</span>
-          </h1> :
-          <h1 className='price'>Preço Total: <span>R${totalPrice.toFixed(2)}</span></h1>
-        }
-      </div>
+          <div className='deliveryAndPrice'>
+            {delivery.includes("Solicitar entrega (+R$5,00)") &&
+              <div className='deliveryAddress'>
+                <InputText label="Rua/Av:" type="text" name="street"
+                  placeholder={"Informe a rua"} {...street}
+                />
+                <InputText label="Nº:" type="text" name="number"
+                  placeholder={"Informe o número"} {...number}
+                />
+                <InputText label="Bairro:" type="text" name="neighborhood"
+                  placeholder={"Informe o bairro"} {...neighborhood}
+                />
+                <InputText label="Ref.:" type="text" name="reference"
+                  placeholder={"Ponto de referência"} {...reference}
+                />
+              </div>
+            }
+            {(installmentCard && payment && getOption(payment)==="Cartão de Crédito") ?
+              <h1 className='price'>
+                {numberfyInstallment(getOption(installmentCard))} Parcelas de <span>R${(totalPrice/numberfyInstallment(getOption(installmentCard))).toFixed(2)}</span>
+              </h1> :
+              <h1 className='price'>Preço Total: <span>R${totalPrice.toFixed(2)}</span></h1>
+            }
+          </div>
+        </div>
+        <Button
+          label='Enviar Pedido'
+          statusSubmit={statusSubmit} setStatusSubmit={setStatusSubmit}
+          className='buttonSubmit'
+        />
+      </form>
     </OrderContainer>
   )
 }

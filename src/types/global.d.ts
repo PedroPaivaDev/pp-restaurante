@@ -68,6 +68,23 @@ interface Bag {
   [key: string]: MarmitaOnBag;
 }
 
+interface ObjectKeyString {
+  [key: string]: string;
+}
+
 interface OptionsObject {
   [key: string]: number | null;
+}
+
+type FormDataEntries = [string, string][]
+
+interface OrderFormData {
+  client: string;
+  contact: string;
+  payment: string;
+  installment?: string;
+  street?: string;
+  number?: string;
+  neighborhood?: string;
+  reference?: string;
 }

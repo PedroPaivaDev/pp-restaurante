@@ -13,13 +13,13 @@ const getWidthString = (number: number) => {
 export const Column = styled.div<GridProps>`
   padding: 15px;
   ${({ xs }) => (xs ? getWidthString(xs) : 'width: 100%')};
-  @media only screen and (min-width: 768px) {
+  @media only screen and (min-width: 576px) {
     ${({ sm }) => sm && getWidthString(sm)};
   }
-  @media only screen and (min-width: 992px) {
+  @media only screen and (min-width: 768px) {
     ${({ md }) => md && getWidthString(md)};
   }
-  @media only screen and (min-width: 1200px) {
+  @media only screen and (min-width: 992px) {
     ${({ lg }) => lg && getWidthString(lg)};
   }
 `;
