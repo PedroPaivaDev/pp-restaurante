@@ -8,22 +8,23 @@ import OrderMarmita from '@/components/OrderMarmita';
 import Button from '@/components/Forms/Button';
 import { useRouter } from 'next/router';
 import Order from '@/components/Order';
+import Grid from '@/components/Grid';
 
-const DivMarmitas = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-`;
-
-const DivEmpty = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 20px;
-  .buttonMenu {
+const DivEnvelope = styled.div`
+  .empty {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    .buttonMenu {
+      justify-content: center;
+    }
+  }
+  .buttonSubmit {
     justify-content: center;
+    button {
+      background-color: ${props => props.theme.colors.sucess};
+    }
   }
 `;
 
@@ -48,34 +49,37 @@ const Entrega = () => {
   return (
     <div className='page animeLeft'>
       <div className='container'>
-        <div className='envelope'>
+        <DivEnvelope>
           <h1>Finalizar Pedido</h1>
           {bagWithMarmita ?
             <div className='wrapper'>
               <p>{`Confira com atenção todos os itens, preencha seu endereço de entrega e clique no botão "enviar" ao final.`}</p>
-              <DivMarmitas>
+              <div className='row'>
                 {bagStorage && menu && Object.keys(bagStorage).map(marmitaId =>
-                  <OrderMarmita key={marmitaId}
-                    marmita={bagStorage[marmitaId]} id={marmitaId}
-                    bag={bagStorage} setBag={setBagStorage}
-                    setMarmitaStorage={setMarmitaStorage} menu={menu as Menu}
-                  />
+                  <Grid key={marmitaId} xs={12} sm={6} md={4} lg={3}>
+                    <OrderMarmita
+                      marmita={bagStorage[marmitaId]} id={marmitaId}
+                      bag={bagStorage} setBag={setBagStorage}
+                      setMarmitaStorage={setMarmitaStorage} menu={menu as Menu}
+                    />
+                  </Grid>
                 )}
-              </DivMarmitas>
+              </div>
             </div> :
-            <DivEmpty>
+            <div className='empty'>
               <p>Você ainda não montou uma marmita...</p>
               <Button
                 label='Começar a Montar'
                 onClick={() => push('/menu?categoria=bases')}
                 className='buttonMenu'
               />
-            </DivEmpty>
+            </div>
           }
           {bagWithMarmita &&
             <Order bag={bagStorage}/>
           }
-        </div>
+          <Button label='Enviar Pedido' className='buttonSubmit'/>
+        </DivEnvelope>
       </div>
     </div>
   )

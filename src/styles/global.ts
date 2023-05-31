@@ -166,7 +166,7 @@ const GlobalStyles: GlobalStyleComponent<
   .row {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
     flex-wrap: wrap;
     margin-top: 10px;

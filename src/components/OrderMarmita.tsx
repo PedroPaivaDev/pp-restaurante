@@ -19,8 +19,7 @@ const DivMarmitaDetails = styled.div`
   border: 2px solid ${props => props.theme.colors.primaryColor};
   box-shadow: 0px 7px 20px 0px ${props => props.theme.colors.dark};
   padding: 10px;  
-  width: 250px;
-  height: 100%;
+  /* width: 250px; */
   padding: 10px 10px 10px 10px;
   * {
     color: ${props => props.theme.colors.primaryColor};    

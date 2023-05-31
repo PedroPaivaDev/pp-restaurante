@@ -22,6 +22,7 @@ const CheckboxContainer = styled.div`
   .label::before {
     border: 2px solid ${props => props.theme.colors.secondaryColor};
     position: absolute;
+    background-color: rgb(242,227,204);
     top: 1px;
     left: -18px;
     width: 15px;
@@ -30,7 +31,7 @@ const CheckboxContainer = styled.div`
     content: "";
   }
   .input:checked + .label::before {
-    background-color: ${props => props.theme.colors.quaternaryColor};
+    background-color: ${props => props.theme.colors.sucess};
     z-index: 2;
   }
 `;

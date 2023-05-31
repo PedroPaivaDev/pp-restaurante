@@ -9,15 +9,38 @@ import Checkbox from './Forms/Checkbox';
 import getOption from '@/helper/getOption';
 
 const OrderContainer = styled.div`
-  form {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 25px;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  .form, .payment, .deliveryAddress {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    height: 100%;
+    gap: 25px;
+    .price {
+      font-size: 1.25rem;
+      text-align: end;
+      margin-top: 0px;
+      span {
+        font-size: 1.5rem;
+        vertical-align: baseline;
+      }
+    }
   }
-  .deliveryAddress {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  @media (max-width:640px) {
+    & {
+      flex-direction: column;
+      justify-content: center;
+    }
+    .form, .payment, .deliveryAddress {
+      justify-content: flex-end;
+      width: 280px;
+    }
   }
 `;
 
@@ -56,7 +79,7 @@ const Order = ({bag}:{bag:Bag}) => {
   }
 
   React.useEffect(() => {
-    let sumPrices = delivery.includes("Pagar pela entrega (+R$5,00)") ? 5 : 0;
+    let sumPrices = delivery.includes("Solicitar entrega (+R$5,00)") ? 5 : 0;
     if(payment && installmentCard && getOption(payment)==="Cartão de Crédito") {
       Object.keys(bag).length>0 && Object.keys(bag).forEach(marmitaId => {
         sumPrices = sumPrices + bag[marmitaId].price;
@@ -74,7 +97,7 @@ const Order = ({bag}:{bag:Bag}) => {
 
   return (
     <OrderContainer>
-      <form>
+      <form className='form'>
         <InputText
           label="Nome:" type="text" name="client"
           placeholder={"Digite seu nome"} {...client}
@@ -98,15 +121,15 @@ const Order = ({bag}:{bag:Bag}) => {
             selectedOption={installmentCard} setSelectedOption={setInstallmentCard}
           />
         }
-      </form>
-      <div className='payment'>
         <Checkbox
-          options={["Pagar pela entrega (+R$5,00)"]}
+          options={["Solicitar entrega (+R$5,00)"]}
           state={delivery}
           setState={setDelivery}
           name="delivery"
         />
-        {delivery.includes("Pagar pela entrega (+R$5,00)") &&
+      </form>
+      <div className='payment'>
+        {delivery.includes("Solicitar entrega (+R$5,00)") &&
           <div className='deliveryAddress'>
             <InputText label="Rua/Av:" type="text" name="street"
               placeholder={"Informe a rua"} {...street}
