@@ -26,6 +26,11 @@ const PortionDetail = styled.div`
     h3 {
       color: ${props => props.theme.colors.primaryColor};
     }
+    .buttonAddRemove {
+      h6 {
+        top: -30px;
+      }
+    }
   }
 `;
 
@@ -136,6 +141,7 @@ const Portion = ({ingredient, marmita, setMarmita}:PropsPortion) => {
         <h3>{ingredient.name}</h3>
         <Button label={statusSubmit.label} onClick={handleClick}
           statusSubmit={statusSubmit} setStatusSubmit={setStatusSubmit}
+          className='buttonAddRemove'
         />
       </div>
       <DivImage bgImage={ingredient.image[0]}/>

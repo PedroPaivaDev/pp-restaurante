@@ -9,11 +9,11 @@ import InputText from './Forms/InputText';
 import Select from './Forms/Select';
 import Checkbox from './Forms/Checkbox';
 import Button from './Forms/Button';
+import handleOrderSubmit from '@/helper/handleOrderSubmit';
 
 const OrderContainer = styled.div`
   .form {
     .buttonSubmit {
-      position: relative;
       justify-content: center;
       button {
         background-color: ${props => props.theme.colors.sucess};
@@ -57,7 +57,7 @@ const OrderContainer = styled.div`
   }
 `;
 
-const Order = ({bag}:{bag:Bag}) => {  
+const Order = ({bag, menu}:{bag:Bag, menu:Menu}) => {  
   const [totalPrice, setTotalPrice] = React.useState(0);
   const [statusSubmit, setStatusSubmit] = React.useState<StatusSubmit>({
     label: 'Enviar Pedido',
@@ -108,10 +108,9 @@ const Order = ({bag}:{bag:Bag}) => {
         status: 'error',
         msg: 'Preencha os campos corretamente'
       })
-      console.log('erro')
       return;
     } else {
-      console.log('enviado')
+      handleOrderSubmit(bag, formDataEntries as FormDataEntries, totalPrice, menu.products);
     }
 
   }

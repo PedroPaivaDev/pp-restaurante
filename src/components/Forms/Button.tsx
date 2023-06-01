@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ContainerButton = styled.div`
+  position: relative;
   display: flex;
   justify-content: flex-end;
   button {
