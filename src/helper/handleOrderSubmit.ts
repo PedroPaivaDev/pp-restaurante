@@ -14,7 +14,7 @@ export default function handleOrderSubmit(
   function mapPortions(portions:MarmitaPortions) {
     let ingredients = "";
     Object.keys(portions).forEach(category =>
-      ingredients += `%0a${category}: ${getNameById(portions,menu)[category]}`.replace(/,/g, ', ')
+      ingredients += `${category}: ${getNameById(portions,menu)[category]}%0a`.replace(/,/g, ', ')
     );
     return ingredients;
   }
@@ -24,7 +24,7 @@ export default function handleOrderSubmit(
     Object.keys(bag).forEach(product => {
       const id = (`${bag[product].id}`).substring(4);
       const size = `*${bag[product].size}*: ${id} - R$${bag[product].price.toFixed(2)}%0a`;
-      const portions = `*Ingredientes*: ${mapPortions(bag[product].portions)}%0a-----%0a`;
+      const portions = `${mapPortions(bag[product].portions)}%0a-----%0a`;
       products += size + portions
     })
     return products;

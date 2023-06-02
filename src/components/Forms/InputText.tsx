@@ -5,11 +5,11 @@ interface PropsInputText {
   label: string;
   type: string;
   name: string;
-  value: string;
-  placeholder: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
-  error: string | null;
-  onBlur: () => boolean;
+  placeholder?: string;
+  value?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  error?: string | null;
+  onBlur?: () => boolean;
 }
 
 const InputTextContainer = styled.div`
