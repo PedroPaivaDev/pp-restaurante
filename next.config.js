@@ -4,6 +4,9 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  images: {
+    domains: ['lh3.googleusercontent.com', '192.168.2.198'],
+  },
 }
 
 module.exports = nextConfig
