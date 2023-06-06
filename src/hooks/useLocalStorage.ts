@@ -3,8 +3,10 @@ import React from 'react';
 function useLocalStorage<Type>(key:string, initial:Type):
 [Type, React.Dispatch<React.SetStateAction<Type>>] {
 
+  const isClient = typeof window !== 'undefined';
+
   const [state, setState] = React.useState<Type>(() => {
-    if(typeof window === 'undefined') {
+    if(!isClient) {
       return initial;
     }
     try {
@@ -19,11 +21,13 @@ function useLocalStorage<Type>(key:string, initial:Type):
   const setLocalStorageValue = React.useCallback((value: Type) => {
     try {
       setState(value);
-      window.localStorage.setItem(key, JSON.stringify(value));
+      if(isClient) {
+        window.localStorage.setItem(key, JSON.stringify(value));
+      }
     } catch(error) {
       console.log(error);
     }
-  }, [key]);
+  }, [key, isClient]);
 
   React.useEffect(() => {
     if (state !== undefined) {

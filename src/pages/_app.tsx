@@ -9,7 +9,7 @@ import theme from '../styles/theme';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import MarmitaContext from '@/contexts/MarmitaContext';
-import AuthGoogleProvider from '@/contexts/authGoogle';
+import AuthGoogleProvider from '@/contexts/AuthGoogleContext';
 
 export default function App({ Component, pageProps }: AppProps) {
 

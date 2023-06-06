@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-// import Image from 'next/image';
-// import { AuthGoogleContext } from '@/contexts/authGoogle';
+import Image from 'next/image';
+import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
 
 const DivSignIn = styled.div`
   display: flex;
@@ -22,24 +22,29 @@ const DivSignIn = styled.div`
 `;
 
 const SignIn: React.FC = () => {
-  // const {signInGoogle} = React.useContext(AuthGoogleContext);
-
-  // async function handleSignInGoogle() {
-  //   await signInGoogle();
-  // }
+  const {signInGoogle, user, signOut, isSiged} = React.useContext(AuthGoogleContext);
 
   return (
     <DivSignIn>
-      {/* <div className='userData'>
-        {user.photoURL && 
-          <Image src={user.photoURL} width={100} height={100} alt="FotoUsuario" />
-        }
-        <strong>{user.displayName}</strong>
-        <small>{user.email}</small>
-      </div> */}
-      {/* <button style={{color:'black'}} onClick={handleSignInGoogle}>
-        Entrar com o Google
-      </button> */}
+      {(isSiged && user)
+      ?
+        <>
+          <div className='userData'>
+            {user.photoURL && 
+              <Image src={user.photoURL} width={100} height={100} alt="FotoUsuario" />
+            }
+            <strong>{user.displayName}</strong>
+            <small>{user.email}</small>
+          </div>
+          <button style={{color:'black'}} onClick={signOut}>
+            Sair
+          </button>
+        </>
+      :
+        <button style={{color:'black'}} onClick={signInGoogle}>
+          Entrar com o Google
+        </button>
+      }
     </DivSignIn>
   );
 };

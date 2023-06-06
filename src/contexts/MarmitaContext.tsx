@@ -25,10 +25,10 @@ const MarmitaProvider = ({children}:{children:React.ReactNode;}) => {
   const [bagStorage, setBagStorage] = useLocalStorage<Bag>('bag', {});
   return (
     <MarmitaContext.Provider value={{
-      marmitaStorage: marmitaStorage as Marmita,
-      setMarmitaStorage: setMarmitaStorage as PropsMarmitaSetState,
-      bagStorage: bagStorage as Bag,
-      setBagStorage: setBagStorage as PropsBagSetState
+      marmitaStorage: marmitaStorage,
+      setMarmitaStorage: setMarmitaStorage,
+      bagStorage: bagStorage,
+      setBagStorage: setBagStorage
     }}>
       {children}
     </MarmitaContext.Provider>
