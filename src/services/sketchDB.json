@@ -1,4 +1,19 @@
 {
+  "usuarios": {
+    "admin": {
+      "displayName": "Pedro Paiva",
+      "email": "pedropaivadev@gmail.com",
+      "photoURL": "https://lh3.googleusercontent.com/a/AAcHTteN5huFBrKvVT5leekJc7EG5nDcOe9v2OGMljBs=s96-c",
+      "uid": "",
+      "createdAt": "1685802625650",
+      "lastLoginAt": "1686150981089",
+      "phoneNumber": "",
+      "street": "",
+      "streetNumber": "",
+      "neighborhood": "",
+      "reference": ""
+    }
+  },
   "cardapio": {
     "title": "Cardápio",
     "description1": "Escolha o que você deseja na sua marmita",

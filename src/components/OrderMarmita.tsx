@@ -21,6 +21,7 @@ const DivMarmitaDetails = styled.div`
   padding: 10px;  
   /* width: 250px; */
   padding: 10px 10px 10px 10px;
+  margin: 0 20px;
   * {
     color: ${props => props.theme.colors.primaryColor};    
   }

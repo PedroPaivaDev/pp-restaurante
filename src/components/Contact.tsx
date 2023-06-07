@@ -56,7 +56,7 @@ const BgPaper = styled.div`
 
 const Contact = () => {
   return (    
-    <div className="container">
+    <div className="envelope">
       <BgPaper>
         <div className="wrapper">
           <h2>Horários de Funcionamento</h2>

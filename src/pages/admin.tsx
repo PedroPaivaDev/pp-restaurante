@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import Button from '@/components/Forms/Button';
 import InputText from '@/components/Forms/InputText';
-import SignIn from '@/components/Forms/SignIn';
 
 const LoginForm = styled.form`
   display: flex;
@@ -36,7 +35,6 @@ const admin = () => {
               <Button label='Entrar'/>
             </LoginForm>
           </div>
-          <SignIn />
         </div>
       </div>
     </div>
