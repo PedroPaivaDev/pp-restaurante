@@ -7,8 +7,10 @@ export default function Home() {
   return (
     <div className="page">
       <div className="container">
-        <SignIn/>
-        <Contact/>
+        <div className="envelope animeLeft">
+          <SignIn/>
+          <Contact/>
+        </div>
       </div>
     </div>
   )

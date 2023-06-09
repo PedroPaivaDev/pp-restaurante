@@ -98,4 +98,11 @@ interface UserData {
   displayName: string;
   email: string;
   photoURL: string;
+  createdAt?: number;
+  lastLoginAt?: number;
+  phoneNumber?: string;
+  street?: string;
+  streetNumber?: string;
+  neighborhood?: string;
+  reference?: string;
 }

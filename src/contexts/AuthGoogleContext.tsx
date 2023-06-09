@@ -32,8 +32,10 @@ export const AuthGoogleProvider = ({children}:{children:React.ReactNode;}) => {
       isUidAlreadyRegistered(result.user).then((resolve) => {
         if(resolve) {
           setUserAuth(result.user);
+          console.log('entrando...')
         } else {
           createUser(result.user);
+          console.log('criando...')
         }
       });
     })
@@ -43,12 +45,15 @@ export const AuthGoogleProvider = ({children}:{children:React.ReactNode;}) => {
   }
 
   async function isUidAlreadyRegistered(user:User) {
-    const currentTimestamp = Date.now();
-    const difference = currentTimestamp - new Date(user.metadata.creationTime as string).getTime();
+    const creationTime = new Date(user.metadata.creationTime as string).getTime();
+    const lastLoginAt = new Date(user.metadata.lastSignInTime as string).getTime();
+    const difference = lastLoginAt - creationTime
     const fiveSecondsInMillis = 5000;
     if(difference < fiveSecondsInMillis) {
+      console.log('não tem cadastro.')
       return false;
     } else {
+      console.log('já tem cadastro.')
       return true;
     }
   }

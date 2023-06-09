@@ -6,6 +6,7 @@ import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
 import { getUserDB, getUsers } from '@/services/firebase';
 
 import Button from './Button';
+import { useRouter } from 'next/router';
 
 const DivSignIn = styled.div`
   margin-top: 20px;
@@ -15,9 +16,14 @@ const DivSignIn = styled.div`
     justify-content: center;
     gap: 5px;
     img {
+      cursor: pointer;
       border: 2px solid ${props => props.theme.colors.primaryColor};
       border-radius: 40px;
       box-shadow: 0px 1px 5px 0px ${props => props.theme.colors.dark};
+      transition: 0.3s;
+    }
+    img:hover {
+      box-shadow: 0px 1px 5px 0px ${props => props.theme.colors.tertiaryColor};
     }
     .userName {
       display: flex;
@@ -34,6 +40,11 @@ const DivSignIn = styled.div`
 const SignIn: React.FC = () => {
   const {signInGoogle, userAuth, logout} = React.useContext(AuthGoogleContext);
   const [userDB, setUserDB] = React.useState<UserDB|null>(null);
+  const {push} = useRouter();
+
+  function redirectToProfile() {
+    push('perfil')
+  }
 
   React.useEffect(() => {
     userAuth && getUserDB(userAuth.uid, setUserDB);
@@ -48,7 +59,7 @@ const SignIn: React.FC = () => {
       {(userAuth && userDB)
       ?
         <div className='userData'>
-          <div className='userPhoto'>
+          <div className='userPhoto' onClick={redirectToProfile}>
             {userDB.userData.photoURL && 
               <Image src={userDB.userData.photoURL} width={80} height={80} alt="FotoUsuario" />
             }

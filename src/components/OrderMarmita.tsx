@@ -8,23 +8,8 @@ import { MarmitaContext } from '@/contexts/MarmitaContext';
 import getNameById from '@/helper/getNameById';
 
 const DivMarmitaDetails = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   gap: 5px;
-  background: ${props => props.theme.colors.portionBg};
-  background-position: center center;
-  background-size: cover;
-  border: 2px solid ${props => props.theme.colors.primaryColor};
-  box-shadow: 0px 7px 20px 0px ${props => props.theme.colors.dark};
-  padding: 10px;  
-  /* width: 250px; */
-  padding: 10px 10px 10px 10px;
   margin: 0 20px;
-  * {
-    color: ${props => props.theme.colors.primaryColor};    
-  }
   .detailsButtons {
     display: flex;
     justify-content: space-between;
@@ -75,7 +60,7 @@ const OrderMarmita = ({marmita, id, bag, setBag, menu}:PropsMarmitaDetails) => {
   }
 
   return (
-    <DivMarmitaDetails>
+    <DivMarmitaDetails className='bgPaper'>
       <div className='detailsButtons'>
         <Button label='Editar' onClick={handleEdit}/>
         <Button label='Remover' onClick={handleRemove}/>

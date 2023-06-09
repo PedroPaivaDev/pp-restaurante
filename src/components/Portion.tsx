@@ -5,18 +5,6 @@ import Button from './Forms/Button';
 
 const PortionDetail = styled.div`
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  background: ${props => props.theme.colors.portionBg};
-  background-position: center center;
-  background-size: cover;
-  border: 2px solid ${props => props.theme.colors.primaryColor};
-  box-shadow: 0px 7px 20px 0px ${props => props.theme.colors.dark};
-  width: 100%;
-  height: 100%;
-  padding: 10px 10px 10px 10px;
   .portionHeader {
     display: flex;
     justify-content: space-between;
@@ -136,7 +124,7 @@ const Portion = ({ingredient, marmita, setMarmita}:PropsPortion) => {
   }
 
   return (
-    <PortionDetail>
+    <PortionDetail className='bgPaper'>
       <div className='portionHeader'>
         <h3>{ingredient.name}</h3>
         <Button label={statusSubmit.label} onClick={handleClick}

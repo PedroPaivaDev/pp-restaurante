@@ -79,18 +79,15 @@ export function setNewUser(userAuth:User) {
 
 //MÉTODOS DO REALTIME DATABASE:
 
-//Para criar novos produtos
-// export function createNewProduct(id, name, description, price, image) {
-//   const productsRef = ref(db, 'products');
-//   const product = {
-//     id: id,
-//     name: name,
-//     description: description,
-//     price: price,
-//     image: image
-//   };
-//   set(child(productsRef,`${id}`), product)
-// }
+//Para buscar os produtos no DB
+export function getProducts(path:string, setState:React.Dispatch<React.SetStateAction<Menu>>) {
+  const productsRef = ref(db, path);
+  onValue(
+    productsRef,
+    (snapshot) => setState(snapshot.val()),
+    {onlyOnce: true}
+  )
+}
 
 //Para registrar pedidos de clientes
 // export function registerProductsOrder(name, description, price, image) {
@@ -103,27 +100,6 @@ export function setNewUser(userAuth:User) {
 //   };
 //   push(ordersRef, product)
 // }
-
-//Para buscar os produtos no DB (velho)
-// export function getProductsOld(path, setState) {
-//   const productsRef = ref(db, path);
-//   let products = [];
-//   onValue(productsRef, (snapshot) => {
-//     snapshot.forEach(product => {
-//       products = [...products, product.val()]
-//     })
-//     setState(products)
-//   }, {onlyOnce: true})
-// }
-//Para buscar os produtos no DB
-export function getProducts(path:string, setState:React.Dispatch<React.SetStateAction<Menu>>) {
-  const productsRef = ref(db, path);
-  onValue(
-    productsRef,
-    (snapshot) => setState(snapshot.val()),
-    {onlyOnce: true}
-  )
-}
 
 //Para remover produtos
 // export function removeProduct(id) {

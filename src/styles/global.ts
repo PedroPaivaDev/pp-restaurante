@@ -94,8 +94,12 @@ const GlobalStyles: GlobalStyleComponent<
     text-align: center;
   }
 
-  p {
+  p, small {
     font-weight: ${props => props.theme.font.normal};
+  }
+
+  small {
+    font-size: ${props => props.theme.font.size.xsmall};
   }
 
   main {
@@ -177,6 +181,22 @@ const GlobalStyles: GlobalStyleComponent<
     opacity: 0;
     transform: translateX(calc(-100vw * 0.2));
     animation: animeLeft .3s forwards;
+  }
+
+  .bgPaper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: ${props => props.theme.colors.portionBg};
+    background-position: center center;
+    background-size: cover;
+    border: 2px solid ${props => props.theme.colors.primaryColor};
+    box-shadow: 0px 7px 20px 0px ${props => props.theme.colors.dark};
+    padding: 10px;    
+    * {
+      color: ${props => props.theme.colors.primaryColor};    
+    }
   }
 
   @keyframes animeLeft {
