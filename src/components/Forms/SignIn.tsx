@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
+
 import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
+import { getUserAuth } from '@/services/firebase';
+
 import Button from './Button';
 
 const DivSignIn = styled.div`
@@ -29,23 +32,32 @@ const DivSignIn = styled.div`
 `;
 
 const SignIn: React.FC = () => {
-  const {signInGoogle, user, signOut, isSiged} = React.useContext(AuthGoogleContext);
+  const {signInGoogle, userUid, logout} = React.useContext(AuthGoogleContext);
+  const [userAuth, setUserAuth] = React.useState<UserAuth|null>(null);
+
+  React.useEffect(() => {
+    userUid && getUserAuth(userUid, setUserAuth);
+  },[userUid])
+
+  React.useEffect(() => {
+    console.log(userUid,userAuth)
+  },[userUid,userAuth])
 
   return (
     <DivSignIn>
-      {(isSiged && user)
+      {(userUid && userAuth)
       ?
         <div className='userData'>
           <div className='userPhoto'>
-            {user.photoURL && 
-              <Image src={user.photoURL} width={80} height={80} alt="FotoUsuario" />
+            {userAuth.userData.photoURL && 
+              <Image src={userAuth.userData.photoURL} width={80} height={80} alt="FotoUsuario" />
             }
           </div>
           <div className='userName'>
-            <strong>{user.displayName}</strong>
+            <strong>{userAuth.userData.displayName}</strong>
             <Button
               label='Sair'
-              onClick={signOut}
+              onClick={logout}
               className='signInButton'
             />
           </div>

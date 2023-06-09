@@ -33,6 +33,24 @@ const db = getDatabase(app);
 // MÉTODOS DO AUTENTICADOR
 export const auth = getAuth(app)
 
+export function getUsers(path:string, setState:React.Dispatch<React.SetStateAction<string[]>>) {
+  const getRef = ref(db, path);
+  onValue(
+    getRef,
+    (snapshot) => setState(snapshot.val()),
+    {onlyOnce: true}
+  )
+}
+
+export function getUserAuth(uid:string, setState:React.Dispatch<React.SetStateAction<UserAuth|null>>) {
+  const getRef = ref(db, `usuarios/${uid}`);
+  onValue(
+    getRef,
+    (snapshot) => setState(snapshot.val()),
+    {onlyOnce: true}
+  )
+}
+
 //MÉTODOS DO STORAGE
 // export function urlEasterImages() {
 //   const easterRef = storageRef(storage, `easter/eggs/ovoBombomMorango-1.jpg`);

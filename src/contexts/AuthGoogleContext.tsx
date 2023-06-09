@@ -1,63 +1,60 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React from 'react'
-import { GoogleAuthProvider, User, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 
 import { auth } from '@/services/firebase';
-import useLocalStorage from '@/hooks/useLocalStorage';
 
 const provider = new GoogleAuthProvider();
 
 interface PropsAuthGoogleContext {
   signInGoogle: () => void;
-  signOut: () => void;
-  isSiged: boolean;
-  user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>
+  logout: () => void;
+  userUid: string | null;
+  setUserUid: React.Dispatch<React.SetStateAction<string | null>>
 }
 
 const defaultContext: PropsAuthGoogleContext = {
   signInGoogle: () => {},
-  signOut: () => {},
-  isSiged: false,
-  user: null,
-  setUser: () => null
+  logout: () => {},
+  userUid: null,
+  setUserUid: () => null
 }
 
 export const AuthGoogleContext = React.createContext<PropsAuthGoogleContext>(defaultContext)
 
 export const AuthGoogleProvider = ({children}:{children:React.ReactNode;}) => {
-  const [user, setUser] = useLocalStorage<User|null>('@AuthFirebase:user', null);
-  const [isSiged, setIsSigned] = React.useState<boolean>(false);
+  const [userUid, setUserUid] = React.useState<string|null>(null);
 
   const signInGoogle = () => {
     signInWithPopup(auth, provider)
     .then((result) => {
-      setUser(result.user);
+      setUserUid(result.user.uid);
     })
     .catch((error) => {
       console.log(error);
     });
   }
 
-  const signOut = () => {
-    setUser(null);
-  }
+  const logout = () => {
+    signOut(auth);
+};
 
   React.useEffect(() => {
-    if(user) {
-      setIsSigned(true);
-    } else {
-      setIsSigned(false);
-    }
-  },[user])
+    onAuthStateChanged(auth, (user) => {
+      if(user) {
+        setUserUid(user?.uid);
+      } else {
+        setUserUid(null);
+      }
+    });
+  });
 
   return (
     <AuthGoogleContext.Provider value={{
       signInGoogle,
-      signOut,
-      isSiged,
-      user,
-      setUser: setUser as React.Dispatch<React.SetStateAction<User|null>>
+      logout,
+      userUid,
+      setUserUid: setUserUid as React.Dispatch<React.SetStateAction<string|null>>
     }}>
       {children}
     </AuthGoogleContext.Provider>

@@ -88,3 +88,14 @@ interface OrderFormData {
   neighborhood?: string;
   reference?: string;
 }
+
+interface UserAuth {
+  userData: UserData;
+  userOrders?: OptionsObject;
+}
+
+interface UserData {
+  displayName: string;
+  email: string;
+  photoURL: string;
+}
