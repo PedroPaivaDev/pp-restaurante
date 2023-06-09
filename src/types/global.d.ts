@@ -89,7 +89,7 @@ interface OrderFormData {
   reference?: string;
 }
 
-interface UserAuth {
+interface UserDB {
   userData: UserData;
   userOrders?: OptionsObject;
 }

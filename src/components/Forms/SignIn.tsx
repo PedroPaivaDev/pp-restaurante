@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 
 import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
-import { getUserAuth } from '@/services/firebase';
+import { getUserDB, getUsers } from '@/services/firebase';
 
 import Button from './Button';
 
@@ -32,29 +32,29 @@ const DivSignIn = styled.div`
 `;
 
 const SignIn: React.FC = () => {
-  const {signInGoogle, userUid, logout} = React.useContext(AuthGoogleContext);
-  const [userAuth, setUserAuth] = React.useState<UserAuth|null>(null);
+  const {signInGoogle, userAuth, logout} = React.useContext(AuthGoogleContext);
+  const [userDB, setUserDB] = React.useState<UserDB|null>(null);
 
   React.useEffect(() => {
-    userUid && getUserAuth(userUid, setUserAuth);
-  },[userUid])
+    userAuth && getUserDB(userAuth.uid, setUserDB);
+  },[userAuth])
 
   React.useEffect(() => {
-    console.log(userUid,userAuth)
-  },[userUid,userAuth])
+    getUsers();
+  })
 
   return (
     <DivSignIn>
-      {(userUid && userAuth)
+      {(userAuth && userDB)
       ?
         <div className='userData'>
           <div className='userPhoto'>
-            {userAuth.userData.photoURL && 
-              <Image src={userAuth.userData.photoURL} width={80} height={80} alt="FotoUsuario" />
+            {userDB.userData.photoURL && 
+              <Image src={userDB.userData.photoURL} width={80} height={80} alt="FotoUsuario" />
             }
           </div>
           <div className='userName'>
-            <strong>{userAuth.userData.displayName}</strong>
+            <strong>{userDB.userData.displayName}</strong>
             <Button
               label='Sair'
               onClick={logout}

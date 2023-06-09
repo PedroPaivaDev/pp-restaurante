@@ -1,51 +1,70 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React from 'react'
-import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
+import { GoogleAuthProvider, User, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 
-import { auth } from '@/services/firebase';
+import { auth, setNewUser } from '@/services/firebase';
 
 const provider = new GoogleAuthProvider();
 
 interface PropsAuthGoogleContext {
   signInGoogle: () => void;
   logout: () => void;
-  userUid: string | null;
-  setUserUid: React.Dispatch<React.SetStateAction<string | null>>
+  userAuth: User | null;
+  setUserAuth: React.Dispatch<React.SetStateAction<User | null>>
 }
 
 const defaultContext: PropsAuthGoogleContext = {
   signInGoogle: () => {},
   logout: () => {},
-  userUid: null,
-  setUserUid: () => null
+  userAuth: null,
+  setUserAuth: () => null
 }
 
 export const AuthGoogleContext = React.createContext<PropsAuthGoogleContext>(defaultContext)
 
 export const AuthGoogleProvider = ({children}:{children:React.ReactNode;}) => {
-  const [userUid, setUserUid] = React.useState<string|null>(null);
+  const [userAuth, setUserAuth] = React.useState<User|null>(null);
 
-  const signInGoogle = () => {
+  function signInGoogle() {
     signInWithPopup(auth, provider)
     .then((result) => {
-      setUserUid(result.user.uid);
+      console.log(result.user)
+      isUidAlreadyRegistered(result.user).then((resolve) => {
+        if(resolve) {
+          setUserAuth(result.user);
+        } else {
+          createUser(result.user);
+        }
+      });
     })
     .catch((error) => {
       console.log(error);
     });
   }
 
-  const logout = () => {
+  async function isUidAlreadyRegistered(user:User) {
+    const currentTimestamp = Date.now();
+    const difference = currentTimestamp - new Date(user.metadata.creationTime as string).getTime();
+    const fiveSecondsInMillis = 5000;
+    if(difference < fiveSecondsInMillis) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  function createUser(user:User) {
+    setNewUser(user);
+    setUserAuth(user);
+  }
+
+  function logout() {
     signOut(auth);
-};
+  }
 
   React.useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if(user) {
-        setUserUid(user?.uid);
-      } else {
-        setUserUid(null);
-      }
+      setUserAuth(user);
     });
   });
 
@@ -53,8 +72,8 @@ export const AuthGoogleProvider = ({children}:{children:React.ReactNode;}) => {
     <AuthGoogleContext.Provider value={{
       signInGoogle,
       logout,
-      userUid,
-      setUserUid: setUserUid as React.Dispatch<React.SetStateAction<string|null>>
+      userAuth,
+      setUserAuth: setUserAuth as React.Dispatch<React.SetStateAction<User|null>>
     }}>
       {children}
     </AuthGoogleContext.Provider>

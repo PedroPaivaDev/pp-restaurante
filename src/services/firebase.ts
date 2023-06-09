@@ -1,13 +1,13 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth"
+import { User, getAuth } from "firebase/auth"
 // import { getStorage, ref as storageRef, getDownloadURL } from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Import Admin SDK
 // import { getDatabase, ref, set, child, push, onValue, remove, update, orderByChild, query, onChildAdded } from "firebase/database";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, set, child } from "firebase/database";
 import React from "react";
 
 // Your web app's Firebase configuration
@@ -33,8 +33,17 @@ const db = getDatabase(app);
 // MÉTODOS DO AUTENTICADOR
 export const auth = getAuth(app)
 
-export function getUsers(path:string, setState:React.Dispatch<React.SetStateAction<string[]>>) {
-  const getRef = ref(db, path);
+export function getUsers() {
+  const getRef = ref(db, 'usuarios');
+  onValue(
+    getRef,
+    (snapshot) => console.log(snapshot.val()),
+    {onlyOnce: true}
+  )
+}
+
+export function getUserDB(uid:string, setState:React.Dispatch<React.SetStateAction<UserDB|null>>) {
+  const getRef = ref(db, `usuarios/${uid}`);
   onValue(
     getRef,
     (snapshot) => setState(snapshot.val()),
@@ -42,13 +51,24 @@ export function getUsers(path:string, setState:React.Dispatch<React.SetStateActi
   )
 }
 
-export function getUserAuth(uid:string, setState:React.Dispatch<React.SetStateAction<UserAuth|null>>) {
-  const getRef = ref(db, `usuarios/${uid}`);
-  onValue(
-    getRef,
-    (snapshot) => setState(snapshot.val()),
-    {onlyOnce: true}
-  )
+export function setNewUser(userAuth:User) {
+  const usersRef = ref(db, 'usuarios');
+  const newUser = {
+    userData: {
+      displayName: userAuth.displayName,
+      email: userAuth.email,
+      photoURL: userAuth.photoURL,
+      createdAt: new Date(userAuth.metadata.creationTime as string).getTime(),
+      lastLoginAt: new Date(userAuth.metadata.lastSignInTime as string).getTime(),
+      phoneNumber: "",
+      street: "",
+      streetNumber: "",
+      neighborhood: "",
+      reference: ""
+    },
+    userOrders: {}
+  };
+  set(child(usersRef,`${userAuth.uid}`), newUser)
 }
 
 //MÉTODOS DO STORAGE
