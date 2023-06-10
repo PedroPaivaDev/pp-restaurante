@@ -2,19 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 
 import useLocalStorage from '@/hooks/useLocalStorage';
-import useForm from '@/hooks/useForm';
 import getOption from '@/helper/getOption';
+import handleOrderSubmit from '@/helper/handleOrderSubmit';
+import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
 
-import InputText from './Forms/InputText';
 import Select from './Forms/Select';
 import Checkbox from './Forms/Checkbox';
 import Button from './Forms/Button';
-import handleOrderSubmit from '@/helper/handleOrderSubmit';
+import LinkButton from './Forms/LinkButton';
 
 const OrderContainer = styled.div`
   .form {
     .buttonSubmit {
-      justify-content: center;
       button {
         background-color: ${props => props.theme.colors.sucess};
       }
@@ -43,6 +42,12 @@ const OrderContainer = styled.div`
           }
         }
       }
+      .deliveryAddressHeader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+      }
     }
     @media (max-width:640px) {
       .formInputs {
@@ -57,7 +62,8 @@ const OrderContainer = styled.div`
   }
 `;
 
-const Order = ({bag, menu}:{bag:Bag, menu:Menu}) => {  
+const Order = ({bag, menu}:{bag:Bag, menu:Menu}) => {
+  const {userDB} = React.useContext(AuthGoogleContext);
   const [totalPrice, setTotalPrice] = React.useState(0);
   const [statusSubmit, setStatusSubmit] = React.useState<StatusSubmit>({
     label: 'Enviar Pedido',
@@ -65,15 +71,9 @@ const Order = ({bag, menu}:{bag:Bag, menu:Menu}) => {
     msg: null
   });
 
-  const client = useForm('client', '');
-  const contact = useForm('contact', '', 'contact');
   const [payment, setPayment] = useLocalStorage<OptionsObject|null>('payment', null);
   const [installmentCard, setInstallmentCard] = React.useState<OptionsObject|null>(null);
   const [delivery, setDelivery] = useLocalStorage<string[]>('delivery', []);
-  const street = useForm('street', '');
-  const number = useForm('number', '');
-  const neighborhood = useForm('neighborhood', '');
-  const reference = useForm('reference', '');
 
   const paymentsForms = {
     "Transferência": null,
@@ -101,7 +101,11 @@ const Order = ({bag, menu}:{bag:Bag, menu:Menu}) => {
     const formData = new FormData(event.currentTarget);
     const formDataEntries = Array.from(formData.entries())
 
-    if(client.value.length<=0 || contact.value.length<=0 || client.error || contact.error || totalPrice===0 || !payment || (getOption(payment)==="Cartão de Crédito" && !installmentCard) || (delivery && (street.value.length<=0 || number.value.length<=0 || neighborhood.value.length<=0))) {
+    if(
+      !payment
+      || (getOption(payment)==="Cartão de Crédito" && !installmentCard)
+      || (delivery.length>0 && (!userDB?.userData.street || !userDB?.userData.streetNumber || !userDB?.userData.neighborhood || !userDB?.userData.reference))
+    ) {
       setStatusSubmit({
         label: 'Enviar Pedido',
         status: 'error',
@@ -136,13 +140,6 @@ const Order = ({bag, menu}:{bag:Bag, menu:Menu}) => {
       <form className='form' onSubmit={handleSubmit}>
         <div className='formInputs'>
           <div className='clientData'>
-            <InputText
-              label="Nome:" type="text" name="client"
-              placeholder={"Digite seu nome"} {...client}
-            />
-            <InputText label="Contato:" type="text" name="contact"
-              placeholder={"(37) 9 9999-9999"} {...contact}
-            />
             <Select
               name="payment"
               label="Pagamento:"
@@ -169,18 +166,13 @@ const Order = ({bag, menu}:{bag:Bag, menu:Menu}) => {
           <div className='deliveryAndPrice'>
             {delivery.includes("Solicitar entrega (+R$5,00)") &&
               <div className='deliveryAddress'>
-                <InputText label="Rua/Av:" type="text" name="street"
-                  placeholder={"Informe a rua"} {...street}
-                />
-                <InputText label="Nº:" type="text" name="number"
-                  placeholder={"Informe o número"} {...number}
-                />
-                <InputText label="Bairro:" type="text" name="neighborhood"
-                  placeholder={"Informe o bairro"} {...neighborhood}
-                />
-                <InputText label="Ref.:" type="text" name="reference"
-                  placeholder={"Ponto de referência"} {...reference}
-                />
+                <p>Endereço de entrega: {userDB?.userData.street}, 
+                  nº {userDB?.userData.streetNumber}, 
+                  Bairro {userDB?.userData.neighborhood}.
+                  <br/>
+                  Ponto de referência: {userDB?.userData.reference}.
+                </p>
+                <LinkButton label='Alterar endereço de entrega' href='perfil'/>
               </div>
             }
             {(installmentCard && payment && getOption(payment)==="Cartão de Crédito") ?

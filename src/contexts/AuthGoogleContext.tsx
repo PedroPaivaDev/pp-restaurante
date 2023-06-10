@@ -2,28 +2,30 @@
 import React from 'react'
 import { GoogleAuthProvider, User, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 
-import { auth, setNewUser } from '@/services/firebase';
+import { auth, getUserDB, setNewUser } from '@/services/firebase';
 
 const provider = new GoogleAuthProvider();
 
 interface PropsAuthGoogleContext {
   signInGoogle: () => void;
   logout: () => void;
-  userAuth: User | null;
-  setUserAuth: React.Dispatch<React.SetStateAction<User | null>>
+  userDB: UserDB|null;
+  setUserDBChanged: React.Dispatch<React.SetStateAction<number|null>>
 }
 
 const defaultContext: PropsAuthGoogleContext = {
   signInGoogle: () => {},
   logout: () => {},
-  userAuth: null,
-  setUserAuth: () => null
+  userDB: null,
+  setUserDBChanged: () => {}
 }
 
 export const AuthGoogleContext = React.createContext<PropsAuthGoogleContext>(defaultContext)
 
 export const AuthGoogleProvider = ({children}:{children:React.ReactNode;}) => {
   const [userAuth, setUserAuth] = React.useState<User|null>(null);
+  const [userDB, setUserDB] = React.useState<UserDB|null>(null);
+  const [userDBChanged, setUserDBChanged] = React.useState<number|null>(null);
 
   function signInGoogle() {
     signInWithPopup(auth, provider)
@@ -73,12 +75,20 @@ export const AuthGoogleProvider = ({children}:{children:React.ReactNode;}) => {
     });
   });
 
+  React.useEffect(() => {
+    if(userAuth) {
+      getUserDB(userAuth.uid, setUserDB);      
+    } else {
+      setUserDB(null);
+    }
+  },[userAuth, userDBChanged])
+
   return (
     <AuthGoogleContext.Provider value={{
       signInGoogle,
       logout,
-      userAuth,
-      setUserAuth: setUserAuth as React.Dispatch<React.SetStateAction<User|null>>
+      userDB,
+      setUserDBChanged
     }}>
       {children}
     </AuthGoogleContext.Provider>

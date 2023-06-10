@@ -33,7 +33,6 @@ const ButtonDivFinish = styled.div`
   justify-content: center;
   width: 100%;
   .finishButton {
-    justify-content: center;
     position: relative;
     margin-top: 20px;
     h6 {

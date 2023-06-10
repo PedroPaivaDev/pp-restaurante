@@ -15,6 +15,7 @@ const PortionDetail = styled.div`
       color: ${props => props.theme.colors.primaryColor};
     }
     .buttonAddRemove {
+      justify-content: flex-end;
       h6 {
         top: -30px;
       }

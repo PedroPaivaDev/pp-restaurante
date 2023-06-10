@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 
 import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
-import { getUserDB, getUsers } from '@/services/firebase';
+import { getUsers } from '@/services/firebase';
 
 import Button from './Button';
 import { useRouter } from 'next/router';
@@ -32,14 +32,12 @@ const DivSignIn = styled.div`
     }
   }
   .signInButton {
-    justify-content: center;
     color: ${props => props.theme.colors.primaryColor};
   }
 `;
 
 const SignIn: React.FC = () => {
-  const {signInGoogle, userAuth, logout} = React.useContext(AuthGoogleContext);
-  const [userDB, setUserDB] = React.useState<UserDB|null>(null);
+  const {signInGoogle, userDB, logout, } = React.useContext(AuthGoogleContext);
   const {push} = useRouter();
 
   function redirectToProfile() {
@@ -47,16 +45,12 @@ const SignIn: React.FC = () => {
   }
 
   React.useEffect(() => {
-    userAuth && getUserDB(userAuth.uid, setUserDB);
-  },[userAuth])
-
-  React.useEffect(() => {
     getUsers();
   })
 
   return (
     <DivSignIn>
-      {(userAuth && userDB)
+      {userDB
       ?
         <div className='userData'>
           <div className='userPhoto' onClick={redirectToProfile}>

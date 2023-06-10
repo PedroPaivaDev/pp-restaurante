@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Image from 'next/image';
 
 import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
-import { getUserDB } from '@/services/firebase';
 import timestampToDate from '@/helper/timestampToDate';
 
 import ProfileForm from '@/components/Forms/ProfileForm';
@@ -44,12 +43,7 @@ const DivPerfil = styled.div`
 `;
 
 const Perfil = () => {
-  const {userAuth} = React.useContext(AuthGoogleContext);
-  const [userDB, setUserDB] = React.useState<UserDB|null>(null);
-
-  React.useEffect(() => {
-    userAuth && getUserDB(userAuth.uid, setUserDB);
-  },[userAuth])
+  const {userDB, setUserDBChanged} = React.useContext(AuthGoogleContext);
 
   return (
     <DivPerfil className='page'>
@@ -66,7 +60,7 @@ const Perfil = () => {
               <small>último login: {timestampToDate(userDB?.userData.lastLoginAt as number)}</small>
             </div>
           </div>
-          {userDB && <ProfileForm userDB={userDB}/>}
+          {userDB && <ProfileForm userDB={userDB} setUserDBChanged={setUserDBChanged}/>}
         </div>
       </div>
     </DivPerfil>

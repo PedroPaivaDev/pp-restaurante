@@ -5,6 +5,7 @@ import { changeUserData } from '@/services/firebase';
 
 import InputText from './InputText';
 import Button from './Button';
+import { useRouter } from 'next/router';
 
 const FormContainer = styled.form`
   display: flex;
@@ -15,9 +16,18 @@ const FormContainer = styled.form`
     flex-direction: column;
     gap: 25px;
   }
+  .saveChangesButton {
+    justify-content: flex-end;
+  }
 `;
 
-const ProfileForm = ({userDB}:{userDB:UserDB}) => {
+interface PropsProfileForm {
+  userDB: UserDB;
+  setUserDBChanged: React.Dispatch<React.SetStateAction<number|null>>;
+}
+
+const ProfileForm = ({userDB, setUserDBChanged}:PropsProfileForm) => {
+  const {push} = useRouter();
 
   function createObjectFromEntries(entriesArray:Array<[string, string]>) {
     let objectWithEntries:ObjectKeyString = {};
@@ -39,6 +49,8 @@ const ProfileForm = ({userDB}:{userDB:UserDB}) => {
     const formObjectChangedKeys = createObjectFromEntries(formDataEntriesArray as Array<[string, string]>);
 
     changeUserData(userDB.uid, formObjectChangedKeys);
+    setUserDBChanged(Date.now())
+    push('entregar');
   }
 
   return (
@@ -49,7 +61,7 @@ const ProfileForm = ({userDB}:{userDB:UserDB}) => {
           placeholder={userDB.userData.phoneNumber}
         />
         <InputText
-          label="Rua/Av:" type="text" name="street"
+          label="Rua ou Av:" type="text" name="street"
           placeholder={userDB.userData.street}
         />
         <InputText
@@ -65,7 +77,7 @@ const ProfileForm = ({userDB}:{userDB:UserDB}) => {
           placeholder={userDB.userData.reference}
         />
       </div>
-      <Button label='Salvar alterações'/>
+      <Button label='Salvar alterações' className='saveChangesButton'/>
     </FormContainer>
   )
 }

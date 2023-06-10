@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const ContainerButton = styled.div`
   position: relative;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   button {
     background-color: ${props => props.theme.colors.quaternaryColor};
     padding: 0px 10px;

@@ -16,9 +16,6 @@ const DivEnvelope = styled.div`
     flex-direction: column;
     gap: 10px;
     margin-top: 20px;
-    .buttonMenu {
-      justify-content: center;
-    }
   }
 `;
 
@@ -65,7 +62,6 @@ const Entrega = () => {
               <Button
                 label='Começar a Montar'
                 onClick={() => push('/menu?categoria=bases')}
-                className='buttonMenu'
               />
             </div>
           }
