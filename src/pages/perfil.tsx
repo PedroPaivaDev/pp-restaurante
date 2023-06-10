@@ -1,9 +1,12 @@
 import React from 'react';
-import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
-import { getUserDB } from '@/services/firebase';
 import styled from 'styled-components';
 import Image from 'next/image';
+
+import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
+import { getUserDB } from '@/services/firebase';
 import timestampToDate from '@/helper/timestampToDate';
+
+import ProfileForm from '@/components/Forms/ProfileForm';
 
 const DivPerfil = styled.div`
   display: flex;
@@ -51,7 +54,7 @@ const Perfil = () => {
   return (
     <DivPerfil className='page'>
       <div className='container'>
-        <div className='envelope'>
+        <div className='envelope animeLeft'>
           <div className='headerProfile'>
             {userDB && <Image src={userDB.userData.photoURL} width={80} height={80} alt="FotoUsuario" />}
             <div className='userData'>
@@ -63,6 +66,7 @@ const Perfil = () => {
               <small>último login: {timestampToDate(userDB?.userData.lastLoginAt as number)}</small>
             </div>
           </div>
+          {userDB && <ProfileForm userDB={userDB}/>}
         </div>
       </div>
     </DivPerfil>

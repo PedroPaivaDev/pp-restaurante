@@ -100,7 +100,6 @@ const Order = ({bag, menu}:{bag:Bag, menu:Menu}) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const formDataEntries = Array.from(formData.entries())
-    console.log(formDataEntries)
 
     if(client.value.length<=0 || contact.value.length<=0 || client.error || contact.error || totalPrice===0 || !payment || (getOption(payment)==="Cartão de Crédito" && !installmentCard) || (delivery && (street.value.length<=0 || number.value.length<=0 || neighborhood.value.length<=0))) {
       setStatusSubmit({

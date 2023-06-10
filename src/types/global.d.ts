@@ -90,6 +90,7 @@ interface OrderFormData {
 }
 
 interface UserDB {
+  uid: string;
   userData: UserData;
   userOrders?: OptionsObject;
 }

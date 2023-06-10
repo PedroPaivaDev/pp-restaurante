@@ -7,7 +7,7 @@ import { User, getAuth } from "firebase/auth"
 
 // Import Admin SDK
 // import { getDatabase, ref, set, child, push, onValue, remove, update, orderByChild, query, onChildAdded } from "firebase/database";
-import { getDatabase, ref, onValue, set, child } from "firebase/database";
+import { getDatabase, ref, onValue, set, child, update } from "firebase/database";
 import React from "react";
 
 // Your web app's Firebase configuration
@@ -27,11 +27,28 @@ const app = initializeApp(firebaseConfig);
 // Initialize Realtime Database and get a reference to the service
 const db = getDatabase(app);
 // const storage = getStorage(app);
+export const auth = getAuth(app)
 
 //----------------------------------------
 
-// MÉTODOS DO AUTENTICADOR
-export const auth = getAuth(app)
+//MÉTODOS DO STORAGE
+
+// export function urlEasterImages() {
+//   const easterRef = storageRef(storage, `easter/eggs/ovoBombomMorango-1.jpg`);
+//   getDownloadURL(storageRef(easterRef)).then((url) => console.log(url));
+// }
+
+//MÉTODOS DO REALTIME DATABASE:
+
+//Para buscar os produtos no DB
+export function getProducts(path:string, setState:React.Dispatch<React.SetStateAction<Menu>>) {
+  const productsRef = ref(db, path);
+  onValue(
+    productsRef,
+    (snapshot) => setState(snapshot.val()),
+    {onlyOnce: true}
+  )
+}
 
 export function getUsers() {
   const getRef = ref(db, 'usuarios');
@@ -54,6 +71,7 @@ export function getUserDB(uid:string, setState:React.Dispatch<React.SetStateActi
 export function setNewUser(userAuth:User) {
   const usersRef = ref(db, 'usuarios');
   const newUser = {
+    uid: userAuth.uid,
     userData: {
       displayName: userAuth.displayName,
       email: userAuth.email,
@@ -71,22 +89,11 @@ export function setNewUser(userAuth:User) {
   set(child(usersRef,`${userAuth.uid}`), newUser)
 }
 
-//MÉTODOS DO STORAGE
-// export function urlEasterImages() {
-//   const easterRef = storageRef(storage, `easter/eggs/ovoBombomMorango-1.jpg`);
-//   getDownloadURL(storageRef(easterRef)).then((url) => console.log(url));
-// }
-
-//MÉTODOS DO REALTIME DATABASE:
-
-//Para buscar os produtos no DB
-export function getProducts(path:string, setState:React.Dispatch<React.SetStateAction<Menu>>) {
-  const productsRef = ref(db, path);
-  onValue(
-    productsRef,
-    (snapshot) => setState(snapshot.val()),
-    {onlyOnce: true}
-  )
+export function changeUserData(uid:string, newData:ObjectKeyString) {
+  const usersRef = ref(db, `usuarios/${uid}/userData`);
+  update(usersRef, newData).then(() => {
+    console.log(`seus dados foram atualizados`)
+  }).catch(err => console.log(err));
 }
 
 //Para registrar pedidos de clientes

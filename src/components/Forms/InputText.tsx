@@ -1,17 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-interface PropsInputText {
-  label: string;
-  type: string;
-  name: string;
-  placeholder?: string;
-  value?: string;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  error?: string | null;
-  onBlur?: () => boolean;
-}
-
 const InputTextContainer = styled.div`
   display: flex;
   position: relative;
@@ -44,6 +33,17 @@ const InputTextContainer = styled.div`
     font-size: 0.75rem;
   }
 `;
+
+interface PropsInputText {
+  label: string;
+  type: string;
+  name: string;
+  placeholder?: string;
+  value?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  error?: string | null;
+  onBlur?: () => boolean;
+}
 
 const InputText = ({label, type, name, value, placeholder, onChange, error, onBlur}: PropsInputText) => {
   return (

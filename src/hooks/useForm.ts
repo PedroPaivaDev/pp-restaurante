@@ -39,7 +39,7 @@ const useForm = (key:string, initial:string, type?:'email'|'contact'|null) => {
   function onChange({ target, currentTarget }:PropsOnChange) {
     if (error) validate(target.value);
     if (type==="contact") {
-      currentTarget.maxLength = 11;
+      currentTarget.maxLength = 16;
       let valueMasked = currentTarget.value;
       valueMasked = valueMasked.replace(/\D/g, "");
       valueMasked = valueMasked.replace(/^(\d{2})(\d{1})(\d{4})(\d)/, "($1) $2 $3-$4");
