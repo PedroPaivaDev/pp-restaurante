@@ -83,6 +83,7 @@ interface OrderFormData {
   contact: string;
   payment: string;
   installment?: string;
+  delivery?: string;
   street?: string;
   number?: string;
   neighborhood?: string;

@@ -17,6 +17,7 @@ const PortionDetail = styled.div`
     .buttonAddRemove {
       justify-content: flex-end;
       h6 {
+        text-align: right;
         top: -30px;
       }
     }

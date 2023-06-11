@@ -23,7 +23,7 @@ const ContainerButton = styled.div`
     top: -20px;
     font-size: ${props => props.theme.font.size.medium};
     font-family: ${props => props.theme.font.family};
-    text-align: right;
+    text-align: center;
     text-shadow: 1px 1px 5px ${props => props.theme.colors.dark};
     width: 270px;
   }

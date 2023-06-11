@@ -1,7 +1,7 @@
 import getNameById from './getNameById';
 
 export default function handleOrderSubmit(
-  bag:Bag, formDataEntries:FormDataEntries, totalPrice:number, menu:MenuProducts
+  bag:Bag, formDataEntries:FormDataEntries, totalPrice:number, menu:MenuProducts, userDB:UserDB
 ) {
   function arrayToObj(formDataEntries:FormDataEntries) {
     return formDataEntries.reduce((obj:ObjectKeyString, [key, value]) => {
@@ -33,9 +33,9 @@ export default function handleOrderSubmit(
   const storeNumber = 5537999237253;
   const urlApi = 'http://api.whatsapp.com/send';
 
-  const header = `_Código do Pedido: ${Date.now()}_%0a_Cliente: ${formData.client}_%0a_Contato: ${formData.contact}_%0a`;
+  const header = `_Código do Pedido: ${Date.now()}_%0a_Cliente: ${userDB.userData.displayName}_%0a_Contato: ${userDB.userData.phoneNumber}_%0a`;
   const pay = `_Forma de Pagamento: ${formData.payment}${formData.installment ? ` ${formData.installment}` : ''}_%0a`;
-  const deliveryAddress = formData.street ? `_*Entregar no endereço*: Rua ${formData.street}, ${formData.number}, Bairro ${formData.neighborhood}. Ponto de referência: ${formData.reference}._%0a` : '_*Retirada no Restaurante*_%0a';
+  const deliveryAddress = formData.delivery ? `_*Entregar no endereço*: Rua ${userDB.userData.street}, ${userDB.userData.streetNumber}, Bairro ${userDB.userData.neighborhood}. Ponto de referência: ${userDB.userData.reference}._%0a` : '_*Retirada no Restaurante*_%0a';
 
   const mappedProducts = mapMarmitas();
   

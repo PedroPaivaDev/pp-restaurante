@@ -69,6 +69,7 @@ function Checkbox ({options, state, setState, name, className, ...props}:PropsCh
             onChange={handleOnChange}
             type='checkbox'
             className='input'
+            name={name}
             {...props}
           />
           <label htmlFor={`${name + option}`} className='label'>

@@ -100,22 +100,31 @@ const Order = ({bag, menu}:{bag:Bag, menu:Menu}) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const formDataEntries = Array.from(formData.entries())
-
-    if(
-      !payment
-      || (getOption(payment)==="Cartão de Crédito" && !installmentCard)
-      || (delivery.length>0 && (!userDB?.userData.street || !userDB?.userData.streetNumber || !userDB?.userData.neighborhood || !userDB?.userData.reference))
-    ) {
+    if(!payment) {
       setStatusSubmit({
         label: 'Enviar Pedido',
         status: 'error',
-        msg: 'Preencha os campos corretamente'
+        msg: 'Escolha uma forma de pagamento'
+      })
+      return;
+    } else if(getOption(payment)==="Cartão de Crédito" && !installmentCard) {
+      setStatusSubmit({
+        label: 'Enviar Pedido',
+        status: 'error',
+        msg: 'Escolha a quantidade de parcelas'
+      })
+      console.log(formDataEntries)
+      return;
+    } else if(delivery.length>0 && (!userDB?.userData.street || !userDB?.userData.streetNumber || !userDB?.userData.neighborhood || !userDB?.userData.reference)) {
+      setStatusSubmit({
+        label: 'Enviar Pedido',
+        status: 'error',
+        msg: 'Altere o endereço de entrega'
       })
       return;
     } else {
-      handleOrderSubmit(bag, formDataEntries as FormDataEntries, totalPrice, menu.products);
+      userDB && handleOrderSubmit(bag, formDataEntries as FormDataEntries, totalPrice, menu.products, userDB);
     }
-
   }
 
   React.useEffect(() => {
