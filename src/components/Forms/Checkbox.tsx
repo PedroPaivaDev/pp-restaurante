@@ -15,23 +15,37 @@ const CheckboxContainer = styled.div`
     transition: 0.3s;
     cursor: pointer;
     line-height: 32px;
+    opacity: 0.7;
   }
   .label:hover, .input:checked + .label {
     color: ${props => props.theme.colors.quaternaryColor};
+    opacity: 1;
+  }
+  .label::after {
+    border: 2px solid ${props => props.theme.colors.secondaryColor};
+    border-radius: 10px;
+    position: absolute;
+    top: 1px;
+    left: -33px;
+    content: "";
+    width: 30px;
+    height: 15px;
   }
   .label::before {
-    border: 2px solid ${props => props.theme.colors.secondaryColor};
+    border: 2px solid ${props => props.theme.colors.quintenaryColor};
     position: absolute;
     background-color: rgb(242,227,204);
     top: 1px;
-    left: -18px;
+    left: -33px;
     width: 15px;
     height: 15px;
     border-radius: 10px;
     content: "";
+    transition: 0.3s;
   }
   .input:checked + .label::before {
     background-color: ${props => props.theme.colors.sucess};
+    left: -18px;
     z-index: 2;
   }
 `;

@@ -28,6 +28,7 @@ const OrderContainer = styled.div`
       margin-bottom: 10px;
       text-align: center;
       .clientData, .deliveryAndPrice, .deliveryAddress {
+        width: 280px;
         display: flex;
         flex-direction: column;
         height: 100%;
@@ -54,7 +55,7 @@ const OrderContainer = styled.div`
         flex-direction: column;
         align-items: center;
       }
-      .clientData, .deliveryAndPrice, .deliveryAddress {
+      .clientData, .deliveryAddress {
         justify-content: flex-end;
         width: 280px;
       }
@@ -73,7 +74,7 @@ const Order = ({bag, menu}:{bag:Bag, menu:Menu}) => {
 
   const [payment, setPayment] = useLocalStorage<OptionsObject|null>('payment', null);
   const [installmentCard, setInstallmentCard] = React.useState<OptionsObject|null>(null);
-  const [delivery, setDelivery] = useLocalStorage<string[]>('delivery', []);
+  const [delivery, setDelivery] = React.useState<string[]>(["Solicitar entrega (+R$5,00)"]);
 
   const paymentsForms = {
     "Transferência": null,
