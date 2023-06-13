@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import { MarmitaContext } from '@/contexts/MarmitaContext';
 import { getProducts } from '@/services/firebase';
+import withAuth from '@/utils/withAuth';
 
 import OrderMarmita from '@/components/OrderMarmita';
 import Order from '@/components/Order';
@@ -35,7 +36,7 @@ const Entrega = () => {
 
   React.useEffect(() => {
     getProducts('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>)
-  },[])
+  },[]);
 
   return (
     <div className='page animeLeft'>
@@ -74,4 +75,4 @@ const Entrega = () => {
   )
 }
 
-export default Entrega;
+export default withAuth(Entrega);

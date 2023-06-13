@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React from 'react'
 import { GoogleAuthProvider, User, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
+import Cookie from 'js-cookie';
 
 import { auth, getUserDB, setNewUser } from '@/services/firebase';
 
@@ -26,6 +27,16 @@ export const AuthGoogleProvider = ({children}:{children:React.ReactNode;}) => {
   const [userAuth, setUserAuth] = React.useState<User|null>(null);
   const [userDB, setUserDB] = React.useState<UserDB|null>(null);
   const [userDBChanged, setUserDBChanged] = React.useState<number|null>(null);
+
+  function setSession(session:string|null) {
+    if(session) {
+      Cookie.set('FirebaseUserUid', session, {
+        expires: 1,
+      });
+    } else {
+      Cookie.remove('FirebaseUserUid');
+    }
+  }
 
   function signInGoogle() {
     signInWithPopup(auth, provider)
@@ -77,8 +88,10 @@ export const AuthGoogleProvider = ({children}:{children:React.ReactNode;}) => {
 
   React.useEffect(() => {
     if(userAuth) {
+      setSession(userAuth.uid)
       getUserDB(userAuth.uid, setUserDB);      
     } else {
+      setSession(null)
       setUserDB(null);
     }
   },[userAuth, userDBChanged])
