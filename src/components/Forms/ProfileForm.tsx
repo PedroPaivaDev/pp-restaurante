@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 import { changeUserData } from '@/services/firebase';
 
 import InputText from './InputText';
 import Button from './Button';
-import { useRouter } from 'next/router';
 
 const FormContainer = styled.form`
   display: flex;
@@ -77,6 +77,7 @@ const ProfileForm = ({userDB, setUserDBChanged}:PropsProfileForm) => {
           placeholder={userDB.userData.reference}
         />
       </div>
+      <p style={{width: '280px'}}><strong>ATENÇÃO!</strong> Para prosseguir, todos os campos devem ser preenchidos.</p>
       <Button label='Salvar alterações' className='saveChangesButton'/>
     </FormContainer>
   )

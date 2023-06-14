@@ -69,7 +69,7 @@ interface Bag {
 }
 
 interface ObjectKeyString {
-  [key: string]: string;
+  [key: string]: string | number;
 }
 
 interface OptionsObject {

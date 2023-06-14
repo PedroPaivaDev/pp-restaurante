@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Image from 'next/image';
 
 import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
-import { getUsers } from '@/services/firebase';
 
 import Button from './Button';
 import { useRouter } from 'next/router';
@@ -43,10 +42,6 @@ const SignIn: React.FC = () => {
   function redirectToProfile() {
     push('perfil')
   }
-
-  React.useEffect(() => {
-    getUsers();
-  })
 
   return (
     <DivSignIn>

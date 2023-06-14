@@ -78,11 +78,11 @@ export function setNewUser(userAuth:User) {
       photoURL: userAuth.photoURL,
       createdAt: new Date(userAuth.metadata.creationTime as string).getTime(),
       lastLoginAt: new Date(userAuth.metadata.lastSignInTime as string).getTime(),
-      phoneNumber: "",
-      street: "",
-      streetNumber: "",
-      neighborhood: "",
-      reference: ""
+      phoneNumber: null,
+      street: null,
+      streetNumber: null,
+      neighborhood: null,
+      reference: null
     },
     userOrders: {}
   };
@@ -92,7 +92,7 @@ export function setNewUser(userAuth:User) {
 export function changeUserData(uid:string, newData:ObjectKeyString) {
   const usersRef = ref(db, `usuarios/${uid}/userData`);
   update(usersRef, newData).then(() => {
-    console.log(`seus dados foram atualizados`)
+    console.log(`UserDB updated`)
   }).catch(err => console.log(err));
 }
 

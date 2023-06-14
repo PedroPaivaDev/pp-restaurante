@@ -6,6 +6,7 @@ import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
 import timestampToDate from '@/helper/timestampToDate';
 
 import ProfileForm from '@/components/Forms/ProfileForm';
+import SignIn from '@/components/Forms/SignIn';
 
 const DivPerfil = styled.div`
   display: flex;
@@ -43,24 +44,32 @@ const DivPerfil = styled.div`
 `;
 
 const Perfil = () => {
-  const {userDB, setUserDBChanged} = React.useContext(AuthGoogleContext);
+  const {userAuth, userDB, setUserDBChanged} = React.useContext(AuthGoogleContext);
 
   return (
     <DivPerfil className='page'>
       <div className='container'>
         <div className='envelope animeLeft'>
-          <div className='headerProfile'>
-            {userDB && <Image src={userDB.userData.photoURL} width={80} height={80} alt="FotoUsuario" />}
-            <div className='userData'>
-              <h1>{userDB?.userData.displayName}</h1>
-              <p>{userDB?.userData.email}</p>
-              <small>
-                cadastro: {timestampToDate(userDB?.userData.createdAt as number)}
-              </small>
-              <small>último login: {timestampToDate(userDB?.userData.lastLoginAt as number)}</small>
-            </div>
-          </div>
-          {userDB && <ProfileForm userDB={userDB} setUserDBChanged={setUserDBChanged}/>}
+          {userAuth ?
+            <>
+              <div className='headerProfile'>
+                {userDB && <Image src={userDB.userData.photoURL} width={80} height={80} alt="FotoUsuario" />}
+                <div className='userData'>
+                  <h1>{userDB?.userData.displayName}</h1>
+                  <p>{userDB?.userData.email}</p>
+                  <small>
+                    cadastro: {timestampToDate(userDB?.userData.createdAt as number)}
+                  </small>
+                  <small>último login: {timestampToDate(userDB?.userData.lastLoginAt as number)}</small>
+                </div>
+              </div>
+              {userDB && <ProfileForm userDB={userDB} setUserDBChanged={setUserDBChanged}/>}
+            </> :
+            <>
+              <p style={{marginTop:'25px'}}>Faça login com a sua conta do Google, para completar o seu cadastro e prosseguir para a página de Entrega</p>
+              <SignIn />
+            </>
+          }
         </div>
       </div>
     </DivPerfil>

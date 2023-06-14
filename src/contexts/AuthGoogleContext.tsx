@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React from 'react'
 import { GoogleAuthProvider, User, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
-import Cookie from 'js-cookie';
 
-import { auth, getUserDB, setNewUser } from '@/services/firebase';
+import { auth, changeUserData, getUserDB, setNewUser } from '@/services/firebase';
 
 const provider = new GoogleAuthProvider();
 
 interface PropsAuthGoogleContext {
+  userAuth: User|null;
   signInGoogle: () => void;
   logout: () => void;
   userDB: UserDB|null;
@@ -15,6 +15,7 @@ interface PropsAuthGoogleContext {
 }
 
 const defaultContext: PropsAuthGoogleContext = {
+  userAuth: null,
   signInGoogle: () => {},
   logout: () => {},
   userDB: null,
@@ -28,23 +29,13 @@ export const AuthGoogleProvider = ({children}:{children:React.ReactNode;}) => {
   const [userDB, setUserDB] = React.useState<UserDB|null>(null);
   const [userDBChanged, setUserDBChanged] = React.useState<number|null>(null);
 
-  function setSession(session:string|null) {
-    if(session) {
-      Cookie.set('FirebaseUserUid', session, {
-        expires: 1,
-      });
-    } else {
-      Cookie.remove('FirebaseUserUid');
-    }
-  }
-
   function signInGoogle() {
     signInWithPopup(auth, provider)
     .then((result) => {
-      console.log(result.user)
       isUidAlreadyRegistered(result.user).then((resolve) => {
         if(resolve) {
           setUserAuth(result.user);
+          changeUserData(result.user?.uid, {lastLoginAt: new Date(result.user.metadata.lastSignInTime as string).getTime()})
           console.log('entrando...')
         } else {
           createUser(result.user);
@@ -88,16 +79,15 @@ export const AuthGoogleProvider = ({children}:{children:React.ReactNode;}) => {
 
   React.useEffect(() => {
     if(userAuth) {
-      setSession(userAuth.uid)
       getUserDB(userAuth.uid, setUserDB);      
     } else {
-      setSession(null)
       setUserDB(null);
     }
   },[userAuth, userDBChanged])
 
   return (
     <AuthGoogleContext.Provider value={{
+      userAuth,
       signInGoogle,
       logout,
       userDB,

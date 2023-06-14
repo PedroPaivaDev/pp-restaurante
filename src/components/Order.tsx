@@ -74,7 +74,7 @@ const Order = ({bag, menu}:{bag:Bag, menu:Menu}) => {
 
   const [payment, setPayment] = useLocalStorage<OptionsObject|null>('payment', null);
   const [installmentCard, setInstallmentCard] = React.useState<OptionsObject|null>(null);
-  const [delivery, setDelivery] = React.useState<string[]>(["Solicitar entrega (+R$5,00)"]);
+  const [delivery, setDelivery] = React.useState<string[]>(["Entregar (+R$5,00)"]);
 
   const paymentsForms = {
     "Transferência": null,
@@ -129,7 +129,7 @@ const Order = ({bag, menu}:{bag:Bag, menu:Menu}) => {
   }
 
   React.useEffect(() => {
-    let sumPrices = delivery.includes("Solicitar entrega (+R$5,00)") ? 5 : 0;
+    let sumPrices = delivery.includes("Entregar (+R$5,00)") ? 5 : 0;
     if(payment && installmentCard && getOption(payment)==="Cartão de Crédito") {
       Object.keys(bag).length>0 && Object.keys(bag).forEach(marmitaId => {
         sumPrices = sumPrices + bag[marmitaId].price;
@@ -167,14 +167,14 @@ const Order = ({bag, menu}:{bag:Bag, menu:Menu}) => {
               />
             }
             <Checkbox
-              options={["Solicitar entrega (+R$5,00)"]}
+              options={["Entregar (+R$5,00)"]}
               state={delivery}
               setState={setDelivery}
               name="delivery"
             />
           </div>
           <div className='deliveryAndPrice'>
-            {delivery.includes("Solicitar entrega (+R$5,00)") &&
+            {delivery.includes("Entregar (+R$5,00)") &&
               <div className='deliveryAddress'>
                 <p>Endereço de entrega: {userDB?.userData.street}, 
                   nº {userDB?.userData.streetNumber}, 
