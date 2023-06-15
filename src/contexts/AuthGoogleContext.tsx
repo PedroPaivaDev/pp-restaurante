@@ -35,7 +35,7 @@ export const AuthGoogleProvider = ({children}:{children:React.ReactNode;}) => {
       isUidAlreadyRegistered(result.user).then((resolve) => {
         if(resolve) {
           setUserAuth(result.user);
-          changeUserData(result.user?.uid, {lastLoginAt: new Date(result.user.metadata.lastSignInTime as string).getTime()})
+          changeUserData(result.user?.uid, {lastLoginAt: new Date(result.user.metadata.lastSignInTime as string).getTime()});
           console.log('entrando...')
         } else {
           createUser(result.user);
@@ -79,7 +79,7 @@ export const AuthGoogleProvider = ({children}:{children:React.ReactNode;}) => {
 
   React.useEffect(() => {
     if(userAuth) {
-      getUserDB(userAuth.uid, setUserDB);      
+      getUserDB(userAuth.uid, setUserDB);
     } else {
       setUserDB(null);
     }
