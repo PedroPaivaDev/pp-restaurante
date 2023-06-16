@@ -36,10 +36,8 @@ export const AuthGoogleProvider = ({children}:{children:React.ReactNode;}) => {
         if(resolve) {
           setUserAuth(result.user);
           changeUserData(result.user?.uid, {lastLoginAt: new Date(result.user.metadata.lastSignInTime as string).getTime()});
-          console.log('entrando...')
         } else {
           createUser(result.user);
-          console.log('criando...')
         }
       });
     })
@@ -54,10 +52,8 @@ export const AuthGoogleProvider = ({children}:{children:React.ReactNode;}) => {
     const difference = lastLoginAt - creationTime
     const fiveSecondsInMillis = 5000;
     if(difference < fiveSecondsInMillis) {
-      console.log('não tem cadastro.')
       return false;
     } else {
-      console.log('já tem cadastro.')
       return true;
     }
   }

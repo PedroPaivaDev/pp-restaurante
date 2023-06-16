@@ -78,7 +78,7 @@ export function setNewUser(userAuth:User) {
       photoURL: userAuth.photoURL,
       createdAt: new Date(userAuth.metadata.creationTime as string).getTime(),
       lastLoginAt: new Date(userAuth.metadata.lastSignInTime as string).getTime(),
-      phoneNumber: null,
+      phoneNumber: userAuth.phoneNumber,
       street: null,
       streetNumber: null,
       neighborhood: null,
