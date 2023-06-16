@@ -1,5 +1,4 @@
 import React from "react";
-import useLocalStorage from './useLocalStorage';
 
 const types = {
   email: {
@@ -18,8 +17,8 @@ interface PropsOnChange {
   currentTarget: HTMLInputElement;
 }
 
-const useForm = (key:string, initial:string, type?:'email'|'contact'|null) => {
-  const [value, setValue] = useLocalStorage(key, initial);
+const useForm = (type:'email'|'contact'|null) => {
+  const [value, setValue] = React.useState<string>('');
   const [error, setError] = React.useState<string|null>(null);
 
   function validate(value:string) {
@@ -51,10 +50,8 @@ const useForm = (key:string, initial:string, type?:'email'|'contact'|null) => {
 
   return {
     value,
-    setValue,
     error,
     onChange,
-    validate: () => validate(value),
     onBlur: () => validate(value),
   };
 };

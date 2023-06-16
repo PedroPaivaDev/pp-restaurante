@@ -6,6 +6,7 @@ import { changeUserData } from '@/services/firebase';
 
 import InputText from './InputText';
 import Button from './Button';
+import useForm from '@/hooks/useForm';
 
 const FormContainer = styled.form`
   display: flex;
@@ -28,6 +29,7 @@ interface PropsProfileForm {
 
 const ProfileForm = ({userDB, setUserDBChanged}:PropsProfileForm) => {
   const {push} = useRouter();
+  const phoneNumber = useForm('contact');
 
   function createObjectFromEntries(entriesArray:Array<[string, string]>) {
     let objectWithEntries:ObjectKeyString = {};
@@ -59,6 +61,7 @@ const ProfileForm = ({userDB, setUserDBChanged}:PropsProfileForm) => {
         <InputText
           label="Contato:" type="text" name="phoneNumber"
           placeholder={userDB.userData.phoneNumber}
+          {...phoneNumber}
         />
         <InputText
           label="Rua ou Av:" type="text" name="street"
