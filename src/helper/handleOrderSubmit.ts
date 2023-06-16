@@ -1,8 +1,9 @@
 import getNameById from './getNameById';
 
 export default function handleOrderSubmit(
-  bag:Bag, formDataEntries:FormDataEntries, totalPrice:number, menu:MenuProducts, userDB:UserDB
+  bag:Bag, formDataEntries:FormDataEntries, totalPrice:number, menu:MenuProducts, userDB:UserDB, screenWidth:number
 ) {
+
   function arrayToObj(formDataEntries:FormDataEntries) {
     return formDataEntries.reduce((obj:ObjectKeyString, [key, value]) => {
       obj[key] = value;
@@ -31,7 +32,10 @@ export default function handleOrderSubmit(
   }
 
   const storeNumber = 5537999237253;
-  const urlApi = 'http://api.whatsapp.com/send';
+  let urlApi = 'http://web.whatsapp.com/send';
+  if(screenWidth < 914){
+    urlApi = "https://api.whatsapp.com/send";
+  }
 
   const header = `_Código do Pedido: ${Date.now()}_%0a_Cliente: ${userDB.userData.displayName}_%0a_Contato: ${userDB.userData.phoneNumber}_%0a`;
   const pay = `_Forma de Pagamento: ${formData.payment}${formData.installment ? ` ${formData.installment}` : ''}_%0a`;

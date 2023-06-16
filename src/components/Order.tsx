@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import useLocalStorage from '@/hooks/useLocalStorage';
+import useMediaQuery from '@/hooks/useMediaQuery';
 import getOption from '@/helper/getOption';
 import handleOrderSubmit from '@/helper/handleOrderSubmit';
 import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
@@ -64,6 +65,7 @@ const OrderContainer = styled.div`
 `;
 
 const Order = ({bag, menu}:{bag:Bag, menu:Menu}) => {
+  const screenWidth = useMediaQuery();
   const {userDB} = React.useContext(AuthGoogleContext);
   const [totalPrice, setTotalPrice] = React.useState(0);
   const [statusSubmit, setStatusSubmit] = React.useState<StatusSubmit>({
@@ -124,7 +126,7 @@ const Order = ({bag, menu}:{bag:Bag, menu:Menu}) => {
       })
       return;
     } else {
-      userDB && handleOrderSubmit(bag, formDataEntries as FormDataEntries, totalPrice, menu.products, userDB);
+      userDB && handleOrderSubmit(bag, formDataEntries as FormDataEntries, totalPrice, menu.products, userDB, screenWidth);
     }
   }
 
