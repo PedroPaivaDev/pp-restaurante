@@ -30,12 +30,13 @@ interface GridProps {
   md?: number;
   lg?: number;
   children?: React.ReactNode;
+  className?: string;
 }
 
-const Grid: React.FC<GridProps> = ({ xs, sm, md, lg, children }) => {
+const Grid: React.FC<GridProps> = ({ xs, sm, md, lg, children, className }) => {
   return (
     <>
-      <Column xs={xs} sm={sm} md={md} lg={lg}>
+      <Column xs={xs} sm={sm} md={md} lg={lg} className={className}>
         {children}
       </Column>
     </>

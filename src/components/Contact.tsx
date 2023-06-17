@@ -1,6 +1,7 @@
-import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const DivContact = styled.div`
   width: auto;
@@ -42,6 +43,7 @@ const DivContact = styled.div`
 `;
 
 const Contact = () => {
+  const {push} = useRouter();
   return (
     <DivContact className='bgPaper'>
       <div className="wrapper">
@@ -61,7 +63,7 @@ const Contact = () => {
         <h2>Localização</h2>
         <p>Av. Doutor Roberto de Melo Queiroz</p>
         <p>Número 1790, Bairro Novo São José</p>
-        <p>Bom Despacho / MG</p>
+        <p onClick={() => push('admin')}>Bom Despacho / MG</p>
       </div>
     </DivContact>
   )

@@ -26,6 +26,7 @@ interface Portions {
 }
 
 interface Portion {
+  available: boolean;
   category: string;
   type: string;
   id: string;
