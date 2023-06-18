@@ -108,4 +108,5 @@ interface UserData {
   streetNumber?: string;
   neighborhood?: string;
   reference?: string;
+  admin?: boolean;
 }

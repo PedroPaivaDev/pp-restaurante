@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
 
 import { getProducts } from '@/services/firebase';
 import Checkbox from '../Forms/Checkbox';
@@ -35,35 +36,49 @@ interface DailyMenu {
 }
 
 const DailyMenu = () => {
+  const {userDB} = React.useContext(AuthGoogleContext);
   const [menu, setMenu] = React.useState<Menu>();
-  const [menuOptions, setMenuOptions] = React.useState<DailyMenu|null>(null);
+  const [menuOptionsIds, setMenuOptionsIds] = React.useState<DailyMenu|null>(null);
   const [available, setAvailable] = React.useState<string[]>([]);
 
-  function getMenuProducts(menuProducts:MenuProducts):DailyMenu {
-    let arrayPortions:DailyMenu = {};
+  function getMenuProductsByCategories(menuProducts:MenuProducts):DailyMenu {
+    let portionsByCategory:DailyMenu = {};
     Object.keys(menuProducts).forEach(category =>
       Object.keys(menuProducts[category].products).forEach(type =>
-        Object.keys(menuProducts[category].products[type].products).forEach(option => {
-          if(arrayPortions[category]) {
-            arrayPortions = {
-              ...arrayPortions,
+        Object.keys(menuProducts[category].products[type].products).forEach(portion => {
+          if(portionsByCategory[category]) {
+            portionsByCategory = {
+              ...portionsByCategory,
               [category]: [
-                ...arrayPortions[category],
-                menuProducts[category].products[type].products[option].id
+                ...portionsByCategory[category],
+                `${category}_${menuProducts[category].products[type].products[portion].id}`
               ]
             }
           } else {
-            arrayPortions = {
-              ...arrayPortions,
+            portionsByCategory = {
+              ...portionsByCategory,
               [category]: [
-                menuProducts[category].products[type].products[option].id
+                `${category}_${menuProducts[category].products[type].products[portion].id}`
               ]
             }
           }
         })
       )
     )
-    return arrayPortions
+    return portionsByCategory
+  }
+
+  function getAllProductsInCategories(menuProducts:MenuProducts):string[] {
+    const arrayAllPortionsAvailables:string[] = [];
+    Object.keys(menuProducts).forEach(category =>
+      Object.keys(menuProducts[category].products).forEach(type =>
+        Object.keys(menuProducts[category].products[type].products).forEach(portion => {
+          if(menuProducts[category].products[type].products[portion].available)
+          arrayAllPortionsAvailables.push(`${category}_${portion}`)
+        })
+      )
+    )
+    return arrayAllPortionsAvailables;
   }
 
   React.useEffect(() => {
@@ -71,8 +86,12 @@ const DailyMenu = () => {
   },[]);
 
   React.useEffect(() => {
-    menu && setMenuOptions(getMenuProducts(menu.products))
+    menu && setMenuOptionsIds(getMenuProductsByCategories(menu.products))
   },[menu])
+
+  React.useEffect(() => {
+    menu && menuOptionsIds && setAvailable(getAllProductsInCategories(menu?.products));
+  },[menu, menuOptionsIds])
 
   React.useEffect(() => {
     console.log(available)
@@ -81,19 +100,20 @@ const DailyMenu = () => {
   return (
     <DivDailyMenu className='wrapper'>
       <h1>Cardápio do Dia</h1>
-      {menuOptions && <div className='row'>
-        {Object.keys(menuOptions).map(category =>
+      {menuOptionsIds && <div className='row'>
+        {Object.keys(menuOptionsIds).map(category =>
           <Grid key={category}
             xs={12} sm={6} md={4} lg={3}
           >
             <div className='bgPaper category'>
               <h2>{category}</h2>
               <Checkbox
-                options={menuOptions[category]}
+                options={menuOptionsIds[category]}
                 state={available}
                 setState={setAvailable}
                 name={category}
                 className='divCheckbox'
+                admin={userDB?.userData.admin}
               />
             </div>
           </Grid>

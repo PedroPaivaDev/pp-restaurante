@@ -1,3 +1,4 @@
+import { changeProductAvailability } from '@/services/firebase';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -56,15 +57,18 @@ interface PropsCheckbox {
   setState: React.Dispatch<React.SetStateAction<string[]>>;
   name: string;
   className?: string;
+  admin?: boolean;
 }
 
-function Checkbox ({options, state, setState, name, className, ...props}:PropsCheckbox) {
+function Checkbox ({options, state, setState, name, className, admin, ...props}:PropsCheckbox) {
 
   function handleOnChange({target}:{target:EventTarget & HTMLInputElement}) {
     if(target.checked) {
-      setState([...state, target.value])
+      admin && changeProductAvailability(target.value, true);
+      setState([...state, target.value]);
     } else {
-      setState(state.filter(item => item !== target.value))
+      admin && changeProductAvailability(target.value, false);
+      setState(state.filter(item => item !== target.value));
     }
   }
 

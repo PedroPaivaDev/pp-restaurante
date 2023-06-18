@@ -96,6 +96,16 @@ export function changeUserData(uid:string, newData:ObjectKeyString) {
   }).catch(err => console.log(err));
 }
 
+// Para atualizar produtos
+export function changeProductAvailability(id:string, availability:boolean) {
+  const category = id.split('_')[0];
+  const type = id.split('_')[1].split('-')[0];
+  const productRef = ref(db, `cardapio/products/${category}/products/${type}/products/${id.split('_')[1]}`);
+  update(productRef, {available: availability}).then(() => {
+    console.log(`a disponibilidade do produto de id: ${id}, foi alterado para ${availability}`)
+  });
+}
+
 //Para registrar pedidos de clientes
 // export function registerProductsOrder(name, description, price, image) {
 //   const ordersRef = ref(db, 'productsOrders');
@@ -120,14 +130,6 @@ export function changeUserData(uid:string, newData:ObjectKeyString) {
 //   // set(productsRef, null).then(() => {
 //   //   console.log(`excluído o item ${id}`)
 //   // });
-// }
-
-//Para atualizar produtos
-// export function changeProductPrice(id, newPrice) {
-//   const productRef = ref(db, 'products/' + id);
-//   update(productRef, {price: newPrice}).then(() => {
-//     console.log(`o preço do produto de id: ${id}, foi alterado para ${newPrice}`)
-//   });
 // }
 
 //Para ordenar produtos pelo nome (ainda não funciona)
