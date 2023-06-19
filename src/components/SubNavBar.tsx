@@ -31,17 +31,18 @@ const NavBar = styled.nav`
 interface PropsSubNavBar {
   categories: string[];
   path: string;
+  endpoint: string;
 }
 
-const SubNavBar = ({categories, path}:PropsSubNavBar) => {
+const SubNavBar = ({categories, path, endpoint}:PropsSubNavBar) => {
   return (
     <NavBar>
       <div className='navLinks'>
         {categories.map(category =>
           <Link
             key={category}
-            href={`/menu?categoria=${category}`}
-            className={path===category ? 'active' : ''}
+            href={`/${path}?categoria=${category}`}
+            className={endpoint===category ? 'active' : ''}
           >
             {category}
           </Link>

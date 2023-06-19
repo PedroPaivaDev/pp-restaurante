@@ -64,10 +64,10 @@ function Checkbox ({options, state, setState, name, className, admin, ...props}:
 
   function handleOnChange({target}:{target:EventTarget & HTMLInputElement}) {
     if(target.checked) {
-      admin && changeProductAvailability(target.value, true);
+      admin && changeProductAvailability(`${name}_${target.value}`, true);
       setState([...state, target.value]);
     } else {
-      admin && changeProductAvailability(target.value, false);
+      admin && changeProductAvailability(`${name}_${target.value}`, false);
       setState(state.filter(item => item !== target.value));
     }
   }

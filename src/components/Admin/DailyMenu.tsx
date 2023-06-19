@@ -24,9 +24,15 @@ const DivDailyMenu = styled.div`
     flex-wrap: wrap;
   }
   .inputGroup {
+    .label {
+      opacity: 0.4;
+    }
     .label:hover, .input:checked + .label {
       color: ${props => props.theme.colors.primaryColor};
       opacity: 1;
+    }
+    .label::before {
+      border: 2px solid ${props => props.theme.colors.primaryColor};
     }
   }
 `;
@@ -51,14 +57,14 @@ const DailyMenu = () => {
               ...portionsByCategory,
               [category]: [
                 ...portionsByCategory[category],
-                `${category}_${menuProducts[category].products[type].products[portion].id}`
+                `${menuProducts[category].products[type].products[portion].id}`
               ]
             }
           } else {
             portionsByCategory = {
               ...portionsByCategory,
               [category]: [
-                `${category}_${menuProducts[category].products[type].products[portion].id}`
+                `${menuProducts[category].products[type].products[portion].id}`
               ]
             }
           }
@@ -74,7 +80,7 @@ const DailyMenu = () => {
       Object.keys(menuProducts[category].products).forEach(type =>
         Object.keys(menuProducts[category].products[type].products).forEach(portion => {
           if(menuProducts[category].products[type].products[portion].available)
-          arrayAllPortionsAvailables.push(`${category}_${portion}`)
+          arrayAllPortionsAvailables.push(`${portion}`)
         })
       )
     )
@@ -93,12 +99,8 @@ const DailyMenu = () => {
     menu && menuOptionsIds && setAvailable(getAllProductsInCategories(menu?.products));
   },[menu, menuOptionsIds])
 
-  React.useEffect(() => {
-    console.log(available)
-  },[available])
-
   return (
-    <DivDailyMenu className='wrapper'>
+    <DivDailyMenu className='envelope animeLeft'>
       <h1>Cardápio do Dia</h1>
       {menuOptionsIds && <div className='row'>
         {Object.keys(menuOptionsIds).map(category =>
@@ -106,7 +108,7 @@ const DailyMenu = () => {
             xs={12} sm={6} md={4} lg={3}
           >
             <div className='bgPaper category'>
-              <h2>{category}</h2>
+              <h2>{category.toUpperCase()}</h2>
               <Checkbox
                 options={menuOptionsIds[category]}
                 state={available}

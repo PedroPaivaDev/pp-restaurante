@@ -127,7 +127,8 @@ const Menu = () => {
     <div className='page animeleft'>
       {menu && <SubNavBar 
         categories={Object.keys(menu?.products)}
-        path={query.categoria as string}
+        path={"menu"}
+        endpoint={query.categoria as string}
       />}
       {query.categoria && (marmitaPortions && marmitaPortions?.length>2) && 
         <ButtonDiv>
