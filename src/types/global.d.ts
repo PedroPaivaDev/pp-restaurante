@@ -110,3 +110,7 @@ interface UserData {
   reference?: string;
   admin?: boolean;
 }
+
+interface UsersDB {
+  [key:string]: UserDB;
+}

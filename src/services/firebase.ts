@@ -50,11 +50,11 @@ export function getProducts(path:string, setState:React.Dispatch<React.SetStateA
   )
 }
 
-export function getUsers() {
+export function getUsers(setState:React.Dispatch<React.SetStateAction<UsersDB>>) {
   const getRef = ref(db, 'usuarios');
   onValue(
     getRef,
-    (snapshot) => console.log(snapshot.val()),
+    (snapshot) => setState(snapshot.val()),
     {onlyOnce: true}
   )
 }
