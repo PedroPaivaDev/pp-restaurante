@@ -5,6 +5,7 @@ import withAdmin from '@/utils/withAdmin';
 import DailyMenu from '@/components/Admin/DailyMenu';
 import SubNavBar from '@/components/SubNavBar';
 import CustomersDB from '@/components/Admin/CustomersDB';
+import CreateProduct from '@/components/Admin/CreateProduct';
 
 const Admin = () => {
   const {query} = useRouter();
@@ -27,7 +28,7 @@ const Admin = () => {
         {query.categoria==='Pedidos' && <div className='envelope'>Pedidos</div>}
         {query.categoria==='Historico' && <div className='envelope'>Historico</div>}
         {query.categoria==='Clientes' && <CustomersDB/>}
-        {query.categoria==='Cadastrar' && <div className='envelope'>Cadastrar</div>}
+        {query.categoria==='Cadastrar' && <CreateProduct/>}
       </div>
     </div>
   )

@@ -1,9 +1,10 @@
-import { getUsers } from '@/services/firebase';
 import React from 'react';
-import styled from 'styled-components';
-import Grid from '../Grid';
 import Image from 'next/image';
+import styled from 'styled-components';
+
+import { getUsers } from '@/services/firebase';
 import timestampToDate from '@/helper/timestampToDate';
+import Grid from '../Grid';
 
 const DivCustomersDB = styled.div`
   .customer {

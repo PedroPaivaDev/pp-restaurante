@@ -1,12 +1,8 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { User, getAuth } from "firebase/auth"
-// import { getStorage, ref as storageRef, getDownloadURL } from "firebase/storage";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getStorage, ref as storageRef, getDownloadURL, uploadBytes } from "firebase/storage";
 
 // Import Admin SDK
-// import { getDatabase, ref, set, child, push, onValue, remove, update, orderByChild, query, onChildAdded } from "firebase/database";
 import { getDatabase, ref, onValue, set, child, update } from "firebase/database";
 import React from "react";
 
@@ -26,17 +22,25 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Realtime Database and get a reference to the service
 const db = getDatabase(app);
-// const storage = getStorage(app);
 export const auth = getAuth(app)
+const storage = getStorage(app);
 
 //----------------------------------------
 
 //MÉTODOS DO STORAGE
 
-// export function urlEasterImages() {
-//   const easterRef = storageRef(storage, `easter/eggs/ovoBombomMorango-1.jpg`);
-//   getDownloadURL(storageRef(easterRef)).then((url) => console.log(url));
-// }
+export function getUrlPortions(
+  category: string,
+  photoName: string,
+  photoFile: File,
+  setState: React.Dispatch<React.SetStateAction<string>>
+) {
+  const photosRef = storageRef(storage, `portions/${category}/${photoName}`);
+  uploadBytes(photosRef, photoFile).then(snapshot => {
+    getDownloadURL(storageRef(storage, snapshot.metadata.fullPath)).then((url) => setState(url));
+  })
+  
+}
 
 //MÉTODOS DO REALTIME DATABASE:
 
