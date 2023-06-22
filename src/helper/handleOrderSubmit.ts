@@ -1,17 +1,11 @@
 import getNameById from './getNameById';
+import tupleToObject from './tupleToObject';
 
 export default function handleOrderSubmit(
   bag:Bag, formDataEntries:FormDataEntries, totalPrice:number, menu:MenuProducts, userDB:UserDB, screenWidth:number
 ) {
-
-  function arrayToObj(formDataEntries:FormDataEntries) {
-    return formDataEntries.reduce((obj:ObjectKeyString, [key, value]) => {
-      obj[key] = value;
-      return obj;
-    }, {});
-  }  
-  const formData = arrayToObj(formDataEntries) as unknown as OrderFormData;
-
+  const formData = tupleToObject(formDataEntries) as unknown as OrderFormData;
+  
   function mapPortions(portions:MarmitaPortions) {
     let ingredients = "";
     Object.keys(portions).forEach(category =>

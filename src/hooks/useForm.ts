@@ -22,11 +22,10 @@ const useForm = (type:'email'|'contact'|null) => {
   const [error, setError] = React.useState<string|null>(null);
 
   function validate(value:string) {
-    if (!type) return true;
     if (value.trim().length === 0) {
       setError("Preenchimento obrigatório");
       return false;
-    } else if (types[type] && !types[type].regex.test(value)) {
+    } else if (type && types[type] && !types[type].regex.test(value)) {
       setError(types[type].message);
       return false;
     } else {

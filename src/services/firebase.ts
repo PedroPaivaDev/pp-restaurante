@@ -29,17 +29,16 @@ const storage = getStorage(app);
 
 //MÉTODOS DO STORAGE
 
-export function getUrlPortions(
+export async function uploadPhotoAndGetUrl(
   category: string,
   photoName: string,
-  photoFile: File,
-  setState: React.Dispatch<React.SetStateAction<string>>
+  photoFile: File
 ) {
   const photosRef = storageRef(storage, `portions/${category}/${photoName}`);
-  uploadBytes(photosRef, photoFile).then(snapshot => {
-    getDownloadURL(storageRef(storage, snapshot.metadata.fullPath)).then((url) => setState(url));
-  })
-  
+  return uploadBytes(photosRef, photoFile).then(async (snapshot) => {
+    const url = await getDownloadURL(storageRef(storage, snapshot.metadata.fullPath));
+    return url;
+  });
 }
 
 //MÉTODOS DO REALTIME DATABASE:
@@ -108,6 +107,20 @@ export function changeProductAvailability(id:string, availability:boolean) {
   update(productRef, {available: availability}).then(() => {
     console.log(`a disponibilidade do produto de id: ${id}, foi alterado para ${availability}`)
   });
+}
+
+export function setNewProduct(category:string, type:string, id:string, name:string, description:string, photoUrl:string) {
+  const productsRef = ref(db, `cardapio/products/${category}/products/${type}/products`);
+  const newProduct = {
+    available: true,
+    category: category,
+    description: description,
+    id: id,
+    image: [photoUrl],
+    name: name,
+    type: type
+  };
+  set(child(productsRef,`${id}`), newProduct);
 }
 
 //Para registrar pedidos de clientes

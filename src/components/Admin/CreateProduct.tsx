@@ -1,10 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { getProducts, getUrlPortions } from '@/services/firebase';
+import { getProducts, setNewProduct, uploadPhotoAndGetUrl } from '@/services/firebase';
 import getOption from '@/helper/getOption';
+
 import Select from '../Forms/Select';
 import InputText from '../Forms/InputText';
+import Button from '../Forms/Button';
+import useForm from '@/hooks/useForm';
+import { useRouter } from 'next/router';
 
 const DivCreateProduct = styled.div`
   .form {
@@ -12,11 +16,18 @@ const DivCreateProduct = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: flex-end;
-    gap: 15px;
+    gap: 20px;
     margin-top: 20px;
-    .inputFile {
-      width: 280px;
-      text-align: right;
+    .productData {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 20px;      
+      .inputFile {
+          width: 300px;
+          text-align: right;
+        }
     }
   }
 `;
@@ -31,12 +42,19 @@ const DivImage = styled.div<BgProps>`
 `;
 
 const CreateProduct = () => {
+  const {push} = useRouter();
   const [menu, setMenu] = React.useState<Menu>();
   const [selectedCategory, setSelectedCategory] = React.useState<OptionsObject|null>(null);
   const [selectedType, setSelectedType] = React.useState<OptionsObject|null>(null);
+  const productName = useForm(null);
+  const productDescription = useForm(null);
   const [photoPreview, setPhotoPreview] = React.useState<string | null>(null);
   const [photoFile, setPhotoFile] = React.useState<File|null>(null);
-  const [photoUrl, setPhotoUrl] = React.useState<string|null>(null);
+  const [statusSubmit, setStatusSubmit] = React.useState<StatusSubmit>({
+    label: 'Cadastrar Produto',
+    status: null,
+    msg: null
+  });
 
   function makeCategoryObject(objectRef:MenuProducts|{[key: string]: Portions}) {
     const arrayCategories = Object.keys(objectRef)
@@ -56,32 +74,55 @@ const CreateProduct = () => {
     setPhotoPreview(photoPreviewURL);
   }
 
+  function handleCreateProductSubmit(event:React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const productId = `${getOption(selectedType as OptionsObject)}-${productName.value.replace(/\s/g, '')}`;
+
+    if(productName.error || productDescription.error) {
+      setStatusSubmit({
+        label: 'Cadastrar Produto',
+        status: 'error',
+        msg: 'Preencha todos os campos!'
+      });
+    } else if(!photoFile || !selectedCategory ) {
+      setStatusSubmit({
+        label: 'Cadastrar Produto',
+        status: 'error',
+        msg: 'Selecione uma imagem antes!'
+      });
+    } else {
+      uploadPhotoAndGetUrl(
+        getOption(selectedCategory),
+        photoFile.name,
+        photoFile as File
+      ).then((photoUrl) =>
+        setNewProduct(getOption(selectedCategory as OptionsObject), getOption(selectedType as OptionsObject), productId, productName.value, productDescription.value, photoUrl)
+      );
+      setStatusSubmit({
+        label: 'Cadastrar Produto',
+        status: 'sucess',
+        msg: 'Produto Cadastrado com Sucesso!'
+      });
+      push('admin');
+    }
+  }
+
   React.useEffect(() => {
     getProducts('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>)
   },[]);
-
-  // React.useEffect(() => {
-  //   menu && selectedCategory && selectedType && console.log(menu.products[getOption(selectedCategory)].products[getOption(selectedType)])
-  // }, [menu, selectedCategory, selectedType])
-
+  
   React.useEffect(() => {
-    selectedCategory && photoFile && getUrlPortions(
-      getOption(selectedCategory),
-      photoFile.name,
-      photoFile as File,
-      setPhotoUrl as React.Dispatch<React.SetStateAction<string>>
-    );
-  },[selectedCategory, photoFile])
-
-  React.useEffect(() => {
-    console.log(photoUrl)
-  })
+    setSelectedType(null);
+  },[selectedCategory])
 
   return (
     <DivCreateProduct  className='envelope animeLeft'>
       <h1>Cadastro de Produtos</h1>
       {menu &&
-        <div className='form'>
+        <form
+          className='form'
+          onSubmit={handleCreateProductSubmit}
+        >
           <Select
             name="category"
             label="Categoria:"
@@ -97,15 +138,12 @@ const CreateProduct = () => {
             selectedOption={selectedType} setSelectedOption={setSelectedType}
           />}
           {selectedType && 
-            <div className='form'>
+            <div className='productData'>
               <InputText
-                label="Identificador:" type="text" name="id"
+                label="Nome:" type="text" name="name" {...productName}
               />
               <InputText
-                label="Nome:" type="text" name="name"
-              />
-              <InputText
-                label="Descrição:" type="text" name="description"
+                label="Descrição:" type="text" name="description" {...productDescription}
               />
               <input
                 onChange={onFileSelected}
@@ -120,9 +158,13 @@ const CreateProduct = () => {
                   bgImage={photoPreview}
                 />
               }
+              <Button
+                statusSubmit={statusSubmit} setStatusSubmit={setStatusSubmit}
+                className='buttonSubmit'
+              />
             </div>
           }
-        </div>
+        </form>
       }
     </DivCreateProduct>
   )

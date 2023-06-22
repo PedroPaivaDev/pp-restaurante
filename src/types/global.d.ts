@@ -41,7 +41,7 @@ interface BgProps {
 
 interface StatusSubmit {
   label: string;
-  status: string | null;
+  status: 'error' | 'sucess' | null;
   msg: string | null;
 }
 
