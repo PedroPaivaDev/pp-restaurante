@@ -7,7 +7,7 @@ import { auth, changeUserData, getUserDB, setNewUser } from '@/services/firebase
 const provider = new GoogleAuthProvider();
 
 interface PropsAuthGoogleContext {
-  userAuth: User|null;
+  userAuth: User|null|false;
   signInGoogle: () => void;
   logout: () => void;
   userDB: UserDB|null;
@@ -25,7 +25,7 @@ const defaultContext: PropsAuthGoogleContext = {
 export const AuthGoogleContext = React.createContext<PropsAuthGoogleContext>(defaultContext)
 
 export const AuthGoogleProvider = ({children}:{children:React.ReactNode;}) => {
-  const [userAuth, setUserAuth] = React.useState<User|null>(null);
+  const [userAuth, setUserAuth] = React.useState<User|null|false>(false);
   const [userDB, setUserDB] = React.useState<UserDB|null>(null);
   const [userDBChanged, setUserDBChanged] = React.useState<number|null>(null);
 

@@ -18,9 +18,11 @@ export default function withAuth(WrappedComponent:React.ComponentType<JSX.Elemen
         userDB?.userData.reference
       )) {
         setIsAuthenticated(true);
-      } else {
+      } else if(userAuth===null) {
         setIsAuthenticated(false);
         replace('/perfil')
+      } else {
+        setIsAuthenticated(false);
       }
     // eslint-disable-next-line
     },[userAuth, userDB]);

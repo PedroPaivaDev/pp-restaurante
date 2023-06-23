@@ -12,9 +12,11 @@ export default function withAdmin(WrappedComponent:React.ComponentType<JSX.Eleme
     React.useEffect(() => {
       if(userAuth && userDB?.userData.admin) {
         setIsAuthenticated(true);
+      } else if(userAuth===null) {
+        setIsAuthenticated(false);
+        replace('/');
       } else {
         setIsAuthenticated(false);
-        replace('/')
       }
     // eslint-disable-next-line
     },[userAuth, userDB]);
