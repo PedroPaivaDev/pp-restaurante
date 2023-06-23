@@ -6,6 +6,7 @@ import DailyMenu from '@/components/Admin/DailyMenu';
 import SubNavBar from '@/components/SubNavBar';
 import CustomersDB from '@/components/Admin/CustomersDB';
 import CreateProduct from '@/components/Admin/CreateProduct';
+import EditProduct from '@/components/Admin/EditProduct';
 
 const Admin = () => {
   const {query} = useRouter();
@@ -13,7 +14,7 @@ const Admin = () => {
   return (
     <div className='page animeLeft'>
       <SubNavBar
-        categories={["Cardapio", "Pedidos", "Historico", "Clientes", "Cadastrar"]}
+        categories={["Cardapio", "Pedidos", "Historico", "Clientes", "Cadastrar", "Editar"]}
         path={"admin"}
         endpoint={query.categoria as string}
       />
@@ -29,6 +30,7 @@ const Admin = () => {
         {query.categoria==='Historico' && <div className='envelope'>Historico</div>}
         {query.categoria==='Clientes' && <CustomersDB/>}
         {query.categoria==='Cadastrar' && <CreateProduct/>}
+        {query.categoria==='Editar' && <EditProduct/>}
       </div>
     </div>
   )

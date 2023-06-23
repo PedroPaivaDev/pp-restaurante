@@ -5,6 +5,7 @@ import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
 import { getProducts } from '@/services/firebase';
 import Checkbox from '../Forms/Checkbox';
 import Grid from '../Grid';
+import getMenuProductsIdsByCategories from '@/helper/getMenuProductsIdsByCategories';
 
 const DivDailyMenu = styled.div`
   .categories {
@@ -37,44 +38,13 @@ const DivDailyMenu = styled.div`
   }
 `;
 
-interface DailyMenu {
-  [key:string]: string[];
-}
-
 const DailyMenu = () => {
   const {userDB} = React.useContext(AuthGoogleContext);
   const [menu, setMenu] = React.useState<Menu>();
-  const [menuOptionsIds, setMenuOptionsIds] = React.useState<DailyMenu|null>(null);
+  const [menuOptionsIds, setMenuOptionsIds] = React.useState<ObjectArrayString|null>(null);
   const [available, setAvailable] = React.useState<string[]>([]);
 
-  function getMenuProductsByCategories(menuProducts:MenuProducts):DailyMenu {
-    let portionsByCategory:DailyMenu = {};
-    Object.keys(menuProducts).forEach(category =>
-      Object.keys(menuProducts[category].products).forEach(type =>
-        Object.keys(menuProducts[category].products[type].products).forEach(portion => {
-          if(portionsByCategory[category]) {
-            portionsByCategory = {
-              ...portionsByCategory,
-              [category]: [
-                ...portionsByCategory[category],
-                `${menuProducts[category].products[type].products[portion].id}`
-              ]
-            }
-          } else {
-            portionsByCategory = {
-              ...portionsByCategory,
-              [category]: [
-                `${menuProducts[category].products[type].products[portion].id}`
-              ]
-            }
-          }
-        })
-      )
-    )
-    return portionsByCategory
-  }
-
-  function getAllProductsInCategories(menuProducts:MenuProducts):string[] {
+  function getAvailableProducts(menuProducts:MenuProducts):string[] {
     const arrayAllPortionsAvailables:string[] = [];
     Object.keys(menuProducts).forEach(category =>
       Object.keys(menuProducts[category].products).forEach(type =>
@@ -92,12 +62,12 @@ const DailyMenu = () => {
   },[]);
 
   React.useEffect(() => {
-    menu && setMenuOptionsIds(getMenuProductsByCategories(menu.products))
-  },[menu])
+    menu && setMenuOptionsIds(getMenuProductsIdsByCategories(menu.products))
+  },[menu]);
 
   React.useEffect(() => {
-    menu && menuOptionsIds && setAvailable(getAllProductsInCategories(menu?.products));
-  },[menu, menuOptionsIds])
+    menu && menuOptionsIds && setAvailable(getAvailableProducts(menu?.products));
+  },[menu, menuOptionsIds]);
 
   return (
     <DivDailyMenu className='envelope animeLeft'>

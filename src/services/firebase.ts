@@ -1,9 +1,9 @@
 import { initializeApp } from "firebase/app";
 import { User, getAuth } from "firebase/auth"
-import { getStorage, ref as storageRef, getDownloadURL, uploadBytes } from "firebase/storage";
+import { getStorage, ref as storageRef, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
 
 // Import Admin SDK
-import { getDatabase, ref, onValue, set, child, update } from "firebase/database";
+import { getDatabase, ref, onValue, set, child, update, remove } from "firebase/database";
 import React from "react";
 
 // Your web app's Firebase configuration
@@ -39,6 +39,15 @@ export async function uploadPhotoAndGetUrl(
     const url = await getDownloadURL(storageRef(storage, snapshot.metadata.fullPath));
     return url;
   });
+}
+
+export function removePhotoFromDB(category: string, fileName: string) {
+  const photoRef = storageRef(storage, `portions/${category}/${fileName}`);
+  deleteObject(photoRef).then(() => {
+    console.log("Imagem removida do Banco de Dados");
+  }).catch(err => {
+    console.log("Não foi possível remover a imagem no Banco de Dados", err)
+  })
 }
 
 //MÉTODOS DO REALTIME DATABASE:
@@ -123,6 +132,16 @@ export function setNewProduct(category:string, type:string, id:string, name:stri
   set(child(productsRef,`${id}`), newProduct);
 }
 
+export function removeProduct(category:string, type:string, id:string) {
+  const productRef = ref(db, `cardapio/products/${category}/products/${type}/products/${id}`);
+  remove(productRef).then(() => {
+    console.log(`excluído o item ${id}`)
+  }).catch((error) => { // não está funcionando o catch
+    alert(`Não foi encontrado o item${id} para ser excluído.`);
+    console.log(error);
+  });
+}
+
 //Para registrar pedidos de clientes
 // export function registerProductsOrder(name, description, price, image) {
 //   const ordersRef = ref(db, 'productsOrders');
@@ -133,20 +152,6 @@ export function setNewProduct(category:string, type:string, id:string, name:stri
 //     image: image
 //   };
 //   push(ordersRef, product)
-// }
-
-//Para remover produtos
-// export function removeProduct(id) {
-//   const productRef = ref(db, 'products/' + id);
-//   remove(productRef).then(() => {
-//     console.log(`excluído o item ${id}`)
-//   }).catch((error) => { // não está funcionando o catch
-//     alert(`Não foi encontrado o item${id} para ser excluído.`);
-//     console.log(error);
-//   });
-//   // set(productsRef, null).then(() => {
-//   //   console.log(`excluído o item ${id}`)
-//   // });
 // }
 
 //Para ordenar produtos pelo nome (ainda não funciona)

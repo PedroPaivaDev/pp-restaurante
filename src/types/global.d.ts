@@ -114,3 +114,7 @@ interface UserData {
 interface UsersDB {
   [key:string]: UserDB;
 }
+
+interface ObjectArrayString {
+  [key:string]: string[];
+}
