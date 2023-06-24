@@ -77,24 +77,31 @@ interface OptionsObject {
   [key: string]: number | null;
 }
 
-type FormDataEntries = [string, string][]
+type FormDataEntries = [string, string][];
 
-interface OrderFormData {
-  client: string;
-  contact: string;
+interface OrderChoices {
   payment: string;
   installment?: string;
   delivery?: string;
-  street?: string;
-  number?: string;
-  neighborhood?: string;
-  reference?: string;
+}
+
+interface OrderFormData {
+  uid: string;
+  client: string;
+  contact: string;
+  payment: string;
+  installment: string|null;
+  delivery: string|null;
+  street: string;
+  number: string;
+  neighborhood: string;
+  reference: string;
 }
 
 interface UserDB {
   uid: string;
   userData: UserData;
-  userOrders?: OptionsObject;
+  userOrders: UserOrders;
 }
 
 interface UserData {
@@ -109,6 +116,16 @@ interface UserData {
   neighborhood?: string;
   reference?: string;
   admin?: boolean;
+}
+
+interface UserOrders {
+  [key:string]: UserOrder;
+}
+
+interface UserOrder {
+  orderFormData: OrderFormData;
+  orderMarmitas: Bag;
+  totalPrice: number;
 }
 
 interface UsersDB {

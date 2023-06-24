@@ -1,10 +1,8 @@
-import { initializeApp } from "firebase/app";
-import { User, getAuth } from "firebase/auth"
-import { getStorage, ref as storageRef, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
-
-// Import Admin SDK
-import { getDatabase, ref, onValue, set, child, update, remove } from "firebase/database";
 import React from "react";
+import { initializeApp } from "firebase/app";
+import { User, getAuth } from "firebase/auth";
+import { getStorage, ref as storageRef, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
+import { getDatabase, ref, onValue, set, child, update, remove, push } from "firebase/database";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -52,7 +50,6 @@ export function removePhotoFromDB(category: string, fileName: string) {
 
 //MÉTODOS DO REALTIME DATABASE:
 
-//Para buscar os produtos no DB
 export function getProducts(path:string, setState:React.Dispatch<React.SetStateAction<Menu>>) {
   const productsRef = ref(db, path);
   onValue(
@@ -108,7 +105,6 @@ export function changeUserData(uid:string, newData:ObjectKeyString) {
   }).catch(err => console.log(err));
 }
 
-// Para atualizar produtos
 export function changeProductAvailability(id:string, availability:boolean) {
   const category = id.split('_')[0];
   const type = id.split('_')[1].split('-')[0];
@@ -142,23 +138,14 @@ export function removeProduct(category:string, type:string, id:string) {
   });
 }
 
-//Para registrar pedidos de clientes
-// export function registerProductsOrder(name, description, price, image) {
-//   const ordersRef = ref(db, 'productsOrders');
-//   const product = {
-//     name: name,
-//     description: description,
-//     price: price,
-//     image: image
-//   };
-//   push(ordersRef, product)
-// }
-
-//Para ordenar produtos pelo nome (ainda não funciona)
-// export function ordainByName() {
-//   const eggsRef = ref(db, 'eggs');
-//   const orderlyName = query(eggsRef, orderByChild('name'));
-//   onChildAdded(orderlyName, (snapshot) => {
-//     console.log(snapshot.val())
-//   })
-// }
+export function registerOrder(
+  uid:string, orderFormData:OrderFormData, bag:Bag, totalPrice:number
+) {
+  const userOrdersRef = ref(db, `usuarios/${uid}/userOrders`);
+  const userOrder:UserOrder = {
+    orderFormData: orderFormData,
+    orderMarmitas: bag,
+    totalPrice: totalPrice
+  };
+  push(userOrdersRef, userOrder)
+}

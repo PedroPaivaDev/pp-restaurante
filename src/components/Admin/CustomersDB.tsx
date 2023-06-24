@@ -60,9 +60,9 @@ const CustomersDB = () => {
                 </div>
                 <p>Contato: {customers[customer].userData.phoneNumber}</p>
                 <p>Endereço: {customers[customer].userData.street}, {customers[customer].userData.streetNumber}, Bairro {customers[customer].userData.neighborhood}. Ponto de referência: {customers[customer].userData.reference}</p>
-                {/* {customers[customer].userOrders &&
-                  <p>Data do último pedido: {customers[customer].userOrders}</p>
-                } */}
+                {customers[customer].userOrders &&
+                  <p>Quantidade de Pedidos: {Object.keys(customers[customer].userOrders as UserOrders).length}</p>
+                }
               </div>
             </Grid>
           )}

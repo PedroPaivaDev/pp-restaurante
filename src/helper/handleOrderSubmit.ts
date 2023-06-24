@@ -1,10 +1,11 @@
+import { registerOrder } from '@/services/firebase';
 import getNameById from './getNameById';
 import tupleToObject from './tupleToObject';
 
 export default function handleOrderSubmit(
   bag:Bag, formDataEntries:FormDataEntries, totalPrice:number, menu:MenuProducts, userDB:UserDB, screenWidth:number
 ) {
-  const formData = tupleToObject(formDataEntries) as unknown as OrderFormData;
+  const formData = tupleToObject(formDataEntries) as unknown as OrderChoices;
   
   function mapPortions(portions:MarmitaPortions) {
     let ingredients = "";
@@ -24,6 +25,21 @@ export default function handleOrderSubmit(
     })
     return products;
   }
+
+  const orderFormData: OrderFormData = {
+    uid: userDB.uid,
+    client: userDB.userData.displayName,
+    contact: userDB.userData.phoneNumber as string,
+    payment: formData.payment,
+    installment: formData.installment ? formData.installment : null,
+    delivery: formData.delivery ? formData.delivery : null,
+    street:userDB.userData.street as string,
+    number: userDB.userData.streetNumber as string,
+    neighborhood: userDB.userData.neighborhood as string,
+    reference: userDB.userData.reference as string
+  }
+
+  registerOrder(userDB.uid, orderFormData, bag, totalPrice);
 
   const storeNumber = 5537999237253;
   let urlApi = 'http://web.whatsapp.com/send';

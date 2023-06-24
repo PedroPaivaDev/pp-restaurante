@@ -2,8 +2,9 @@ import React from 'react';
 import { useRouter } from 'next/router';
 
 import withAdmin from '@/utils/withAdmin';
-import DailyMenu from '@/components/Admin/DailyMenu';
 import SubNavBar from '@/components/SubNavBar';
+import DailyMenu from '@/components/Admin/DailyMenu';
+import HistoryOrders from '@/components/Admin/HistoryOrders';
 import CustomersDB from '@/components/Admin/CustomersDB';
 import CreateProduct from '@/components/Admin/CreateProduct';
 import EditProduct from '@/components/Admin/EditProduct';
@@ -27,7 +28,7 @@ const Admin = () => {
         }
         {query.categoria==='Cardapio' && <DailyMenu/>}
         {query.categoria==='Pedidos' && <div className='envelope'>Pedidos</div>}
-        {query.categoria==='Historico' && <div className='envelope'>Historico</div>}
+        {query.categoria==='Historico' && <HistoryOrders/>}
         {query.categoria==='Clientes' && <CustomersDB/>}
         {query.categoria==='Cadastrar' && <CreateProduct/>}
         {query.categoria==='Editar' && <EditProduct/>}

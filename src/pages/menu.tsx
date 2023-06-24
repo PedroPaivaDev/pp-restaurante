@@ -73,7 +73,7 @@ const Menu = () => {
         ...bagStorage,
         [Date.now()]: {
           portions: marmitaStorage.portions,
-          size: Object.keys(size as object),
+          size: Object.keys(size as object)[0],
           price: size[Object.keys(size as object)[0]],
           id: Date.now(),
         }
