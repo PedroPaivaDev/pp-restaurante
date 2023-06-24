@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import timestampToDate from '@/helper/timestampToDate';
 
 const DivOrderDetail = styled.div`
   display: flex;
@@ -16,15 +17,17 @@ const OrderDetail = ({orderId, userOrder}:PropsOrderDetail) => {
   return (
     <DivOrderDetail className='bgPaper'>
       <h2>Pedido: {orderId}</h2>
-      <strong>{userOrder.orderFormData.client} - {userOrder.orderFormData.contact}</strong>
-      <p>{userOrder.orderFormData.payment}</p>
-      {userOrder.orderFormData.installment && <p>{userOrder.orderFormData.installment}</p>}
+      <p>Feito em {timestampToDate(userOrder.orderTime)}</p>
+      <p><strong>{userOrder.orderFormData.client}</strong> - {userOrder.orderFormData.contact}</p>
+      {userOrder.orderFormData.installment ?
+        <p>{userOrder.orderFormData.installment} - {userOrder.orderFormData.payment} - R$ {userOrder.totalPrice.toFixed(2)}</p> :
+        <p>{userOrder.orderFormData.payment} - R$ {userOrder.totalPrice.toFixed(2)}</p>
+      }
       {userOrder.orderFormData.delivery &&
         <p>
-          Entregar na {userOrder.orderFormData.street}, {userOrder.orderFormData.number}, Bairro {userOrder.orderFormData.neighborhood}. Referência: {userOrder.orderFormData.reference}.
+          <strong>Entregar</strong> na {userOrder.orderFormData.address}.
         </p>
       }
-      <h3>R$ {userOrder.totalPrice.toFixed(2)}</h3>
     </DivOrderDetail>
   )
 }

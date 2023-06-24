@@ -28,7 +28,7 @@ export default function withAuth(WrappedComponent:React.ComponentType<JSX.Elemen
     if(isAuthenticated) {
       return <WrappedComponent {...props}/>;
     } else {
-      return null;
+      return <h1 style={{marginTop:'100px'}}>Carregando...</h1>;
     }
   }
   return Wrapper;

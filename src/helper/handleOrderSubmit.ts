@@ -33,10 +33,7 @@ export default function handleOrderSubmit(
     payment: formData.payment,
     installment: formData.installment ? formData.installment : null,
     delivery: formData.delivery ? formData.delivery : null,
-    street:userDB.userData.street as string,
-    number: userDB.userData.streetNumber as string,
-    neighborhood: userDB.userData.neighborhood as string,
-    reference: userDB.userData.reference as string
+    address: `${userDB.userData.street}, ${userDB.userData.streetNumber}, Bairro ${userDB.userData.neighborhood}. Referência: ${userDB.userData.reference}`
   }
 
   registerOrder(userDB.uid, orderFormData, bag, totalPrice);

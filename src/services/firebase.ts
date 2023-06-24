@@ -145,6 +145,7 @@ export function registerOrder(
   const userOrder:UserOrder = {
     orderFormData: orderFormData,
     orderMarmitas: bag,
+    orderTime: Date.now(),
     totalPrice: totalPrice
   };
   push(userOrdersRef, userOrder)

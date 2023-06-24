@@ -92,10 +92,7 @@ interface OrderFormData {
   payment: string;
   installment: string|null;
   delivery: string|null;
-  street: string;
-  number: string;
-  neighborhood: string;
-  reference: string;
+  address: string;
 }
 
 interface UserDB {
@@ -125,6 +122,7 @@ interface UserOrders {
 interface UserOrder {
   orderFormData: OrderFormData;
   orderMarmitas: Bag;
+  orderTime: number;
   totalPrice: number;
 }
 
