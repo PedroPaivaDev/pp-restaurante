@@ -8,6 +8,7 @@ import HistoryOrders from '@/components/Admin/HistoryOrders';
 import CustomersDB from '@/components/Admin/CustomersDB';
 import CreateProduct from '@/components/Admin/CreateProduct';
 import EditProduct from '@/components/Admin/EditProduct';
+import DailyOrders from '@/components/Admin/DailyOrders';
 
 const Admin = () => {
   const {query} = useRouter();
@@ -27,7 +28,7 @@ const Admin = () => {
           </div>
         }
         {query.categoria==='Cardapio' && <DailyMenu/>}
-        {query.categoria==='Pedidos' && <div className='envelope'>Pedidos</div>}
+        {query.categoria==='Pedidos' && <DailyOrders/>}
         {query.categoria==='Historico' && <HistoryOrders/>}
         {query.categoria==='Clientes' && <CustomersDB/>}
         {query.categoria==='Cadastrar' && <CreateProduct/>}
