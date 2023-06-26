@@ -9,12 +9,20 @@ import CustomersDB from '@/components/Admin/CustomersDB';
 import CreateProduct from '@/components/Admin/CreateProduct';
 import EditProduct from '@/components/Admin/EditProduct';
 import DailyOrders from '@/components/Admin/DailyOrders';
+import OrderModal from '@/components/Admin/OrderModal';
 
 const Admin = () => {
   const {query} = useRouter();
+  const [modalOrder, setModalOrder] = React.useState<UserOrder|null>(null);
 
   return (
     <div className='page animeLeft'>
+      {modalOrder && 
+        <OrderModal
+          modalOrder={modalOrder}
+          setModalOrder={setModalOrder}
+        />
+      }
       <SubNavBar
         categories={["Cardapio", "Pedidos", "Historico", "Clientes", "Cadastrar", "Editar"]}
         path={"admin"}
@@ -28,8 +36,8 @@ const Admin = () => {
           </div>
         }
         {query.categoria==='Cardapio' && <DailyMenu/>}
-        {query.categoria==='Pedidos' && <DailyOrders/>}
-        {query.categoria==='Historico' && <HistoryOrders/>}
+        {query.categoria==='Pedidos' && <DailyOrders setModalOrder={setModalOrder}/>}
+        {query.categoria==='Historico' && <HistoryOrders setModalOrder={setModalOrder}/>}
         {query.categoria==='Clientes' && <CustomersDB/>}
         {query.categoria==='Cadastrar' && <CreateProduct/>}
         {query.categoria==='Editar' && <EditProduct/>}

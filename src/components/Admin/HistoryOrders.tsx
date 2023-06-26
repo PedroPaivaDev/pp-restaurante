@@ -4,7 +4,11 @@ import OrderDetail from './OrderDetail';
 import Grid from '../Grid';
 import getOrdersFromUsers from '@/helper/getOrdersFromUsers';
 
-const HistoryOrders = () => {
+interface PropsHistoryOrders {
+  setModalOrder: React.Dispatch<React.SetStateAction<UserOrder|null>>;
+}
+
+const HistoryOrders = ({setModalOrder}:PropsHistoryOrders) => {
   const [customers, setCustumers] = React.useState<UsersDB|null>(null);
   const [orders, setOrders] = React.useState<{[key:string]:UserOrder}|null>(null);
 
@@ -23,7 +27,7 @@ const HistoryOrders = () => {
         <div className='row'>
           {orders && Object.keys(orders).map(orderId =>
             <Grid key={orderId} xs={12} sm={6} md={6} lg={4}>
-              <OrderDetail orderId={orderId} userOrder={orders[orderId]}/>
+              <OrderDetail setModalOrder={setModalOrder} orderId={orderId} userOrder={orders[orderId]}/>
             </Grid>
           )}
         </div>

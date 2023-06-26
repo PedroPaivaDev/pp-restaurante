@@ -11,11 +11,17 @@ const DivOrderDetail = styled.div`
 interface PropsOrderDetail {
   orderId: string;
   userOrder: UserOrder;
+  setModalOrder: React.Dispatch<React.SetStateAction<UserOrder|null>>;
 }
 
-const OrderDetail = ({orderId, userOrder}:PropsOrderDetail) => {
+const OrderDetail = ({orderId, userOrder, setModalOrder}:PropsOrderDetail) => {
+
+  function handleClick() {
+    setModalOrder(userOrder);
+  }
+
   return (
-    <DivOrderDetail className='bgPaper'>
+    <DivOrderDetail className='bgPaper' onClick={handleClick}>
       <h2>Pedido: {orderId}</h2>
       <p>Feito em {timestampToDate(userOrder.orderTime)}</p>
       <p><strong>{userOrder.orderFormData.client}</strong> - {userOrder.orderFormData.contact}</p>
