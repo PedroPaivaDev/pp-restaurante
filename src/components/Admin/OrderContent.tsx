@@ -1,3 +1,4 @@
+import getPortions from '@/helper/getPortions';
 import timestampToDate from '@/helper/timestampToDate';
 import React from 'react';
 import styled from 'styled-components';
@@ -5,7 +6,26 @@ import styled from 'styled-components';
 const DivOrderContent = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: stretch;
+  align-items: center;
   gap: 10px;
+  height: 100%;
+  overflow: auto;
+  .delivery {
+    text-align: center;
+    max-width: 300px;
+  }
+  .marmitas {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    p {
+      text-align: center;
+    }
+    .marmitaTitle {
+      margin-top: 20px;
+    }
+  }
 `;
 
 interface PropsOrderModal {
@@ -13,20 +33,29 @@ interface PropsOrderModal {
 }
 
 const OrderContent = ({modalOrder}:PropsOrderModal) => {
+
   return (
     <DivOrderContent className='bgPaper'>
       <h1>{modalOrder.orderFormData.client}</h1>
       <p>Contato: {modalOrder.orderFormData.contact}</p>
       <p>Feito em {timestampToDate(modalOrder.orderTime)}</p>
       {modalOrder.orderFormData.installment ?
-        <p>{modalOrder.orderFormData.installment} - {modalOrder.orderFormData.payment} - R$ {modalOrder.totalPrice.toFixed(2)}</p> :
-        <p>{modalOrder.orderFormData.payment} - R$ {modalOrder.totalPrice.toFixed(2)}</p>
+        <p>{modalOrder.orderFormData.installment} - {modalOrder.orderFormData.payment} - <strong>R$ {modalOrder.totalPrice.toFixed(2)}</strong></p> :
+        <p>{modalOrder.orderFormData.payment} - <strong>R$ {modalOrder.totalPrice.toFixed(2)}</strong></p>
       }
       {modalOrder.orderFormData.delivery &&
-        <p>
+        <p className='delivery'>
           <strong>Entregar</strong> na {modalOrder.orderFormData.address}.
         </p>
       }
+      {Object.keys(modalOrder.orderMarmitas).map(marmitaId =>
+        <div className='marmitas' key={marmitaId}>
+          <p className='marmitaTitle'><strong>{modalOrder.orderMarmitas[marmitaId].size}: </strong>{modalOrder.orderMarmitas[marmitaId].id} - R$ {modalOrder.orderMarmitas[marmitaId].price.toFixed(2)}</p>
+          {getPortions(modalOrder.orderMarmitas[marmitaId].portions).map(portion =>
+            <p key={portion}>{portion}</p>
+          )}
+        </div>
+      )}
     </DivOrderContent>
   )
 }
