@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import { registerOrder } from '@/services/firebase';
 import getNameById from './getNameById';
 import tupleToObject from './tupleToObject';
@@ -36,7 +38,9 @@ export default function handleOrderSubmit(
     address: `${userDB.userData.street}, ${userDB.userData.streetNumber}, Bairro ${userDB.userData.neighborhood}. Referência: ${userDB.userData.reference}`
   }
 
-  registerOrder(userDB.uid, orderFormData, bag, totalPrice);
+  const orderUuid = uuidv4();
+
+  registerOrder(orderUuid, userDB.uid, orderFormData, bag, totalPrice);
 
   const storeNumber = 5537999237253;
   let urlApi = 'http://web.whatsapp.com/send';

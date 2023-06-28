@@ -120,6 +120,7 @@ interface UserOrders {
 }
 
 interface UserOrder {
+  uuid: string;
   orderFormData: OrderFormData;
   orderMarmitas: Bag;
   orderTime: number;

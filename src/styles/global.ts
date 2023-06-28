@@ -207,18 +207,18 @@ const GlobalStyles: GlobalStyleComponent<
   }
 
   @media (min-width: 40rem) {
-    .container::-webkit-scrollbar {
+    .container::-webkit-scrollbar, .bgPaper::-webkit-scrollbar {
         background: transparent;
         width: 10px;
     }
 
-    .container::-webkit-scrollbar-track {
+    .container::-webkit-scrollbar-track, .bgPaper::-webkit-scrollbar-track {
         background: rgba(127,105,91,0.2);
         border-radius: 10px;
         padding: 5px;
     }
 
-    .container::-webkit-scrollbar-thumb {
+    .container::-webkit-scrollbar-thumb, .bgPaper::-webkit-scrollbar-thumb {
         background-color: rgba(127,105,91,0.4);
         border-radius: 10px;
     }

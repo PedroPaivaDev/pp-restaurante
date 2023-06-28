@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const DivOrderContent = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: stretch;
+  justify-content: flex-start;
   align-items: center;
   gap: 10px;
   height: 100%;

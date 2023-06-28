@@ -2,7 +2,7 @@ import React from "react";
 import { initializeApp } from "firebase/app";
 import { User, getAuth } from "firebase/auth";
 import { getStorage, ref as storageRef, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
-import { getDatabase, ref, onValue, set, child, update, remove, push } from "firebase/database";
+import { getDatabase, ref, onValue, set, child, update, remove } from "firebase/database";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -139,14 +139,15 @@ export function removeProduct(category:string, type:string, id:string) {
 }
 
 export function registerOrder(
-  uid:string, orderFormData:OrderFormData, bag:Bag, totalPrice:number
+  uuid:string, uid:string, orderFormData:OrderFormData, bag:Bag, totalPrice:number
 ) {
   const userOrdersRef = ref(db, `usuarios/${uid}/userOrders`);
   const userOrder:UserOrder = {
     orderFormData: orderFormData,
     orderMarmitas: bag,
     orderTime: Date.now(),
-    totalPrice: totalPrice
+    totalPrice: totalPrice,
+    uuid: uuid
   };
-  push(userOrdersRef, userOrder)
+  set(child(userOrdersRef,`${uuid}`), userOrder);
 }
