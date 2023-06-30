@@ -20,7 +20,7 @@ export default function withAuth(WrappedComponent:React.ComponentType<JSX.Elemen
         setIsAuthenticated(true);
       } else {
         setIsAuthenticated(false);
-        replace('/perfil');
+        replace('/perfil?categoria=Dados');
       }
     // eslint-disable-next-line
     },[userAuth, userDB]);

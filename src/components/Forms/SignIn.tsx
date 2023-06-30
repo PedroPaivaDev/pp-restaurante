@@ -40,7 +40,7 @@ const SignIn: React.FC = () => {
   const {push} = useRouter();
 
   function redirectToProfile() {
-    push('perfil')
+    push('perfil?categoria=Dados')
   }
 
   return (

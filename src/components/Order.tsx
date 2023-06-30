@@ -184,7 +184,7 @@ const Order = ({bag, menu}:{bag:Bag, menu:Menu}) => {
                   <br/>
                   Ponto de referência: {userDB?.userData.reference}.
                 </p>
-                <LinkButton label='Alterar endereço de entrega' href='perfil'/>
+                <LinkButton label='Alterar endereço de entrega' href='perfil?categoria=Dados'/>
               </div>
             }
             {(installmentCard && payment && getOption(payment)==="Cartão de Crédito") ?
