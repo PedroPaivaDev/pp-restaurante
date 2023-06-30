@@ -7,10 +7,10 @@ import getOption from '@/helper/getOption';
 import handleOrderSubmit from '@/helper/handleOrderSubmit';
 import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
 
-import Select from './Forms/Select';
-import Checkbox from './Forms/Checkbox';
-import Button from './Forms/Button';
-import LinkButton from './Forms/LinkButton';
+import Select from '../Forms/Select';
+import Checkbox from '../Forms/Checkbox';
+import Button from '../Forms/Button';
+import LinkButton from '../Forms/LinkButton';
 
 const OrderContainer = styled.div`
   .form {

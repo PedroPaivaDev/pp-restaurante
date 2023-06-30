@@ -6,10 +6,10 @@ import { MarmitaContext } from '@/contexts/MarmitaContext';
 import { getProducts } from '@/services/firebase';
 import withAuth from '@/utils/withAuth';
 
-import OrderMarmita from '@/components/OrderMarmita';
-import Order from '@/components/Order';
+import Order from '@/components/Order/Order';
 import Grid from '@/components/Grid';
 import Button from '@/components/Forms/Button';
+import OrderMarmita from '@/components/Order/OrderMarmita';
 
 const DivEnvelope = styled.div`
   .empty {

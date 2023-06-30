@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 import getPortions from '@/helper/getPortions';
-import Button from './Forms/Button';
-import { MarmitaContext } from '@/contexts/MarmitaContext';
 import getNameById from '@/helper/getNameById';
+import { MarmitaContext } from '@/contexts/MarmitaContext';
+
+import Button from '../Forms/Button';
 
 const DivMarmitaDetails = styled.div`
   gap: 5px;

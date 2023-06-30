@@ -1,7 +1,8 @@
-import getPortions from '@/helper/getPortions';
-import timestampToDate from '@/helper/timestampToDate';
 import React from 'react';
 import styled from 'styled-components';
+
+import getPortions from '@/helper/getPortions';
+import timestampToDate from '@/helper/timestampToDate';
 
 const DivOrderContent = styled.div`
   display: flex;

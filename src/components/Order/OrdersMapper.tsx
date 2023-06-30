@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 import sortUuids from '@/helper/sortUuids';
-import OrderDetail from './Admin/OrderDetail';
-import Grid from './Grid';
+
+import Grid from '../Grid';
+import OrderDetail from './OrderDetail';
 
 const DivOrderMapper = styled.div`
   .sequenceButtons {

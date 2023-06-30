@@ -2,22 +2,30 @@ import React from 'react';
 import { useRouter } from 'next/router';
 
 import withAdmin from '@/utils/withAdmin';
+import { getUsers } from '@/services/firebase';
+import getOrdersFromUsers from '@/helper/getOrdersFromUsers';
+import getOrdersOfTheDay from '@/helper/getOrdersOfTheDay';
+
 import SubNavBar from '@/components/SubNavBar';
 import DailyMenu from '@/components/Admin/DailyMenu';
-import HistoryOrders from '@/components/Admin/HistoryOrders';
 import CustomersDB from '@/components/Admin/CustomersDB';
 import CreateProduct from '@/components/Admin/CreateProduct';
 import EditProduct from '@/components/Admin/EditProduct';
-import DailyOrders from '@/components/Admin/DailyOrders';
-import OrderModal from '@/components/Admin/OrderModal';
+import OrdersMapper from '@/components/Order/OrdersMapper';
+import OrderModal from '@/components/Order/OrderModal';
 
 const Admin = () => {
   const {query} = useRouter();
   const [modalOrder, setModalOrder] = React.useState<UserOrder|null>(null);
+  const [customers, setCustumers] = React.useState<UsersDB|null>(null);
+
+  React.useEffect(() => {
+    getUsers(setCustumers as React.Dispatch<React.SetStateAction<UsersDB>>);
+  },[]);
 
   return (
     <div className='page animeLeft'>
-      {modalOrder && 
+      {modalOrder &&
         <OrderModal
           modalOrder={modalOrder}
           setModalOrder={setModalOrder}
@@ -36,8 +44,20 @@ const Admin = () => {
           </div>
         }
         {query.categoria==='Cardapio' && <DailyMenu/>}
-        {query.categoria==='Pedidos' && <DailyOrders setModalOrder={setModalOrder}/>}
-        {query.categoria==='Historico' && <HistoryOrders setModalOrder={setModalOrder}/>}
+        {query.categoria==='Pedidos' && customers &&
+          <OrdersMapper
+            title={'Pedidos do Dia'}
+            orders={getOrdersOfTheDay(getOrdersFromUsers(customers))}
+            setModalOrder={setModalOrder}
+          />
+        }
+        {query.categoria==='Historico' && customers &&
+          <OrdersMapper
+            title={'Histórico de Pedidos'}
+            orders={getOrdersFromUsers(customers)}
+            setModalOrder={setModalOrder}
+          />
+        }
         {query.categoria==='Clientes' && <CustomersDB/>}
         {query.categoria==='Cadastrar' && <CreateProduct/>}
         {query.categoria==='Editar' && <EditProduct/>}

@@ -1,6 +1,7 @@
 import React from 'react';
-import OrderContent from './OrderContent';
 import styled from 'styled-components';
+
+import OrderContent from './OrderContent';
 
 const DivOrderModal = styled.div`
   position: fixed;

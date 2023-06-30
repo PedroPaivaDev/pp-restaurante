@@ -7,8 +7,8 @@ import getOrdersOfTheDay from '@/helper/getOrdersOfTheDay';
 import SignIn from '@/components/Forms/SignIn';
 import SubNavBar from '@/components/SubNavBar';
 import ProfileData from '@/components/ProfileData';
-import OrdersMapper from '@/components/OrdersMapper';
-import OrderModal from '@/components/Admin/OrderModal';
+import OrdersMapper from '@/components/Order/OrdersMapper';
+import OrderModal from '@/components/Order/OrderModal';
 
 const Perfil = () => {
   const {query} = useRouter();
@@ -40,13 +40,17 @@ const Perfil = () => {
               </div>
             }
             {query.categoria==='Pedido' &&
-              <OrdersMapper title={'Pedidos do Dia'}
-                orders={getOrdersOfTheDay(userDB.userOrders)} setModalOrder={setModalOrder}
+              <OrdersMapper
+                title={'Pedidos do Dia'}
+                orders={getOrdersOfTheDay(userDB.userOrders)}
+                setModalOrder={setModalOrder}
               />
             }
             {query.categoria==='Historico' &&
-              <OrdersMapper title={'Histórico de Pedidos'}
-                orders={userDB.userOrders} setModalOrder={setModalOrder}
+              <OrdersMapper
+                title={'Histórico de Pedidos'}
+                orders={userDB.userOrders}
+                setModalOrder={setModalOrder}
               />
             }
             {query.categoria==='Dados' &&
