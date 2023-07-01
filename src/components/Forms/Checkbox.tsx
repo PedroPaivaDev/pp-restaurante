@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { changeProductAvailability } from '@/services/firebase';
 import splitPortionId from '@/helper/splitPortionId';
+import getNameById from '@/helper/getNameById';
 
 const CheckboxContainer = styled.div`
   display: flex;
@@ -60,9 +61,10 @@ interface PropsCheckbox {
   name: string;
   className?: string;
   admin?: boolean;
+  menuProducts?: MenuProducts;
 }
 
-function Checkbox ({options, state, setState, name, className, admin, ...props}:PropsCheckbox) {
+function Checkbox ({options, state, setState, name, className, admin, menuProducts, ...props}:PropsCheckbox) {
 
   function handleOnChange({target}:{target:EventTarget & HTMLInputElement}) {
     if(target.checked) {
@@ -93,7 +95,7 @@ function Checkbox ({options, state, setState, name, className, admin, ...props}:
             {...props}
           />
           <label htmlFor={`${name + option}`} className='label'>
-            {`${option}`}
+            {menuProducts ? getNameById(option,menuProducts) : option}
           </label>
         </div>
       )}

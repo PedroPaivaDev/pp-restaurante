@@ -94,7 +94,7 @@ const GlobalStyles: GlobalStyleComponent<
     text-align: center;
   }
 
-  p, small {
+  p, small, del {
     font-weight: ${props => props.theme.font.normal};
   }
 

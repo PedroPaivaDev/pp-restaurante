@@ -86,6 +86,7 @@ const DailyMenu = () => {
                 name={category}
                 className='divCheckbox'
                 admin={userDB?.userData.admin}
+                menuProducts={menu?.products}
               />
             </div>
           </Grid>

@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import { registerOrder } from '@/services/firebase';
-import getNameById from './getNameById';
+import getPortionsNames from './getPortionsNames';
 import tupleToObject from './tupleToObject';
 
 export default function handleOrderSubmit(
@@ -12,7 +12,7 @@ export default function handleOrderSubmit(
   function mapPortions(portions:MarmitaPortions) {
     let ingredients = "";
     Object.keys(portions).forEach(category =>
-      ingredients += `${category}: ${getNameById(portions,menu)[category]}%0a`.replace(/,/g, ', ')
+      ingredients += `${category}: ${getPortionsNames(portions,menu)[category]}%0a`.replace(/,/g, ', ')
     );
     return ingredients;
   }

@@ -2,20 +2,27 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
-import getPortions from '@/helper/getPortions';
-import getNameById from '@/helper/getNameById';
 import { MarmitaContext } from '@/contexts/MarmitaContext';
+import getPortions from '@/helper/getPortions';
+import splitPortionId from '@/helper/splitPortionId';
+import getNameById from '@/helper/getNameById';
 
 import Button from '../Forms/Button';
 
 const DivMarmitaDetails = styled.div`
   gap: 5px;
   margin: 0 20px;
+  span {
+    width: 100%;
+  }
   .detailsButtons {
     display: flex;
     justify-content: space-between;
     width: 100%;
     margin-bottom: 5px;
+  }
+  del {
+    color: ${props => props.theme.colors.error};
   }
   h3 {
     width: 100%;
@@ -69,8 +76,16 @@ const OrderMarmita = ({marmita, id, bag, setBag, menu}:PropsMarmitaDetails) => {
       <span>{marmita.size}: {id.substring(4)}</span>
       {
         marmita.portions &&
-        getPortions(getNameById(marmita.portions as MarmitaPortions, menu.products)).map(itemName => 
-          <p key={itemName}>{itemName}</p>
+        getPortions(marmita.portions).map(portionId => {
+          const {category, type} = splitPortionId(portionId);
+          if(menu.products[category].products[type].products[portionId].available) {
+            return <p key={portionId}>
+              {getNameById(portionId, menu.products)}
+            </p>            
+          } else {
+            return <del key={portionId}>{getNameById(portionId, menu.products)}</del>
+          }
+        }
         )
       }
       <h3>R${marmita.price.toFixed(2)}</h3>
