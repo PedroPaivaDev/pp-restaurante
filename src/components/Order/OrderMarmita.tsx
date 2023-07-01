@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import { MarmitaContext } from '@/contexts/MarmitaContext';
@@ -21,14 +22,23 @@ const DivMarmitaDetails = styled.div`
     width: 100%;
     margin-bottom: 5px;
   }
-  del {
+  .unavailable {
     color: ${props => props.theme.colors.error};
+    cursor: pointer;
+    &:hover {
+      text-decoration: line-through;
+    }
+    width: auto;
+    .trash {
+      margin-left: 5px;
+    }
   }
   h3 {
     width: 100%;
     text-align: right;
   }
 `;
+
 interface PropsMarmitaDetails {
   marmita: MarmitaOnBag;
   id: string;
@@ -37,9 +47,10 @@ interface PropsMarmitaDetails {
   setMarmitaStorage: React.Dispatch<React.SetStateAction<Marmita>>;
   menu: Menu;
 }
+
 const OrderMarmita = ({marmita, id, bag, setBag, menu}:PropsMarmitaDetails) => {
   const {push} = useRouter();
-  const {marmitaStorage, setMarmitaStorage} = React.useContext(MarmitaContext)
+  const {marmitaStorage, setMarmitaStorage} = React.useContext(MarmitaContext);
 
   function handleRemove() {
     if(confirm(`Tem certeza que você deseja remover esta marmita?`)) {
@@ -53,7 +64,7 @@ const OrderMarmita = ({marmita, id, bag, setBag, menu}:PropsMarmitaDetails) => {
     if(marmitaStorage.portions && Object.keys(marmitaStorage.portions).length>0) {
       if(confirm(`ATENÇÃO! Você já estava montando uma marmita. Caso você queira continuar montando a marmita, clique em "Cancelar". Caso você queira descartar a marmita que estava sendo montada e editar esta, clique em "OK"`)) {
         setMarmitaStorage(marmita)
-        const newBag = JSON.parse(JSON.stringify(bag));
+        const newBag:Bag = JSON.parse(JSON.stringify(bag));
         delete newBag[id];
         setBag(newBag);
         push('/menu');
@@ -64,6 +75,31 @@ const OrderMarmita = ({marmita, id, bag, setBag, menu}:PropsMarmitaDetails) => {
       delete newBag[id];
       setBag(newBag);
       push('/menu');
+    }
+  }
+
+  function handleDeletePortion(marmitaId:string, portionId:string) {
+    let newBag:Bag = JSON.parse(JSON.stringify(bag));
+    const {category} = splitPortionId(portionId);
+    if(confirm(`Infelizmente o item ${getNameById(portionId,menu.products)} ficou indisponível alguns segundos atrás. Deseja removê-lo desta marmita?`)) {
+      if(newBag[marmitaId].portions[category].length>1) {
+        newBag = {
+          ...newBag,
+          [marmitaId]: {
+            ...newBag[marmitaId],
+            portions: {
+              ...newBag[marmitaId].portions,
+              [category]: newBag[marmitaId].portions[category].filter(id => id !== portionId)
+            }
+          }
+        }
+        setBag(newBag);
+      } else {
+        delete newBag[marmitaId].portions[category];
+        setBag(newBag);
+      }
+    } else {
+      return;
     }
   }
 
@@ -83,7 +119,20 @@ const OrderMarmita = ({marmita, id, bag, setBag, menu}:PropsMarmitaDetails) => {
               {getNameById(portionId, menu.products)}
             </p>            
           } else {
-            return <del key={portionId}>{getNameById(portionId, menu.products)}</del>
+            return <p 
+              className='unavailable'
+              key={portionId}
+              onClick={() => handleDeletePortion(marmita.id, portionId)}
+            >
+              {getNameById(portionId, menu.products)}
+              <Image
+                src={'./trash.svg'}
+                alt='trash'
+                width={25}
+                height={25}
+                className='trash'
+              />
+            </p>
           }
         }
         )

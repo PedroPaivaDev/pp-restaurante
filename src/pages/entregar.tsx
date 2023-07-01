@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import { MarmitaContext } from '@/contexts/MarmitaContext';
 import { getProducts } from '@/services/firebase';
 import withAuth from '@/utils/withAuth';
+import getPortions from '@/helper/getPortions';
+import splitPortionId from '@/helper/splitPortionId';
 
 import Order from '@/components/Order/Order';
 import Grid from '@/components/Grid';
@@ -25,6 +27,7 @@ const Entrega = () => {
   const [menu, setMenu] = React.useState<Menu>();
   const {push} = useRouter();
   const [bagWithMarmita, setBagWithMarmita] = React.useState<boolean>();
+  const [unavailable, setUnavailable] = React.useState<string[]>([]);
 
   React.useEffect(() => {
     if(Object.keys(bagStorage).length){
@@ -37,6 +40,21 @@ const Entrega = () => {
   React.useEffect(() => {
     getProducts('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>)
   },[]);
+
+  React.useEffect(() => {
+    if(bagStorage && menu) {
+      const unavailableArray:string[] = [];
+      Object.keys(bagStorage).forEach(marmitaId => {
+        getPortions(bagStorage[marmitaId].portions).forEach(portionId => {
+          const {category, type} = splitPortionId(portionId);
+          if(!menu.products[category].products[type].products[portionId].available) {
+            unavailableArray?.push(portionId)
+          }
+        })
+      });
+      setUnavailable(unavailableArray);
+    }
+  },[bagStorage, menu]);
 
   return (
     <div className='page animeLeft'>
@@ -67,7 +85,7 @@ const Entrega = () => {
             </div>
           }
           {bagWithMarmita && menu &&
-            <Order bag={bagStorage} menu={menu}/>
+            <Order bag={bagStorage} menu={menu} unavailable={unavailable}/>
           }
         </DivEnvelope>
       </div>

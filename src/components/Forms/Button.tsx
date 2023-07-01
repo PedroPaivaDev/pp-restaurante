@@ -57,7 +57,7 @@ const Button = ({label, statusSubmit, setStatusSubmit, className, ...props}:Prop
           status: null,
           msg: null
         })
-      }, 2000);
+      }, 2500);
     }
   }, [statusSubmit, setStatusSubmit]);
 

@@ -1,16 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import getOption from '@/helper/getOption';
 import handleOrderSubmit from '@/helper/handleOrderSubmit';
-import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
 
 import Select from '../Forms/Select';
 import Checkbox from '../Forms/Checkbox';
 import Button from '../Forms/Button';
 import LinkButton from '../Forms/LinkButton';
+import getNameById from '@/helper/getNameById';
 
 const OrderContainer = styled.div`
   .form {
@@ -64,7 +65,7 @@ const OrderContainer = styled.div`
   }
 `;
 
-const Order = ({bag, menu}:{bag:Bag, menu:Menu}) => {
+const Order = ({bag, menu, unavailable}:{bag:Bag, menu:Menu, unavailable:string[]}) => {
   const screenWidth = useMediaQuery();
   const {userDB} = React.useContext(AuthGoogleContext);
   const [totalPrice, setTotalPrice] = React.useState(0);
@@ -125,6 +126,14 @@ const Order = ({bag, menu}:{bag:Bag, menu:Menu}) => {
         msg: 'Altere o endereço de entrega'
       })
       return;
+    } else if(unavailable.length>0) {
+      setStatusSubmit({
+        label: 'Enviar Pedido',
+        status: 'error',
+        msg: `Um ou mais produtos indisponíveis.`
+      })
+      alert(`Infelizmente o item ${getNameById(unavailable[0],menu.products)} ficou indisponível alguns segundos atrás. Considere editar a marmita, escolhendo outro item ou removendo este item da sua marmita.`)
+      return;
     } else {
       userDB && handleOrderSubmit(bag, formDataEntries as FormDataEntries, totalPrice, menu.products, userDB, screenWidth);
     }
@@ -145,7 +154,7 @@ const Order = ({bag, menu}:{bag:Bag, menu:Menu}) => {
       })
       setTotalPrice(sumPrices);
     }
-  }, [bag, payment, installmentCard, delivery])
+  }, [bag, payment, installmentCard, delivery]);
 
   return (
     <OrderContainer>
