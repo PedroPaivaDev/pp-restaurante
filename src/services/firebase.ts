@@ -105,9 +105,7 @@ export function changeUserData(uid:string, newData:ObjectKeyString) {
   }).catch(err => console.log(err));
 }
 
-export function changeProductAvailability(id:string, availability:boolean) {
-  const category = id.split('_')[0];
-  const type = id.split('_')[1].split('-')[0];
+export function changeProductAvailability(category:string, type:string, id:string, availability:boolean) {
   const productRef = ref(db, `cardapio/products/${category}/products/${type}/products/${id.split('_')[1]}`);
   update(productRef, {available: availability}).then(() => {
     console.log(`a disponibilidade do produto de id: ${id}, foi alterado para ${availability}`)
@@ -121,7 +119,7 @@ export function setNewProduct(category:string, type:string, id:string, name:stri
     category: category,
     description: description,
     id: id,
-    image: [photoUrl],
+    image: photoUrl,
     name: name,
     type: type
   };

@@ -1,6 +1,8 @@
-import { changeProductAvailability } from '@/services/firebase';
 import React from 'react';
 import styled from 'styled-components';
+
+import { changeProductAvailability } from '@/services/firebase';
+import splitPortionId from '@/helper/splitPortionId';
 
 const CheckboxContainer = styled.div`
   display: flex;
@@ -64,10 +66,10 @@ function Checkbox ({options, state, setState, name, className, admin, ...props}:
 
   function handleOnChange({target}:{target:EventTarget & HTMLInputElement}) {
     if(target.checked) {
-      admin && changeProductAvailability(`${name}_${target.value}`, true);
+      admin && changeProductAvailability(splitPortionId(target.value).category, splitPortionId(target.value).type, target.value, true);
       setState([...state, target.value]);
     } else {
-      admin && changeProductAvailability(`${name}_${target.value}`, false);
+      admin && changeProductAvailability(splitPortionId(target.value).category, splitPortionId(target.value).type, target.value, false);
       setState(state.filter(item => item !== target.value));
     }
   }

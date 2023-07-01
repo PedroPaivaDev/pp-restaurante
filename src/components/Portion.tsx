@@ -134,7 +134,7 @@ const Portion = ({ingredient, marmita, setMarmita}:PropsPortion) => {
           className='buttonAddRemove'
         />
       </div>
-      <DivImage bgImage={ingredient.image[0]}/>
+      <DivImage bgImage={ingredient.image}/>
     </PortionDetail>
   )
 }

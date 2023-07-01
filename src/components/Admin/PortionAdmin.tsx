@@ -54,7 +54,7 @@ const PortionAdmin = ({ingredient}:PropsPortionAdmin) => {
   function handleClick() {
     if(confirm("Você realmente deseja excluir este produto do banco de dados? Uma vez excluído, não será possível recuperar os dados deste produto.")) {
       removeProduct(ingredient.category, ingredient.type, ingredient.id,);
-      removePhotoFromDB(ingredient.category, getFileNameFromUrl(ingredient.image[0]));
+      removePhotoFromDB(ingredient.category, getFileNameFromUrl(ingredient.image));
       push('admin');
     } else {
       return;
@@ -70,7 +70,7 @@ const PortionAdmin = ({ingredient}:PropsPortionAdmin) => {
           className='buttonAddRemove'
         />
       </div>
-      <DivImage bgImage={ingredient.image[0]}/>
+      <DivImage bgImage={ingredient.image}/>
     </PortionDetail>
   )
 }
