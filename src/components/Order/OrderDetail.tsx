@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import timestampToDate from '@/helper/timestampToDate';
+import OrderStatus from './OrderStatus';
 
 const DivOrderDetail = styled.div`
   display: flex;
@@ -35,6 +36,7 @@ const OrderDetail = ({orderId, userOrder, setModalOrder}:PropsOrderDetail) => {
           <strong>Entregar</strong> na {userOrder.orderFormData.address}.
         </p>
       }
+      <OrderStatus orderStatus={userOrder.status}/>
     </DivOrderDetail>
   )
 }

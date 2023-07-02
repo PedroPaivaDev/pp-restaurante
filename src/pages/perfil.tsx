@@ -42,7 +42,7 @@ const Perfil = () => {
             {query.categoria==='Pedido' &&
               <OrdersMapper
                 title={'Pedidos do Dia'}
-                orders={getOrdersOfTheDay(userDB.userOrders)}
+                orders={userDB.userOrders? getOrdersOfTheDay(userDB.userOrders): {}}
                 setModalOrder={setModalOrder}
               />
             }

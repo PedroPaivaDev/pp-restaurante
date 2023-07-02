@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import getPortions from '@/helper/getPortions';
 import timestampToDate from '@/helper/timestampToDate';
+import OrderStatus from './OrderStatus';
 
 const DivOrderContent = styled.div`
   display: flex;
@@ -49,6 +50,7 @@ const OrderContent = ({modalOrder}:PropsOrderModal) => {
           <strong>Entregar</strong> na {modalOrder.orderFormData.address}.
         </p>
       }
+      <OrderStatus orderStatus={modalOrder.status}/>
       {Object.keys(modalOrder.orderMarmitas).map(marmitaId =>
         <div className='marmitas' key={marmitaId}>
           <p className='marmitaTitle'><strong>{modalOrder.orderMarmitas[marmitaId].size}: </strong>{modalOrder.orderMarmitas[marmitaId].id} - R$ {modalOrder.orderMarmitas[marmitaId].price.toFixed(2)}</p>

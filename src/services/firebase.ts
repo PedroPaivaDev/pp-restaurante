@@ -145,7 +145,8 @@ export function registerOrder(
     orderMarmitas: bag,
     orderTime: Date.now(),
     totalPrice: totalPrice,
-    uuid: uuid
+    uuid: uuid,
+    status: "pendente",
   };
   set(child(userOrdersRef,`${uuid}`), userOrder);
 }

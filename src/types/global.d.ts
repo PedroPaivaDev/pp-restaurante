@@ -125,7 +125,10 @@ interface UserOrder {
   orderMarmitas: Bag;
   orderTime: number;
   totalPrice: number;
+  status: OrderStatus;
 }
+
+type OrderStatus = 'pendente' | 'preparo' | 'entrega' | 'concluido' | 'cancelado';
 
 interface UsersDB {
   [key:string]: UserDB;
