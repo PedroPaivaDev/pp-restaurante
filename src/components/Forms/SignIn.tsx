@@ -33,10 +33,13 @@ const DivSignIn = styled.div`
   .signInButton {
     color: ${props => props.theme.colors.primaryColor};
   }
+  .admButton button {
+    background-color: ${props => props.theme.colors.sucess};
+  }
 `;
 
 const SignIn: React.FC = () => {
-  const {signInGoogle, userDB, logout, } = React.useContext(AuthGoogleContext);
+  const {signInGoogle, userDB, logout } = React.useContext(AuthGoogleContext);
   const {push} = useRouter();
 
   function redirectToProfile() {
@@ -61,6 +64,13 @@ const SignIn: React.FC = () => {
               className='signInButton'
             />
           </div>
+          {userDB?.userData.admin &&
+            <Button
+              label='Administração'
+              onClick={() => push('admin')}
+              className='admButton'
+            />
+          }
         </div>
       :
         <Button

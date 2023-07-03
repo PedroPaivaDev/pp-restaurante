@@ -8,7 +8,7 @@ import OrderStatus from './OrderStatus';
 const DivOrderContent = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: flex-start !important;
   align-items: center;
   gap: 10px;
   height: 100%;

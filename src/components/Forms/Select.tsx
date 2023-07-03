@@ -29,18 +29,20 @@ const SelectContainer = styled.div`
 `;
 
 interface PropsSelect {
-  initial: string;
+  initial?: string;
   options: OptionsObject | null;
   selectedOption: OptionsObject | null;
   setSelectedOption: React.Dispatch<React.SetStateAction<OptionsObject | null>>;
   label: string;
   name: string;
   className?: string;
+  admin?: boolean;
 }
 
-const Select = ({initial, options, selectedOption, setSelectedOption, className, label, name, ...props}:PropsSelect) => {
+const Select = ({initial, options, selectedOption, setSelectedOption, className, label, name, admin, ...props}:PropsSelect) => {
 
   function handleValue() {
+    console.log(admin)
     if(selectedOption && Object.keys(selectedOption).length > 0) {
       return Object.keys(selectedOption)[0];
     } else {
@@ -61,7 +63,7 @@ const Select = ({initial, options, selectedOption, setSelectedOption, className,
         onChange={handleChange}
         className='select' {...props}
       >
-        <option value="" disabled>{initial}</option>
+        {initial && <option value="" disabled>{initial}</option>}
         {options && Object.keys(options).map((option) => (
           <option key={option} value={option}>{option}</option>
         ))}
