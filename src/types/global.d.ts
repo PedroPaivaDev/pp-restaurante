@@ -74,7 +74,7 @@ interface ObjectKeyString {
 }
 
 interface OptionsObject {
-  [key: string]: number | null;
+  [key: string]: number | string | null;
 }
 
 type FormDataEntries = [string, string][];

@@ -31,7 +31,7 @@ const OrdersMapper = ({title, orders, setModalOrder}:PropsOrderMapper) => {
         <div className='row'>
           {orders && sortUuids(Object.keys(orders),'descending').map(orderId =>
             <Grid key={orderId} xs={12} sm={6} md={6} lg={4} className='animeLeft'>
-              <OrderDetail setModalOrder={setModalOrder} orderId={orderId} userOrder={orders[orderId]}/>
+              <OrderDetail setModalOrder={setModalOrder} userOrder={orders[orderId]}/>
             </Grid>
           )}
         </div>

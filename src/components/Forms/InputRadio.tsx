@@ -58,6 +58,14 @@ function InputRadio({
     }
   }
 
+  function typeGuardOptionKeyValue(value:string|number|null) {
+    if(typeof value==='number') {
+      return <span className='price'>R${value.toFixed(2)}</span>
+    } else {
+      return null;
+    }
+  }
+
   return (
     <DivInputRadio className={className}>
       {options && Object.keys(options).map(option => 
@@ -72,9 +80,7 @@ function InputRadio({
           />
           <label htmlFor={`${name + option}`}>
             <span>{option}</span>
-            {options[option] && <span className='price'>
-              R${options[option]?.toFixed(2)}
-            </span>}
+            {options[option] && typeGuardOptionKeyValue(options[option])}
           </label>
         </div>
       )}

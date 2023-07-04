@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
 
 import { changeProductAvailability, getProducts } from '@/services/firebase';
 import Checkbox from '../Forms/Checkbox';
