@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
+import { changeOrderStatus } from '@/services/firebase';
 import timestampToDate from '@/helper/timestampToDate';
 
 import Select from '../Forms/Select';
@@ -28,11 +29,7 @@ interface PropsOrderDetail {
 
 const OrderDetail = ({orderId, userOrder, setModalOrder}:PropsOrderDetail) => {
   const [status, setStatus] = React.useState<OptionsObject|null>(null);
-  const {userDB} = React.useContext(AuthGoogleContext)
-
-  function handleClick() {
-    setModalOrder(userOrder);
-  }
+  const {userDB} = React.useContext(AuthGoogleContext);
 
   const statusOptions = {
     pendente: null,
@@ -42,16 +39,24 @@ const OrderDetail = ({orderId, userOrder, setModalOrder}:PropsOrderDetail) => {
     cancelado: null
   }
 
+  function handleStatus(target:HTMLSelectElement) {
+    changeOrderStatus(userDB?.uid as string, userOrder.uuid, target.value)
+  }
+
+  React.useEffect(() => {
+    setStatus({[userOrder.status]:null})
+  },[userOrder])
+
   return (
     <DivOrderDetail className='bgPaper'>
       <h2>Pedido: {orderId}</h2>
-      <Select
+      {userDB?.userData.admin && <Select
         name='status'
         label={"Status:"}
         options={statusOptions}
         selectedOption={status} setSelectedOption={setStatus}
-        admin={userDB?.userData.admin}
-      />
+        admin={handleStatus}
+      />}
       <p>Feito em {timestampToDate(userOrder.orderTime)}</p>
       <p><strong>{userOrder.orderFormData.client}</strong> - {userOrder.orderFormData.contact}</p>
       {userOrder.orderFormData.installment ?
@@ -63,7 +68,9 @@ const OrderDetail = ({orderId, userOrder, setModalOrder}:PropsOrderDetail) => {
           <strong>Entregar</strong> na {userOrder.orderFormData.address}.
         </p>
       }
-      <span className='content' onClick={handleClick}>MAIS DETALHES</span>
+      <span className='content' onClick={() => setModalOrder(userOrder)}>
+        MAIS DETALHES
+      </span>
     </DivOrderDetail>
   )
 }

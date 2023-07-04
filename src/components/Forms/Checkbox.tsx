@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { changeProductAvailability } from '@/services/firebase';
-import splitPortionId from '@/helper/splitPortionId';
 import getNameById from '@/helper/getNameById';
 
 const CheckboxContainer = styled.div`
@@ -60,7 +58,7 @@ interface PropsCheckbox {
   setState: React.Dispatch<React.SetStateAction<string[]>>;
   name: string;
   className?: string;
-  admin?: boolean;
+  admin?: (target:EventTarget & HTMLInputElement) => void;
   menuProducts?: MenuProducts;
 }
 
@@ -68,10 +66,10 @@ function Checkbox ({options, state, setState, name, className, admin, menuProduc
 
   function handleOnChange({target}:{target:EventTarget & HTMLInputElement}) {
     if(target.checked) {
-      admin && changeProductAvailability(splitPortionId(target.value).category, splitPortionId(target.value).type, target.value, true);
+      admin && admin(target);
       setState([...state, target.value]);
     } else {
-      admin && changeProductAvailability(splitPortionId(target.value).category, splitPortionId(target.value).type, target.value, false);
+      admin && admin(target);
       setState(state.filter(item => item !== target.value));
     }
   }

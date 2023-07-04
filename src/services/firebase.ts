@@ -150,3 +150,10 @@ export function registerOrder(
   };
   set(child(userOrdersRef,`${uuid}`), userOrder);
 }
+
+export function changeOrderStatus(userId:string, orderUuid:string, status:string) {
+  const orderRef = ref(db, `usuarios/${userId}/userOrders/${orderUuid}`);
+  update(orderRef, {status: status}).then(() => {
+    console.log(`o status do pedido: ${orderUuid}, foi alterado para ${status}`)
+  });
+}

@@ -36,13 +36,12 @@ interface PropsSelect {
   label: string;
   name: string;
   className?: string;
-  admin?: boolean;
+  admin?: (target:HTMLSelectElement) => void;
 }
 
 const Select = ({initial, options, selectedOption, setSelectedOption, className, label, name, admin, ...props}:PropsSelect) => {
 
   function handleValue() {
-    console.log(admin)
     if(selectedOption && Object.keys(selectedOption).length > 0) {
       return Object.keys(selectedOption)[0];
     } else {
@@ -51,7 +50,8 @@ const Select = ({initial, options, selectedOption, setSelectedOption, className,
   }
 
   function handleChange({target}:{target:HTMLSelectElement}) {
-    options && setSelectedOption({[target.value]: options[target.value]})
+    options && setSelectedOption({[target.value]: options[target.value]});
+    admin && admin(target);
   }
 
   return (

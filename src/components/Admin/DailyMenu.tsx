@@ -2,10 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
 
-import { getProducts } from '@/services/firebase';
+import { changeProductAvailability, getProducts } from '@/services/firebase';
 import Checkbox from '../Forms/Checkbox';
 import Grid from '../Grid';
 import getMenuProductsIdsByCategories from '@/helper/getMenuProductsIdsByCategories';
+import splitPortionId from '@/helper/splitPortionId';
 
 const DivDailyMenu = styled.div`
   .categories {
@@ -39,7 +40,6 @@ const DivDailyMenu = styled.div`
 `;
 
 const DailyMenu = () => {
-  const {userDB} = React.useContext(AuthGoogleContext);
   const [menu, setMenu] = React.useState<Menu>();
   const [menuOptionsIds, setMenuOptionsIds] = React.useState<ObjectArrayString|null>(null);
   const [available, setAvailable] = React.useState<string[]>([]);
@@ -55,6 +55,10 @@ const DailyMenu = () => {
       )
     )
     return arrayAllPortionsAvailables;
+  }
+
+  function handleAvailability(target:EventTarget & HTMLInputElement) {
+    changeProductAvailability(splitPortionId(target.value).category, splitPortionId(target.value).type, target.value, target.checked);
   }
 
   React.useEffect(() => {
@@ -85,7 +89,7 @@ const DailyMenu = () => {
                 setState={setAvailable}
                 name={category}
                 className='divCheckbox'
-                admin={userDB?.userData.admin}
+                admin={handleAvailability}
                 menuProducts={menu?.products}
               />
             </div>
