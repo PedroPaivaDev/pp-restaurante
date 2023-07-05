@@ -2,11 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
+import { getOrderByUuid, getProducts } from '@/services/firebase';
 import getPortions from '@/helper/getPortions';
 import timestampToDate from '@/helper/timestampToDate';
+import getNameById from '@/helper/getNameById';
 
 import OrderStatus from './OrderStatus';
-import { getOrderByUuid } from '@/services/firebase';
 
 const DivOrderContent = styled.div`
   display: flex;
@@ -38,12 +39,17 @@ interface PropsOrderModal {
 const OrderContent = ({userId, orderUuid}:PropsOrderModal) => {
   const {userDB} = React.useContext(AuthGoogleContext);
   const [order, setOrder] = React.useState<UserOrder|null>(null);
+  const [menu, setMenu] = React.useState<Menu|null>(null);
+
+  React.useEffect(() => {
+    getProducts('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>);
+  },[]);
 
   React.useEffect(() => {
     getOrderByUuid(userId, orderUuid, setOrder as React.Dispatch<React.SetStateAction<UserOrder>>);
   },[userId, orderUuid]);
 
-  if(order) {
+  if(order && menu) {
     return <DivOrderContent className='bgPaper'>
       <h1>{order.orderFormData.client}</h1>
       <p>Contato: {order.orderFormData.contact}</p>
@@ -62,7 +68,7 @@ const OrderContent = ({userId, orderUuid}:PropsOrderModal) => {
         <div className='marmitas' key={marmitaId}>
           <p><strong>{order.orderMarmitas[marmitaId].size}: </strong>{order.orderMarmitas[marmitaId].id} - R$ {order.orderMarmitas[marmitaId].price.toFixed(2)}</p>
           {getPortions(order.orderMarmitas[marmitaId].portions).map(portion =>
-            <p key={portion}>{portion}</p>
+            <p key={portion}>{getNameById(portion,menu.products)}</p>
           )}
         </div>
       )}

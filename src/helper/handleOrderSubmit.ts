@@ -1,3 +1,4 @@
+import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { registerOrder } from '@/services/firebase';
@@ -5,7 +6,7 @@ import getPortionsNames from './getPortionsNames';
 import tupleToObject from './tupleToObject';
 
 export default function handleOrderSubmit(
-  bag:Bag, formDataEntries:FormDataEntries, totalPrice:number, menu:MenuProducts, userDB:UserDB, screenWidth:number
+  bag:Bag, formDataEntries:FormDataEntries, totalPrice:number, menu:MenuProducts, userDB:UserDB, screenWidth:number, setUserDBChanged:React.Dispatch<React.SetStateAction<number | null>>
 ) {
   const formData = tupleToObject(formDataEntries) as unknown as OrderChoices;
   
@@ -40,7 +41,7 @@ export default function handleOrderSubmit(
 
   const orderUuid = uuidv4();
 
-  registerOrder(orderUuid, userDB.uid, orderFormData, bag, totalPrice);
+  registerOrder(orderUuid, userDB.uid, orderFormData, bag, totalPrice, setUserDBChanged);
 
   const storeNumber = 5537999237253;
   let urlApi = 'http://web.whatsapp.com/send';

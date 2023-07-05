@@ -67,7 +67,7 @@ const OrderContainer = styled.div`
 
 const Order = ({bag, menu, unavailable}:{bag:Bag, menu:Menu, unavailable:string[]}) => {
   const screenWidth = useMediaQuery();
-  const {userDB} = React.useContext(AuthGoogleContext);
+  const {userDB, setUserDBChanged} = React.useContext(AuthGoogleContext);
   const [totalPrice, setTotalPrice] = React.useState(0);
   const [statusSubmit, setStatusSubmit] = React.useState<StatusSubmit>({
     label: 'Enviar Pedido',
@@ -135,7 +135,7 @@ const Order = ({bag, menu, unavailable}:{bag:Bag, menu:Menu, unavailable:string[
       alert(`Infelizmente o item ${getNameById(unavailable[0],menu.products)} ficou indisponível alguns segundos atrás. Considere editar a marmita, escolhendo outro item ou removendo este item da sua marmita.`)
       return;
     } else {
-      userDB && handleOrderSubmit(bag, formDataEntries as FormDataEntries, totalPrice, menu.products, userDB, screenWidth);
+      userDB && handleOrderSubmit(bag, formDataEntries as FormDataEntries, totalPrice, menu.products, userDB, screenWidth, setUserDBChanged);
     }
   }
 
