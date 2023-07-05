@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
 import getPortions from '@/helper/getPortions';
 import timestampToDate from '@/helper/timestampToDate';
+
 import OrderStatus from './OrderStatus';
 
 const DivOrderContent = styled.div`
@@ -24,9 +26,6 @@ const DivOrderContent = styled.div`
     p {
       text-align: center;
     }
-    .marmitaTitle {
-      margin-top: 20px;
-    }
   }
 `;
 
@@ -35,6 +34,7 @@ interface PropsOrderModal {
 }
 
 const OrderContent = ({modalOrder}:PropsOrderModal) => {
+  const {userDB} = React.useContext(AuthGoogleContext);
 
   return (
     <DivOrderContent className='bgPaper'>
@@ -50,10 +50,15 @@ const OrderContent = ({modalOrder}:PropsOrderModal) => {
           <strong>Entregar</strong> na {modalOrder.orderFormData.address}.
         </p>
       }
-      <OrderStatus orderStatus={modalOrder.status}/>
+      {userDB && <OrderStatus
+        orderStatus={modalOrder.status}
+        admin={userDB.userData.admin ?? false}
+        userUid={userDB.uid}
+        orderUuid={modalOrder.uuid}
+      />}
       {Object.keys(modalOrder.orderMarmitas).map(marmitaId =>
         <div className='marmitas' key={marmitaId}>
-          <p className='marmitaTitle'><strong>{modalOrder.orderMarmitas[marmitaId].size}: </strong>{modalOrder.orderMarmitas[marmitaId].id} - R$ {modalOrder.orderMarmitas[marmitaId].price.toFixed(2)}</p>
+          <p><strong>{modalOrder.orderMarmitas[marmitaId].size}: </strong>{modalOrder.orderMarmitas[marmitaId].id} - R$ {modalOrder.orderMarmitas[marmitaId].price.toFixed(2)}</p>
           {getPortions(modalOrder.orderMarmitas[marmitaId].portions).map(portion =>
             <p key={portion}>{portion}</p>
           )}
