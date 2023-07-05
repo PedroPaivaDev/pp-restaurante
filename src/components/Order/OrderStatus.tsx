@@ -31,9 +31,9 @@ const DivOrderStatus = styled.div<BgProps>`
 
 interface PropsOrderStatus {
   orderStatus: OrderStatus;
-  admin: boolean;
-  userUid: string;
-  orderUuid: string
+  admin?: boolean;
+  userUid?: string;
+  orderUuid?: string
 }
 
 const OrderStatus = ({orderStatus, admin, userUid, orderUuid}:PropsOrderStatus) => {
@@ -47,7 +47,7 @@ const OrderStatus = ({orderStatus, admin, userUid, orderUuid}:PropsOrderStatus) 
   }
 
   function handleStatus(target:HTMLSelectElement) {
-    changeOrderStatus(userUid, orderUuid, target.value)
+    userUid && orderUuid && changeOrderStatus(userUid, orderUuid, target.value)
   }
 
   React.useEffect(() => {

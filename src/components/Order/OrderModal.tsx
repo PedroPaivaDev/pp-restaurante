@@ -33,7 +33,9 @@ const OrderModal = ({modalOrder, setModalOrder}:PropsOrderModal) => {
   
   return (
     <DivOrderModal onClick={handleOutsideClick}>
-      <OrderContent modalOrder={modalOrder}/>
+      <OrderContent
+        userId={modalOrder.orderFormData.uid} orderUuid={modalOrder.uuid}
+      />
     </DivOrderModal>
   )
 }

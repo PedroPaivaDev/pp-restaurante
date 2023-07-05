@@ -6,6 +6,7 @@ import getPortions from '@/helper/getPortions';
 import timestampToDate from '@/helper/timestampToDate';
 
 import OrderStatus from './OrderStatus';
+import { getOrderByUuid } from '@/services/firebase';
 
 const DivOrderContent = styled.div`
   display: flex;
@@ -30,42 +31,45 @@ const DivOrderContent = styled.div`
 `;
 
 interface PropsOrderModal {
-  modalOrder: UserOrder;
+  userId: string;
+  orderUuid: string;
 }
 
-const OrderContent = ({modalOrder}:PropsOrderModal) => {
+const OrderContent = ({userId, orderUuid}:PropsOrderModal) => {
   const {userDB} = React.useContext(AuthGoogleContext);
+  const [order, setOrder] = React.useState<UserOrder|null>(null);
 
-  return (
-    <DivOrderContent className='bgPaper'>
-      <h1>{modalOrder.orderFormData.client}</h1>
-      <p>Contato: {modalOrder.orderFormData.contact}</p>
-      <p>Feito em {timestampToDate(modalOrder.orderTime)}</p>
-      {modalOrder.orderFormData.installment ?
-        <p>{modalOrder.orderFormData.installment} - {modalOrder.orderFormData.payment} - <strong>R$ {modalOrder.totalPrice.toFixed(2)}</strong></p> :
-        <p>{modalOrder.orderFormData.payment} - <strong>R$ {modalOrder.totalPrice.toFixed(2)}</strong></p>
+  React.useEffect(() => {
+    getOrderByUuid(userId, orderUuid, setOrder as React.Dispatch<React.SetStateAction<UserOrder>>);
+  },[userId, orderUuid]);
+
+  if(order) {
+    return <DivOrderContent className='bgPaper'>
+      <h1>{order.orderFormData.client}</h1>
+      <p>Contato: {order.orderFormData.contact}</p>
+      <p>Feito em {timestampToDate(order.orderTime)}</p>
+      {order.orderFormData.installment ?
+        <p>{order.orderFormData.installment} - {order.orderFormData.payment} - <strong>R$ {order.totalPrice.toFixed(2)}</strong></p> :
+        <p>{order.orderFormData.payment} - <strong>R$ {order.totalPrice.toFixed(2)}</strong></p>
       }
-      {modalOrder.orderFormData.delivery &&
+      {order.orderFormData.delivery &&
         <p className='delivery'>
-          <strong>Entregar</strong> na {modalOrder.orderFormData.address}.
+          <strong>Entregar</strong> na {order.orderFormData.address}.
         </p>
       }
-      {userDB && <OrderStatus
-        orderStatus={modalOrder.status}
-        admin={userDB.userData.admin ?? false}
-        userUid={userDB.uid}
-        orderUuid={modalOrder.uuid}
-      />}
-      {Object.keys(modalOrder.orderMarmitas).map(marmitaId =>
+      {userDB && <OrderStatus orderStatus={order.status} />}
+      {Object.keys(order.orderMarmitas).map(marmitaId =>
         <div className='marmitas' key={marmitaId}>
-          <p><strong>{modalOrder.orderMarmitas[marmitaId].size}: </strong>{modalOrder.orderMarmitas[marmitaId].id} - R$ {modalOrder.orderMarmitas[marmitaId].price.toFixed(2)}</p>
-          {getPortions(modalOrder.orderMarmitas[marmitaId].portions).map(portion =>
+          <p><strong>{order.orderMarmitas[marmitaId].size}: </strong>{order.orderMarmitas[marmitaId].id} - R$ {order.orderMarmitas[marmitaId].price.toFixed(2)}</p>
+          {getPortions(order.orderMarmitas[marmitaId].portions).map(portion =>
             <p key={portion}>{portion}</p>
           )}
         </div>
       )}
     </DivOrderContent>
-  )
+  } else {
+    return <></>
+  }
 }
 
 export default OrderContent;
