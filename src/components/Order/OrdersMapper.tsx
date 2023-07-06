@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import sortUuids from '@/helper/sortUuids';
+import sortOrdersByTime from '@/helper/sortOrdersByTime';
 
 import Grid from '../Grid';
 import OrderDetail from './OrderDetail';
@@ -29,9 +29,9 @@ const OrdersMapper = ({title, orders, setModalOrder}:PropsOrderMapper) => {
       <h1>{title}</h1>
       <div className='wrapper'>
         <div className='row'>
-          {orders && sortUuids(Object.keys(orders),'descending').map(orderId =>
-            <Grid key={orderId} xs={12} sm={6} md={6} lg={4} className='animeLeft'>
-              <OrderDetail setModalOrder={setModalOrder} userOrder={orders[orderId]}/>
+          {orders && sortOrdersByTime(orders).map(order =>
+            <Grid key={order.uuid} xs={12} sm={6} md={6} lg={4} className='animeLeft'>
+              <OrderDetail setModalOrder={setModalOrder} userOrder={order}/>
             </Grid>
           )}
         </div>
