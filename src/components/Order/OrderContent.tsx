@@ -51,6 +51,7 @@ const OrderContent = ({userId, orderUuid}:PropsOrderModal) => {
 
   if(order && menu) {
     return <DivOrderContent className='bgPaper'>
+      <p>{order.uuid}</p>
       <h1>{order.orderFormData.client}</h1>
       <p>Contato: {order.orderFormData.contact}</p>
       <p>Feito em {timestampToDate(order.orderTime)}</p>

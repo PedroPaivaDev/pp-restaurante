@@ -119,8 +119,7 @@ export function removeProduct(category:string, type:string, id:string) {
 }
 
 export function registerOrder(
-  uuid:string, uid:string, orderFormData:OrderFormData, bag:Bag, totalPrice:number,
-  setUserDBChanged:React.Dispatch<React.SetStateAction<number|null>>
+  uuid:string, uid:string, orderFormData:OrderFormData, bag:Bag, totalPrice:number
 ) {
   const userOrdersRef = ref(db, `usuarios/${uid}/userOrders`);
   const userOrder:UserOrder = {
@@ -131,9 +130,7 @@ export function registerOrder(
     uuid: uuid,
     status: "pendente",
   };
-  set(child(userOrdersRef,`${uuid}`), userOrder).then(() =>
-    setUserDBChanged(Date.now())
-  );
+  return set(child(userOrdersRef,`${uuid}`), userOrder);
 }
 
 export function changeOrderStatus(userId:string, orderUuid:string, status:string) {

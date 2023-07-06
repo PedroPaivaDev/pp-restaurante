@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
 import useLocalStorage from '@/hooks/useLocalStorage';
-import useMediaQuery from '@/hooks/useMediaQuery';
 import getOption from '@/helper/getOption';
 import handleOrderSubmit from '@/helper/handleOrderSubmit';
 
@@ -66,7 +66,7 @@ const OrderContainer = styled.div`
 `;
 
 const Order = ({bag, menu, unavailable}:{bag:Bag, menu:Menu, unavailable:string[]}) => {
-  const screenWidth = useMediaQuery();
+  const { push } = useRouter();
   const {userDB, setUserDBChanged} = React.useContext(AuthGoogleContext);
   const [totalPrice, setTotalPrice] = React.useState(0);
   const [statusSubmit, setStatusSubmit] = React.useState<StatusSubmit>({
@@ -135,7 +135,10 @@ const Order = ({bag, menu, unavailable}:{bag:Bag, menu:Menu, unavailable:string[
       alert(`Infelizmente o item ${getNameById(unavailable[0],menu.products)} ficou indisponível alguns segundos atrás. Considere editar a marmita, escolhendo outro item ou removendo este item da sua marmita.`)
       return;
     } else {
-      userDB && handleOrderSubmit(bag, formDataEntries as FormDataEntries, totalPrice, menu.products, userDB, screenWidth, setUserDBChanged);
+      userDB && handleOrderSubmit(bag, formDataEntries as FormDataEntries, totalPrice, userDB ).then(() => {
+        setUserDBChanged(Date.now())
+        push('perfil?categoria=Pedido')
+      });
     }
   }
 

@@ -34,7 +34,7 @@ const OrderDetail = ({userOrder, setModalOrder}:PropsOrderDetail) => {
       {userDB && <OrderStatus
         orderStatus={userOrder.status}
         admin={userDB.userData.admin ?? false}
-        userUid={userDB.uid}
+        userUid={userOrder.orderFormData.uid}
         orderUuid={userOrder.uuid}
       />}
       <p>Feito em {timestampToDate(userOrder.orderTime)}</p>
