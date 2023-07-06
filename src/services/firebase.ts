@@ -59,15 +59,6 @@ export function getData<Type>(path:string, setState:React.Dispatch<React.SetStat
   )
 }
 
-export function getUserDB(uid:string, setState:React.Dispatch<React.SetStateAction<UserDB|null>>) {
-  const getRef = ref(db, `usuarios/${uid}`);
-  onValue(
-    getRef,
-    (snapshot) => setState(snapshot.val()),
-    {onlyOnce: true}
-  )
-}
-
 export function setNewUser(userAuth:User) {
   const usersRef = ref(db, 'usuarios');
   const newUser = {
@@ -143,15 +134,6 @@ export function registerOrder(
   set(child(userOrdersRef,`${uuid}`), userOrder).then(() =>
     setUserDBChanged(Date.now())
   );
-}
-
-export function getOrderByUuid(userId:string, orderUuid:string,setState:React.Dispatch<React.SetStateAction<UserOrder>>) {
-  const orderRef = ref(db, `usuarios/${userId}/userOrders/${orderUuid}`);
-  onValue(
-    orderRef,
-    (snapshot) => setState(snapshot.val()),
-    {onlyOnce: true}
-  )
 }
 
 export function changeOrderStatus(userId:string, orderUuid:string, status:string) {

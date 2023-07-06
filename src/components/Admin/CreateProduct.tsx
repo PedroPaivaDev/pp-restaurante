@@ -43,7 +43,7 @@ const DivImage = styled.div<BgProps>`
 
 const CreateProduct = () => {
   const {push} = useRouter();
-  const [menu, setMenu] = React.useState<Menu>();
+  const [menu, setMenu] = React.useState<Menu|null>(null);
   const [selectedCategory, setSelectedCategory] = React.useState<OptionsObject|null>(null);
   const [selectedType, setSelectedType] = React.useState<OptionsObject|null>(null);
   const productName = useForm(null);
@@ -108,7 +108,7 @@ const CreateProduct = () => {
   }
 
   React.useEffect(() => {
-    getData<Menu>('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>)
+    getData<Menu|null>('cardapio', setMenu)
   },[]);
   
   React.useEffect(() => {

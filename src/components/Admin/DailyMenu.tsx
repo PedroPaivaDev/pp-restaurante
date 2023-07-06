@@ -39,7 +39,7 @@ const DivDailyMenu = styled.div`
 `;
 
 const DailyMenu = () => {
-  const [menu, setMenu] = React.useState<Menu>();
+  const [menu, setMenu] = React.useState<Menu|null>(null);
   const [menuOptionsIds, setMenuOptionsIds] = React.useState<ObjectArrayString|null>(null);
   const [available, setAvailable] = React.useState<string[]>([]);
 
@@ -61,7 +61,7 @@ const DailyMenu = () => {
   }
 
   React.useEffect(() => {
-    getData<Menu>('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>)
+    getData<Menu|null>('cardapio', setMenu)
   },[]);
 
   React.useEffect(() => {

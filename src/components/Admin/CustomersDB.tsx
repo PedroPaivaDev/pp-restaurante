@@ -32,7 +32,7 @@ const CustomersDB = () => {
   const [customers, setCustumers] = React.useState<UsersDB|null>(null);
 
   React.useEffect(() => {
-    getData<UsersDB>('usuarios', setCustumers as React.Dispatch<React.SetStateAction<UsersDB>>);
+    getData<UsersDB|null>('usuarios', setCustumers);
   },[]);
 
   return (

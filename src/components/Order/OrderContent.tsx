@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
-import { getOrderByUuid, getData } from '@/services/firebase';
+import { getData } from '@/services/firebase';
 import getPortions from '@/helper/getPortions';
 import timestampToDate from '@/helper/timestampToDate';
 import getNameById from '@/helper/getNameById';
@@ -42,11 +42,11 @@ const OrderContent = ({userId, orderUuid}:PropsOrderModal) => {
   const [menu, setMenu] = React.useState<Menu|null>(null);
 
   React.useEffect(() => {
-    getData<Menu>('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>);
+    getData<Menu|null>('cardapio', setMenu);
   },[]);
 
   React.useEffect(() => {
-    getOrderByUuid(userId, orderUuid, setOrder as React.Dispatch<React.SetStateAction<UserOrder>>);
+    getData<UserOrder|null>(`usuarios/${userId}/userOrders/${orderUuid}`, setOrder);
   },[userId, orderUuid]);
 
   if(order && menu) {

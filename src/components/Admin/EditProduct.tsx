@@ -8,11 +8,11 @@ import Grid from '../Grid';
 import PortionAdmin from './PortionAdmin';
 
 const EditProduct = () => {
-  const [menu, setMenu] = React.useState<Menu>();
+  const [menu, setMenu] = React.useState<Menu|null>(null);
   const [products, setProducts] = React.useState<ObjectArrayString|null>(null);
 
   React.useEffect(() => {
-    getData<Menu>('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>)
+    getData<Menu|null>('cardapio', setMenu)
   },[]);  
 
   React.useEffect(() => {

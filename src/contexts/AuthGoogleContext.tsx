@@ -2,7 +2,7 @@
 import React from 'react'
 import { GoogleAuthProvider, User, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 
-import { auth, changeUserData, getUserDB, setNewUser } from '@/services/firebase';
+import { auth, changeUserData, getData, setNewUser } from '@/services/firebase';
 
 const provider = new GoogleAuthProvider();
 
@@ -75,7 +75,7 @@ export const AuthGoogleProvider = ({children}:{children:React.ReactNode;}) => {
 
   React.useEffect(() => {
     if(userAuth) {
-      getUserDB(userAuth.uid, setUserDB);
+      getData<UserDB|null>(`usuarios/${userAuth.uid}`, setUserDB);
     } else {
       setUserDB(null);
     }

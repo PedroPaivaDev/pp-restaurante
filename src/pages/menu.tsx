@@ -53,7 +53,7 @@ const SizeOptions = styled.div`
 
 const Menu = () => {
   const {query, push} = useRouter();
-  const [menu, setMenu] = React.useState<Menu>();
+  const [menu, setMenu] = React.useState<Menu|null>(null);
   const {marmitaStorage, setMarmitaStorage, bagStorage, setBagStorage} = React.useContext(MarmitaContext);
   const [marmitaPortions, setMarmitaPortions] = React.useState<string[]>();
   const [statusSubmit, setStatusSubmit] = React.useState<StatusSubmit>({
@@ -104,7 +104,7 @@ const Menu = () => {
   }
 
   React.useEffect(() => {
-    getData<Menu>('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>);
+    getData<Menu|null>('cardapio', setMenu);
   },[]);
 
   React.useEffect(() => {

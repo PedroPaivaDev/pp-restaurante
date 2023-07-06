@@ -24,7 +24,7 @@ const DivEnvelope = styled.div`
 
 const Entrega = () => {
   const {bagStorage, setBagStorage, setMarmitaStorage} = React.useContext(MarmitaContext);
-  const [menu, setMenu] = React.useState<Menu>();
+  const [menu, setMenu] = React.useState<Menu|null>(null);
   const {push} = useRouter();
   const [bagWithMarmita, setBagWithMarmita] = React.useState<boolean>();
   const [unavailable, setUnavailable] = React.useState<string[]>([]);
@@ -38,7 +38,7 @@ const Entrega = () => {
   },[bagStorage])
 
   React.useEffect(() => {
-    getData<Menu>('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>)
+    getData<Menu|null>('cardapio', setMenu)
   },[]);
 
   React.useEffect(() => {
