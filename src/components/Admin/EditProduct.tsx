@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getProducts } from '@/services/firebase';
+import { getData } from '@/services/firebase';
 import getMenuProductsIdsByCategories from '@/helper/getMenuProductsIdsByCategories';
 import splitPortionId from '@/helper/splitPortionId';
 
@@ -12,7 +12,7 @@ const EditProduct = () => {
   const [products, setProducts] = React.useState<ObjectArrayString|null>(null);
 
   React.useEffect(() => {
-    getProducts('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>)
+    getData<Menu>('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>)
   },[]);  
 
   React.useEffect(() => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { changeProductAvailability, getProducts } from '@/services/firebase';
+import { changeProductAvailability, getData } from '@/services/firebase';
 import Checkbox from '../Forms/Checkbox';
 import Grid from '../Grid';
 import getMenuProductsIdsByCategories from '@/helper/getMenuProductsIdsByCategories';
@@ -61,7 +61,7 @@ const DailyMenu = () => {
   }
 
   React.useEffect(() => {
-    getProducts('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>)
+    getData<Menu>('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>)
   },[]);
 
   React.useEffect(() => {

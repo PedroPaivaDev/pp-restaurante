@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
-import { getProducts } from '@/services/firebase';
+import { getData } from '@/services/firebase';
 import { MarmitaContext } from '@/contexts/MarmitaContext';
 import getPortions from '@/helper/getPortions';
 
@@ -104,7 +104,7 @@ const Menu = () => {
   }
 
   React.useEffect(() => {
-    getProducts('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>);
+    getData<Menu>('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>);
   },[]);
 
   React.useEffect(() => {

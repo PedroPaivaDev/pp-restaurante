@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import { getUsers } from '@/services/firebase';
+import { getData } from '@/services/firebase';
 import timestampToDate from '@/helper/timestampToDate';
 import Grid from '../Grid';
 
@@ -32,7 +32,7 @@ const CustomersDB = () => {
   const [customers, setCustumers] = React.useState<UsersDB|null>(null);
 
   React.useEffect(() => {
-    getUsers(setCustumers as React.Dispatch<React.SetStateAction<UsersDB>>);
+    getData<UsersDB>('usuarios', setCustumers as React.Dispatch<React.SetStateAction<UsersDB>>);
   },[]);
 
   return (

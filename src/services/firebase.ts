@@ -50,17 +50,8 @@ export function removePhotoFromDB(category: string, fileName: string) {
 
 //MÉTODOS DO REALTIME DATABASE:
 
-export function getProducts(path:string, setState:React.Dispatch<React.SetStateAction<Menu>>) {
-  const productsRef = ref(db, path);
-  onValue(
-    productsRef,
-    (snapshot) => setState(snapshot.val()),
-    {onlyOnce: true}
-  )
-}
-
-export function getUsers(setState:React.Dispatch<React.SetStateAction<UsersDB>>) {
-  const getRef = ref(db, 'usuarios');
+export function getData<Type>(path:string, setState:React.Dispatch<React.SetStateAction<Type>>) {
+  const getRef = ref(db, path);
   onValue(
     getRef,
     (snapshot) => setState(snapshot.val()),

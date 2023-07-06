@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 import { MarmitaContext } from '@/contexts/MarmitaContext';
-import { getProducts } from '@/services/firebase';
+import { getData } from '@/services/firebase';
 import withAuth from '@/utils/withAuth';
 import getPortions from '@/helper/getPortions';
 import splitPortionId from '@/helper/splitPortionId';
@@ -38,7 +38,7 @@ const Entrega = () => {
   },[bagStorage])
 
   React.useEffect(() => {
-    getProducts('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>)
+    getData<Menu>('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>)
   },[]);
 
   React.useEffect(() => {

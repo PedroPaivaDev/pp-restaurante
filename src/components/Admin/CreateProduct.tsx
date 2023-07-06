@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { getProducts, setNewProduct, uploadPhotoAndGetUrl } from '@/services/firebase';
+import { getData, setNewProduct, uploadPhotoAndGetUrl } from '@/services/firebase';
 import getOption from '@/helper/getOption';
 
 import Select from '../Forms/Select';
@@ -108,7 +108,7 @@ const CreateProduct = () => {
   }
 
   React.useEffect(() => {
-    getProducts('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>)
+    getData<Menu>('cardapio', setMenu as React.Dispatch<React.SetStateAction<Menu>>)
   },[]);
   
   React.useEffect(() => {

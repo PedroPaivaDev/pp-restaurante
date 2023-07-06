@@ -2,7 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 
 import withAdmin from '@/utils/withAdmin';
-import { getUsers } from '@/services/firebase';
+import { getData } from '@/services/firebase';
 import getOrdersFromUsers from '@/helper/getOrdersFromUsers';
 import getOrdersOfTheDay from '@/helper/getOrdersOfTheDay';
 
@@ -20,7 +20,7 @@ const Admin = () => {
   const [customers, setCustumers] = React.useState<UsersDB|null>(null);
 
   React.useEffect(() => {
-    getUsers(setCustumers as React.Dispatch<React.SetStateAction<UsersDB>>);
+    getData<UsersDB>('usuarios', setCustumers as React.Dispatch<React.SetStateAction<UsersDB>>);
   },[]);
 
   return (
