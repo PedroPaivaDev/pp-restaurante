@@ -6,12 +6,14 @@ import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import getOption from '@/helper/getOption';
 import handleOrderSubmit from '@/helper/handleOrderSubmit';
+import getNameById from '@/helper/getNameById';
+import getPortions from '@/helper/getPortions';
+import splitPortionId from '@/helper/splitPortionId';
 
 import Select from '../Forms/Select';
 import Checkbox from '../Forms/Checkbox';
 import Button from '../Forms/Button';
 import LinkButton from '../Forms/LinkButton';
-import getNameById from '@/helper/getNameById';
 
 const OrderContainer = styled.div`
   .form {
@@ -65,10 +67,19 @@ const OrderContainer = styled.div`
   }
 `;
 
-const Order = ({bag, menu, unavailable}:{bag:Bag, menu:Menu, unavailable:string[]}) => {
+interface PropsOrder {
+  marmita: Marmita;
+  setMarmita: React.Dispatch<React.SetStateAction<Marmita>>;
+  bag: Bag;
+  setBag: React.Dispatch<React.SetStateAction<Bag>>
+  menu: Menu;
+}
+
+const Order = ({marmita, bag, setMarmita, setBag, menu}:PropsOrder) => {
   const { push } = useRouter();
   const {userDB, setUserDBChanged} = React.useContext(AuthGoogleContext);
   const [totalPrice, setTotalPrice] = React.useState(0);
+  const [unavailable, setUnavailable] = React.useState<string[]>([]);
   const [statusSubmit, setStatusSubmit] = React.useState<StatusSubmit>({
     label: 'Enviar Pedido',
     status: null,
@@ -117,13 +128,12 @@ const Order = ({bag, menu, unavailable}:{bag:Bag, menu:Menu, unavailable:string[
         status: 'error',
         msg: 'Escolha a quantidade de parcelas'
       })
-      console.log(formDataEntries)
       return;
     } else if(delivery.length>0 && (!userDB?.userData.street || !userDB?.userData.streetNumber || !userDB?.userData.neighborhood || !userDB?.userData.reference)) {
       setStatusSubmit({
         label: 'Enviar Pedido',
         status: 'error',
-        msg: 'Altere o endereço de entrega'
+        msg: 'Endereço de entrega inválido'
       })
       return;
     } else if(unavailable.length>0) {
@@ -134,13 +144,33 @@ const Order = ({bag, menu, unavailable}:{bag:Bag, menu:Menu, unavailable:string[
       })
       alert(`Infelizmente o item ${getNameById(unavailable[0],menu.products)} ficou indisponível alguns segundos atrás. Considere editar a marmita, escolhendo outro item ou removendo este item da sua marmita.`)
       return;
+    } else if(Object.keys(marmita).length>0 && !confirm("Você ainda estava montando uma marmita. Tem certeza que deseja finalizar o pedido e descartar a marmita que não foi concluída?")) {
+      return
     } else {
       userDB && handleOrderSubmit(bag, formDataEntries as FormDataEntries, totalPrice, userDB ).then(() => {
-        setUserDBChanged(Date.now())
-        push('perfil?categoria=Pedido')
+        setUserDBChanged(Date.now());
+        setMarmita({});
+        setBag({});
+        localStorage.clear();
+        push('perfil?categoria=Pedido');
       });
     }
   }
+
+  React.useEffect(() => {
+    if(bag && menu) {
+      const unavailableArray:string[] = [];
+      Object.keys(bag).forEach(marmitaId => {
+        getPortions(bag[marmitaId].portions).forEach(portionId => {
+          const {category, type} = splitPortionId(portionId);
+          if(!menu.products[category].products[type].products[portionId].available) {
+            unavailableArray?.push(portionId)
+          }
+        })
+      });
+      setUnavailable(unavailableArray);
+    }
+  },[bag, menu]);
 
   React.useEffect(() => {
     let sumPrices = delivery.includes("Entregar (+R$5,00)") ? 5 : 0;

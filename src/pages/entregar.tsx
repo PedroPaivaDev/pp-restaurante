@@ -5,8 +5,6 @@ import { useRouter } from 'next/router';
 import { MarmitaContext } from '@/contexts/MarmitaContext';
 import { getData } from '@/services/firebase';
 import withAuth from '@/utils/withAuth';
-import getPortions from '@/helper/getPortions';
-import splitPortionId from '@/helper/splitPortionId';
 
 import Order from '@/components/Order/Order';
 import Grid from '@/components/Grid';
@@ -23,11 +21,10 @@ const DivEnvelope = styled.div`
 `;
 
 const Entrega = () => {
-  const {bagStorage, setBagStorage, setMarmitaStorage} = React.useContext(MarmitaContext);
+  const {marmitaStorage, bagStorage, setBagStorage, setMarmitaStorage} = React.useContext(MarmitaContext);
   const [menu, setMenu] = React.useState<Menu|null>(null);
   const {push} = useRouter();
   const [bagWithMarmita, setBagWithMarmita] = React.useState<boolean>();
-  const [unavailable, setUnavailable] = React.useState<string[]>([]);
 
   React.useEffect(() => {
     if(Object.keys(bagStorage).length){
@@ -40,21 +37,6 @@ const Entrega = () => {
   React.useEffect(() => {
     getData<Menu|null>('cardapio', setMenu)
   },[]);
-
-  React.useEffect(() => {
-    if(bagStorage && menu) {
-      const unavailableArray:string[] = [];
-      Object.keys(bagStorage).forEach(marmitaId => {
-        getPortions(bagStorage[marmitaId].portions).forEach(portionId => {
-          const {category, type} = splitPortionId(portionId);
-          if(!menu.products[category].products[type].products[portionId].available) {
-            unavailableArray?.push(portionId)
-          }
-        })
-      });
-      setUnavailable(unavailableArray);
-    }
-  },[bagStorage, menu]);
 
   return (
     <div className='page animeLeft'>
@@ -70,7 +52,7 @@ const Entrega = () => {
                     <OrderMarmita
                       marmita={bagStorage[marmitaId]} id={marmitaId}
                       bag={bagStorage} setBag={setBagStorage}
-                      setMarmitaStorage={setMarmitaStorage} menu={menu as Menu}
+                      setMarmitaStorage={setMarmitaStorage} menu={menu}
                     />
                   </Grid>
                 )}
@@ -85,7 +67,9 @@ const Entrega = () => {
             </div>
           }
           {bagWithMarmita && menu &&
-            <Order bag={bagStorage} menu={menu} unavailable={unavailable}/>
+            <Order
+              marmita={marmitaStorage} setMarmita={setMarmitaStorage}
+              bag={bagStorage} setBag={setBagStorage} menu={menu}/>
           }
         </DivEnvelope>
       </div>
