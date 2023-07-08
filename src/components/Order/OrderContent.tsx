@@ -34,6 +34,7 @@ const DivOrderContent = styled.div`
   }
   .orderAgain {
     margin-top: 10px;
+    width: auto;
   }
   .buttonCancelOrder {
     button {
@@ -105,8 +106,12 @@ const OrderContent = ({userId, orderUuid, setModalOrder}:PropsOrderContent) => {
           )}
         </div>
       )}
-      <p className='orderAgain'>Clique no botão abaixo, caso queira fazer este mesmo pedido novamente:</p>
-      <Button label='Pedir Novamente' onClick={orderAgain}/>
+      {query.categoria==='Historico' &&
+        <>
+          <p className='orderAgain'>Clique no botão abaixo, caso queira fazer este mesmo pedido novamente:</p>
+          <Button label='Pedir Novamente' onClick={orderAgain}/>
+        </>
+      }
     </DivOrderContent>
   } else {
     return <></>

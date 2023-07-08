@@ -3,13 +3,16 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 import { MarmitaContext } from '@/contexts/MarmitaContext';
+import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
 import { getData } from '@/services/firebase';
 import withAuth from '@/utils/withAuth';
+import verifyPendingOrders from '@/helper/verifyPendingOrders';
 
 import Order from '@/components/Order/Order';
 import Grid from '@/components/Grid';
 import Button from '@/components/Forms/Button';
 import OrderMarmita from '@/components/Order/OrderMarmita';
+import OrderPending from '@/components/Order/OrderPending';
 
 const DivEnvelope = styled.div`
   .empty {
@@ -22,27 +25,28 @@ const DivEnvelope = styled.div`
 
 const Entrega = () => {
   const {marmitaStorage, bagStorage, setBagStorage, setMarmitaStorage} = React.useContext(MarmitaContext);
+  const {userDB} = React.useContext(AuthGoogleContext);
   const [menu, setMenu] = React.useState<Menu|null>(null);
   const {push} = useRouter();
   const [bagWithMarmita, setBagWithMarmita] = React.useState<boolean>();
 
   React.useEffect(() => {
     if(Object.keys(bagStorage).length){
-      setBagWithMarmita(true)
+      setBagWithMarmita(true);
     } else {
-      setBagWithMarmita(false)
+      setBagWithMarmita(false);
     }
   },[bagStorage])
 
   React.useEffect(() => {
-    getData<Menu|null>('cardapio', setMenu)
+    getData<Menu|null>('cardapio', setMenu);
   },[]);
 
   return (
     <div className='page animeLeft'>
       <div className='container'>
         <DivEnvelope>
-          <h1>Finalizar Pedido</h1>
+          <h1>Entrega</h1>
           {bagWithMarmita ?
             <div className='wrapper'>
               <p>{`Confira com atenção todos os itens, preencha seu endereço de entrega e clique no botão "enviar" ao final.`}</p>
@@ -59,11 +63,16 @@ const Entrega = () => {
               </div>
             </div> :
             <div className='empty'>
-              <p>Você ainda não montou uma marmita...</p>
-              <Button
-                label='Começar a Montar'
-                onClick={() => push('/menu?categoria=bases')}
-              />
+              {(userDB?.userOrders && verifyPendingOrders(userDB.userOrders)) ?
+                <OrderPending userDB={userDB}/> :
+                <>
+                  <p>Você ainda não montou uma marmita...</p>
+                  <Button
+                    label='Começar a Montar'
+                    onClick={() => push('/menu?categoria=bases')}
+                  />
+                </>
+              }
             </div>
           }
           {bagWithMarmita && menu &&

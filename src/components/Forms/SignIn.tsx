@@ -6,10 +6,11 @@ import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
 
 import Button from './Button';
 import { useRouter } from 'next/router';
+import OrderPending from '../Order/OrderPending';
 
 const DivSignIn = styled.div`
   margin-top: 20px;
-  .userData {
+  .userContent {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -51,26 +52,29 @@ const SignIn: React.FC = () => {
       {userDB
       ?
         <div className='userData'>
-          <div className='userPhoto' onClick={redirectToProfile}>
-            {userDB.userData.photoURL && 
-              <Image src={userDB.userData.photoURL} width={80} height={80} alt="FotoUsuario" />
+          <div className='userContent'>
+            <div className='userPhoto' onClick={redirectToProfile}>
+              {userDB.userData.photoURL && 
+                <Image src={userDB.userData.photoURL} width={80} height={80} alt="FotoUsuario" />
+              }
+            </div>
+            <div className='userName'>
+              <strong>{userDB.userData.displayName}</strong>
+              <Button
+                label='Sair'
+                onClick={logout}
+                className='signInButton'
+              />
+            </div>
+            {userDB?.userData.admin &&
+              <Button
+                label='Administração'
+                onClick={() => push('admin')}
+                className='admButton'
+              />
             }
           </div>
-          <div className='userName'>
-            <strong>{userDB.userData.displayName}</strong>
-            <Button
-              label='Sair'
-              onClick={logout}
-              className='signInButton'
-            />
-          </div>
-          {userDB?.userData.admin &&
-            <Button
-              label='Administração'
-              onClick={() => push('admin')}
-              className='admButton'
-            />
-          }
+          <OrderPending userDB={userDB}/>
         </div>
       :
         <Button
