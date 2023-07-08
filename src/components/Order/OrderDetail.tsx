@@ -1,9 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { getData } from '@/services/firebase';
 import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
+import useMediaQuery from '@/hooks/useMediaQuery';
 import timestampToDate from '@/helper/timestampToDate';
+import verifyPendingOrders from '@/helper/verifyPendingOrders';
+import sendOrderByWhatsapp from '@/helper/sendOrderByWhatsapp';
 
+import Button from '../Forms/Button';
 import OrderStatus from './OrderStatus';
 
 const DivOrderDetail = styled.div`
@@ -27,9 +32,16 @@ interface PropsOrderDetail {
 
 const OrderDetail = ({userOrder, setModalOrder}:PropsOrderDetail) => {
   const {userDB} = React.useContext(AuthGoogleContext);
+  const width = useMediaQuery();
+  const [menu, setMenu] = React.useState<Menu|null>(null);
+
+  React.useEffect(() => {
+    getData('cardapio', setMenu);
+  },[])
 
   return (
     <DivOrderDetail className='bgPaper'>
+      {menu && userDB && verifyPendingOrders(userDB.userOrders) && <Button label='Chamar pelo WhatsApp' onClick={() => sendOrderByWhatsapp(userOrder, menu.products, width, 5537999237253)}/>}
       <h2>Pedido: {userOrder.uuid}</h2>
       {userDB && <OrderStatus
         orderStatus={userOrder.status}

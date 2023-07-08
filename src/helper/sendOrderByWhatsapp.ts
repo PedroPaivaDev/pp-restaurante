@@ -33,6 +33,5 @@ export default function sendOrderByWhatsapp(order:UserOrder, menu:MenuProducts, 
   
   const mappedProducts = mapMarmitas();
   
-  // const storeNumber = 5537999237253;
   window.open(`${urlApi}?phone=${contactNumber}&text=${header}%0a${mappedProducts}%0a${pay}${deliveryAddress}_Preço Total: *R$${order.totalPrice.toFixed(2)}*_`, "_blank");
 }

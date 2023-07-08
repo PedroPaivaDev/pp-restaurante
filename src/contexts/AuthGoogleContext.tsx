@@ -79,7 +79,15 @@ export const AuthGoogleProvider = ({children}:{children:React.ReactNode;}) => {
     } else {
       setUserDB(null);
     }
-  },[userAuth, userDBChanged])
+  },[userAuth, userDBChanged]);  
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setUserDBChanged(Date.now());
+      console.log('reload')
+    },30000);
+    return () => clearInterval(interval)
+  });
 
   return (
     <AuthGoogleContext.Provider value={{

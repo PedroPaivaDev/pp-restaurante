@@ -1,16 +1,21 @@
 import React from 'react';
 
 const useMediaQuery = () => {
+  const [widthApp, setWidthApp] = React.useState(window.innerWidth - 20);
 
-  const [widthApp, setWidthApp] = React.useState(window.screen.width - 20)
+  React.useEffect(() => {
+    const handleResize = () => {
+      setWidthApp(window.innerWidth - 20);
+    };
 
-  const resizeObserver = new ResizeObserver(event => {
-    setWidthApp(event[0].borderBoxSize[0].inlineSize - 20);
-  });
+    window.addEventListener('resize', handleResize);
 
-  resizeObserver.observe(document.body);
-  
-  return widthApp
-}
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  return widthApp;
+};
 
 export default useMediaQuery;
