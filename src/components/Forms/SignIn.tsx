@@ -7,9 +7,14 @@ import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
 import Button from './Button';
 import { useRouter } from 'next/router';
 import OrderPending from '../Order/OrderPending';
+import Loading from '../Loading';
 
 const DivSignIn = styled.div`
   margin-top: 20px;
+  .signInMsg {
+    max-width: 500px;
+    margin-bottom: 10px;
+  }
   .userContent {
     display: flex;
     align-items: center;
@@ -31,27 +36,34 @@ const DivSignIn = styled.div`
       gap: 10px;
     }
   }
-  .signInButton {
-    color: ${props => props.theme.colors.primaryColor};
-  }
   .admButton button {
     background-color: ${props => props.theme.colors.sucess};
   }
 `;
 
 const SignIn: React.FC = () => {
-  const {signInGoogle, userDB, logout } = React.useContext(AuthGoogleContext);
+  const {signInGoogle, userDB, logout, userAuth } = React.useContext(AuthGoogleContext);
   const {push} = useRouter();
 
   function redirectToProfile() {
     push('perfil?categoria=Dados')
   }
 
-  return (
-    <DivSignIn>
-      {userDB
-      ?
-        <div className='userData'>
+  if(userAuth===false) {
+    return <Loading/>
+  } else if(userAuth===null) {
+    return <DivSignIn>      
+      <p className='signInMsg'>Faça login com a sua conta do Google, para completar o seu cadastro e prosseguir para a página de Entrega</p>
+      <Button
+        label='Login com a conta do Google'
+        onClick={signInGoogle}
+        className='signInButton'
+      />
+    </DivSignIn>
+  } else {
+    return (
+      <DivSignIn>
+        {userDB && <div className='userData'>
           <div className='userContent'>
             <div className='userPhoto' onClick={redirectToProfile}>
               {userDB.userData.photoURL && 
@@ -74,17 +86,12 @@ const SignIn: React.FC = () => {
               />
             }
           </div>
-          <OrderPending userDB={userDB}/>
-        </div>
-      :
-        <Button
-          label='Login com a conta do Google'
-          onClick={signInGoogle}
-          className='signInButton'
-        />
-      }
-    </DivSignIn>
-  );
-};
+          {userDB.userOrders && <OrderPending userOrders={userDB.userOrders}/>}
+        </div>}
+      </DivSignIn>
+    );
+  }
+}
+
 
 export default SignIn;

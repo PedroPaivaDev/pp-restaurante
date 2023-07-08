@@ -64,7 +64,7 @@ const Entrega = () => {
             </div> :
             <div className='empty'>
               {(userDB?.userOrders && verifyPendingOrders(userDB.userOrders)) ?
-                <OrderPending userDB={userDB}/> :
+                <OrderPending userOrders={userDB.userOrders}/> :
                 <>
                   <p>Você ainda não montou uma marmita...</p>
                   <Button

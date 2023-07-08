@@ -58,10 +58,7 @@ const Perfil = () => {
             }
           </div>
         </> :
-        <>
-          <p style={{marginTop:'25px'}}>Faça login com a sua conta do Google, para completar o seu cadastro e prosseguir para a página de Entrega</p>
-          <SignIn />
-        </>
+        <SignIn />
       }
     </div>
   )

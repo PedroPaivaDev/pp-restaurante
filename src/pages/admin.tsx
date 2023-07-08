@@ -20,12 +20,13 @@ const Admin = () => {
   const [customers, setCustumers] = React.useState<UsersDB|null>(null);
 
   React.useEffect(() => {
+    getData<UsersDB|null>('usuarios', setCustumers);
     const interval = setInterval(() => {
       getData<UsersDB|null>('usuarios', setCustumers);
       console.log('Admin Reload')
     },30000);
     return () => clearInterval(interval)
-  })
+  },[])
 
   return (
     <div className='page animeLeft'>

@@ -1,8 +1,8 @@
 import getDiffTimestamp from "./getDiffTimestamp";
 
-export default function verifyPendingOrders(userOrders:UserOrders):UserOrders|null {
+export default function verifyPendingOrders(userOrders:UserOrders|null):UserOrders|null {
   let pendingOrdersObject:UserOrders = {};
-  Object.keys(userOrders).filter(orderUuid => getDiffTimestamp(userOrders[orderUuid].orderTime,15)).forEach(orderUuid => {
+  userOrders && Object.keys(userOrders).filter(orderUuid => getDiffTimestamp(userOrders[orderUuid].orderTime,15)).forEach(orderUuid => {
     if(
       userOrders[orderUuid].status==='pendente' ||
       userOrders[orderUuid].status==='preparo' ||

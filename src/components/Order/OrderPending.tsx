@@ -4,15 +4,15 @@ import { useRouter } from 'next/router';
 import verifyPendingOrders from '@/helper/verifyPendingOrders';
 import Button from '../Forms/Button';
 
-const OrderPending = ({userDB, className}:{userDB:UserDB, className?:string}) => {
+const OrderPending = ({userOrders, className}:{userOrders:UserOrders, className?:string}) => {
   const {push} = useRouter();
   const [pendingOrders, setPendingOrders] = React.useState<UserOrders|null>(null);
 
   React.useEffect(() => {
-    userDB && setPendingOrders(verifyPendingOrders(userDB.userOrders));
-  },[userDB]);
+    userOrders && setPendingOrders(verifyPendingOrders(userOrders));
+  },[userOrders]);
 
-  if(userDB?.userOrders && pendingOrders) {
+  if(userOrders && pendingOrders) {
     return (
       <div className={className}>
         <p style={{margin: '10px'}}>Você já fez {Object.keys(pendingOrders).length} pedido hoje.</p>

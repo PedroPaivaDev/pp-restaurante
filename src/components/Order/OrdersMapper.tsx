@@ -5,6 +5,8 @@ import sortOrdersByTime from '@/helper/sortOrdersByTime';
 
 import Grid from '../Grid';
 import OrderDetail from './OrderDetail';
+import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
+import { useRouter } from 'next/router';
 
 const DivOrderMapper = styled.div`
   .sequenceButtons {
@@ -23,6 +25,19 @@ interface PropsOrderMapper {
 }
 
 const OrdersMapper = ({title, orders, setModalOrder}:PropsOrderMapper) => {
+  const {setUserDBChanged} = React.useContext(AuthGoogleContext);
+  const {query} = useRouter();
+
+  React.useEffect(() => {
+    if(query.categoria==='Pedido') {
+      const interval = setInterval(() => {
+        setUserDBChanged(Date.now());
+        console.log('reload')
+      },30000);
+      return () => clearInterval(interval);
+    }
+    // eslint-disable-next-line
+  },[]);
 
   return (
     <DivOrderMapper className='envelope animeLeft'>
