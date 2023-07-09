@@ -51,7 +51,7 @@ const useForm = (type:'email'|'contact'|null) => {
     value,
     error,
     onChange,
-    onBlur: () => validate(value),
+    onBlur: () => validate(value)
   };
 };
 
