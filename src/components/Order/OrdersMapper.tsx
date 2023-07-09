@@ -7,6 +7,7 @@ import Grid from '../Grid';
 import OrderDetail from './OrderDetail';
 import { AuthGoogleContext } from '@/contexts/AuthGoogleContext';
 import { useRouter } from 'next/router';
+import InputRadio from '../Forms/InputRadio';
 
 const DivOrderMapper = styled.div`
   .sequenceButtons {
@@ -15,6 +16,10 @@ const DivOrderMapper = styled.div`
     align-items: center;
     gap: 20px;
     margin-top: 20px;
+  }
+  .sequencesOptions {
+    display: flex;
+    gap: 20px;
   }
 `;
 
@@ -25,8 +30,15 @@ interface PropsOrderMapper {
 }
 
 const OrdersMapper = ({title, orders, setModalOrder}:PropsOrderMapper) => {
-  const {setUserDBChanged} = React.useContext(AuthGoogleContext);
+  const {userDB, setUserDBChanged} = React.useContext(AuthGoogleContext);
   const {query} = useRouter();
+  const [selectedSequence, setSelectedSequence] = React.useState<OptionsObject|null>({descending:null});
+
+  const sorterSequences:OptionsObject = {
+    ascending: null,
+    descending: null,
+    status: null
+  }
 
   React.useEffect(() => {
     if(query.categoria==='Pedido') {
@@ -42,9 +54,15 @@ const OrdersMapper = ({title, orders, setModalOrder}:PropsOrderMapper) => {
   return (
     <DivOrderMapper className='envelope animeLeft'>
       <h1>{title}</h1>
+      {userDB?.userData.admin &&
+        <InputRadio options={sorterSequences} name={'sequence'}
+          state={selectedSequence} setState={setSelectedSequence}
+          className='sequencesOptions'
+        />
+      }
       <div className='wrapper'>
         <div className='row'>
-          {orders && sortOrdersByTime(orders).map(order =>
+          {orders && selectedSequence && sortOrdersByTime(orders, Object.keys(selectedSequence)[0]).map(order =>
             <Grid key={order.uuid} xs={12} sm={6} md={6} lg={4} className='animeLeft'>
               <OrderDetail setModalOrder={setModalOrder} userOrder={order}/>
             </Grid>
