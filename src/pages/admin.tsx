@@ -13,11 +13,14 @@ import CreateProduct from '@/components/Admin/CreateProduct';
 import EditProduct from '@/components/Admin/EditProduct';
 import OrdersMapper from '@/components/Order/OrdersMapper';
 import OrderModal from '@/components/Order/OrderModal';
+import Profile from '@/components/Profile';
 
 const Admin = () => {
   const {query} = useRouter();
   const [modalOrder, setModalOrder] = React.useState<UserOrder|null>(null);
+  const [userCustomer, setUserCustomer] = React.useState<UserDB|null>(null);
   const [customers, setCustumers] = React.useState<UsersDB|null>(null);
+  const [timeUpdate, setTimeUpdate] = React.useState<number | null>(null);
 
   React.useEffect(() => {
     getData<UsersDB|null>('usuarios', setCustumers);
@@ -28,6 +31,11 @@ const Admin = () => {
     return () => clearInterval(interval)
   },[])
 
+  React.useEffect(() => {
+    userCustomer && console.log(`Dados do usuário ${userCustomer.uid}`);
+    // eslint-disable-next-line
+  },[timeUpdate])
+
   return (
     <div className='page animeLeft'>
       {modalOrder &&
@@ -37,7 +45,7 @@ const Admin = () => {
         />
       }
       <SubNavBar
-        categories={["Cardapio", "Pedidos", "Historico", "Clientes", "Cadastrar", "Editar"]}
+        categories={["Cardapio", "Pedidos", "Historicos", "Clientes", "Cadastrar", "Editar"]}
         path={"admin"}
         endpoint={query.categoria as string}
       />
@@ -56,16 +64,24 @@ const Admin = () => {
             setModalOrder={setModalOrder}
           />
         }
-        {query.categoria==='Historico' && customers &&
+        {query.categoria==='Historicos' && customers &&
           <OrdersMapper
             title={'Histórico de Pedidos'}
             orders={getOrdersFromUsers(customers)}
             setModalOrder={setModalOrder}
           />
         }
-        {query.categoria==='Clientes' && <CustomersDB/>}
+        {query.categoria==='Clientes' && <CustomersDB setUserCustomer={setUserCustomer}/>}
         {query.categoria==='Cadastrar' && <CreateProduct/>}
         {query.categoria==='Editar' && <EditProduct/>}
+        {userCustomer &&
+          <Profile
+            userDB={userCustomer}
+            setModalOrder={setModalOrder}
+            path={'admin'}
+            setUserDBChanged={setTimeUpdate}
+          />
+        }
       </div>
     </div>
   )

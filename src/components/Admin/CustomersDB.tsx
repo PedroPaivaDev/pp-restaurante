@@ -1,9 +1,11 @@
 import React from 'react';
-import Image from 'next/image';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 import { getData } from '@/services/firebase';
 import timestampToDate from '@/helper/timestampToDate';
+
 import Grid from '../Grid';
 
 const DivCustomersDB = styled.div`
@@ -23,16 +25,27 @@ const DivCustomersDB = styled.div`
       .customerName {
         display: flex;
         flex-direction: column;
+        align-items: center;
       }
     }
   }
 `;
 
-const CustomersDB = () => {
-  const [customers, setCustumers] = React.useState<UsersDB|null>(null);
+interface PropsCustomersDB {
+  setUserCustomer: React.Dispatch<React.SetStateAction<UserDB|null>>
+}
+
+const CustomersDB = ({setUserCustomer}:PropsCustomersDB) => {
+  const { push } = useRouter();
+  const [customers, setCustomers] = React.useState<UsersDB|null>(null);
+
+  function showCustumerProfile(customer:UserDB) {
+    setUserCustomer(customer);
+    push('admin?categoria=Cliente')
+  }
 
   React.useEffect(() => {
-    getData<UsersDB|null>('usuarios', setCustumers);
+    getData<UsersDB|null>('usuarios', setCustomers);
   },[]);
 
   return (
@@ -44,7 +57,7 @@ const CustomersDB = () => {
             <Grid key={customers[customer].uid}
             xs={12} sm={6} md={6} lg={4}
             >
-              <div className='bgPaper customer'>
+              <div className='bgPaper customer' onClick={() => showCustumerProfile(customers[customer])}>
                 <div className='customerHeader'>
                   <Image src={customers[customer].userData.photoURL}
                     width={80} height={80} alt='photoURL'
