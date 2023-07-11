@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 import getOrdersOfTheDay from '@/helper/getOrdersOfTheDay';
@@ -7,17 +6,13 @@ import getOrdersOfTheDay from '@/helper/getOrdersOfTheDay';
 import OrdersMapper from './Order/OrdersMapper';
 import SubNavBar from './SubNavBar';
 import ProfileData from './ProfileData';
-
-const DivProfile = styled.div`
-  padding-bottom: 0;
-`;
+import ProfileForm from './Forms/ProfileForm';
 
 interface PropsProfile {
   userDB: UserDB;
   setModalOrder: React.Dispatch<React.SetStateAction<UserOrder | null>>;
   setUserDBChanged: React.Dispatch<React.SetStateAction<number | null>>;
   path: string;
-  className?: string;
 }
 
 const Profile = ({userDB, setModalOrder, setUserDBChanged, path}:PropsProfile) => {  
@@ -30,7 +25,7 @@ const Profile = ({userDB, setModalOrder, setUserDBChanged, path}:PropsProfile) =
         path={path}
         endpoint={query.categoria as string}
       />
-      <DivProfile className={path==='admin' ? 'container adminContainer' : 'container'}>
+      <div className={path==='admin' ? 'envelope' : 'container'}>
         {query.categoria===undefined && 
           <div className='wrapper'>
             <h1>Página do perfil do Cliente</h1>
@@ -54,9 +49,12 @@ const Profile = ({userDB, setModalOrder, setUserDBChanged, path}:PropsProfile) =
           />
         }
         {query.categoria==='Dados' && setUserDBChanged &&
-          <ProfileData userDB={userDB} setUserDBChanged={setUserDBChanged}/>
+          <div className='envelope animeLeft'>
+            <ProfileData userDB={userDB}/>
+            <ProfileForm userDB={userDB} setUserDBChanged={setUserDBChanged}/>
+          </div>
         }
-      </DivProfile>
+      </div>
     </>
   )
 }

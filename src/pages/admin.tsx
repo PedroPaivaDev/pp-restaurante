@@ -14,9 +14,10 @@ import EditProduct from '@/components/Admin/EditProduct';
 import OrdersMapper from '@/components/Order/OrdersMapper';
 import OrderModal from '@/components/Order/OrderModal';
 import Profile from '@/components/Profile';
+import ProfileData from '@/components/ProfileData';
 
 const Admin = () => {
-  const {query} = useRouter();
+  const {query, replace} = useRouter();
   const [modalOrder, setModalOrder] = React.useState<UserOrder|null>(null);
   const [userCustomer, setUserCustomer] = React.useState<UserDB|null>(null);
   const [customers, setCustumers] = React.useState<UsersDB|null>(null);
@@ -32,9 +33,28 @@ const Admin = () => {
   },[])
 
   React.useEffect(() => {
-    userCustomer && console.log(`Dados do usuário ${userCustomer.uid}`);
+    userCustomer && console.log(`Alterados os dados do usuário ${userCustomer.uid}`);
     // eslint-disable-next-line
-  },[timeUpdate])
+  },[timeUpdate]);
+
+  React.useEffect(() => {
+    if(userCustomer &&
+      !(query.categoria==='Cliente' ||
+      query.categoria==='Pedido' ||
+      query.categoria==='Historico' ||
+      query.categoria==='Dados')
+    ) {
+      setUserCustomer(null);
+    } else if(!userCustomer &&
+      (query.categoria==='Cliente' ||
+      query.categoria==='Pedido' ||
+      query.categoria==='Historico' ||
+      query.categoria==='Dados')
+    ) {
+      replace('admin?categoria=Clientes');
+    }
+    // eslint-disable-next-line
+  },[query]);
 
   return (
     <div className='page animeLeft'>
@@ -75,12 +95,21 @@ const Admin = () => {
         {query.categoria==='Cadastrar' && <CreateProduct/>}
         {query.categoria==='Editar' && <EditProduct/>}
         {userCustomer &&
-          <Profile
-            userDB={userCustomer}
-            setModalOrder={setModalOrder}
-            path={'admin'}
-            setUserDBChanged={setTimeUpdate}
-          />
+          <>
+            <Profile
+              userDB={userCustomer}
+              setModalOrder={setModalOrder}
+              path={'admin'}
+              setUserDBChanged={setTimeUpdate}
+            />
+            {query.categoria==='Cliente' && <div className='wrapper'>
+              <h1>Página do perfil do Cliente: {userCustomer.uid}</h1>
+              <ProfileData userDB={userCustomer}/>
+              <p>Selecione a categoria <strong>Pedido</strong>, para acompanhar um pedido feito recentemente.</p>
+              <p>Selecione a categoria <strong>Histórico</strong>, para visualizar seus pedidos anteriores.</p>
+              <p>Selecione a categoria <strong>Dados</strong>, para visualizar ou editar seus dados de contato e endereço.</p>
+            </div>}
+          </>
         }
       </div>
     </div>

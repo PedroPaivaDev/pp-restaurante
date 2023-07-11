@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Image from 'next/image';
 
 import timestampToDate from '@/helper/timestampToDate';
-import ProfileForm from './Forms/ProfileForm';
 
 const DivProfileData = styled.div`
   .headerProfile {
@@ -38,12 +37,11 @@ const DivProfileData = styled.div`
 
 interface PropsProfileData {
   userDB: UserDB;
-  setUserDBChanged: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
-const ProfileData = ({userDB, setUserDBChanged}:PropsProfileData) => {
+const ProfileData = ({userDB}:PropsProfileData) => {
   return (
-    <DivProfileData className='envelope animeLeft'>
+    <DivProfileData>
       <div className='headerProfile'>
         {userDB && <Image src={userDB.userData.photoURL} width={80} height={80} alt="FotoUsuario" />}
         <div className='userData'>
@@ -55,7 +53,6 @@ const ProfileData = ({userDB, setUserDBChanged}:PropsProfileData) => {
           <small>último login: {timestampToDate(userDB?.userData.lastLoginAt as number)}</small>
         </div>
       </div>
-      {userDB && <ProfileForm userDB={userDB} setUserDBChanged={setUserDBChanged}/>}
     </DivProfileData>
   )
 }

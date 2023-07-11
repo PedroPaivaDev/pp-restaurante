@@ -32,11 +32,12 @@ interface PropsSubNavBar {
   categories: string[];
   path: string;
   endpoint: string;
+  className?: string;
 }
 
-const SubNavBar = ({categories, path, endpoint}:PropsSubNavBar) => {
+const SubNavBar = ({categories, path, endpoint, className}:PropsSubNavBar) => {
   return (
-    <NavBar>
+    <NavBar className={className}>
       <div className='navLinks'>
         {categories.map(category =>
           <Link
