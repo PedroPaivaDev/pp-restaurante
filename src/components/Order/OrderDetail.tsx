@@ -8,6 +8,7 @@ import timestampToDate from '@/helper/timestampToDate';
 import verifyPendingOrders from '@/helper/verifyPendingOrders';
 import sendOrderByWhatsapp from '@/helper/sendOrderByWhatsapp';
 
+import { contactWhatsapp } from '../Contact';
 import Button from '../Forms/Button';
 import OrderStatus from './OrderStatus';
 
@@ -41,7 +42,7 @@ const OrderDetail = ({userOrder, setModalOrder}:PropsOrderDetail) => {
 
   return (
     <DivOrderDetail className='bgPaper'>
-      {menu && userDB && verifyPendingOrders(userDB.userOrders) && <Button label='Chamar pelo WhatsApp' onClick={() => sendOrderByWhatsapp(userOrder, menu.products, width, 5537999237253)}/>}
+      {menu && userDB && verifyPendingOrders(userDB.userOrders) && <Button label='Chamar pelo WhatsApp' onClick={() => sendOrderByWhatsapp(userOrder, menu.products, width, contactWhatsapp)}/>}
       <h2>Pedido: {userOrder.uuid}</h2>
       {userDB && <OrderStatus
         orderStatus={userOrder.status}

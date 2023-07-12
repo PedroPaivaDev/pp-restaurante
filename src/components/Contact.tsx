@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 
+import Button from './Forms/Button';
+
 const DivContact = styled.div`
   width: auto;
   margin-top: 10px;
@@ -39,9 +41,23 @@ const DivContact = styled.div`
       }
     }
   }
+  .whatsapp {
+    button {
+      background-color: ${props => props.theme.colors.sucess};
+    }
+  }
 `;
 
+export const contactWhatsapp = 5537999237253;
+
 const Contact = () => {
+
+  function redirectToWhatsapp() {
+    const urlApi = 'http://web.whatsapp.com/send';
+    
+    window.open(`${urlApi}?phone=${contactWhatsapp}&text=Olá! Gostaria de fazer um pedido.`, "_blank");
+  }
+
   return (
     <DivContact className='bgPaper'>
       <div className="wrapper">
@@ -63,6 +79,7 @@ const Contact = () => {
         <p>Número 1790, Bairro Novo São José</p>
         <p>Bom Despacho / MG</p>
       </div>
+      <Button label='WhatsApp' onClick={redirectToWhatsapp} className='whatsapp'/>
     </DivContact>
   )
 }
