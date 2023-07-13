@@ -6,6 +6,8 @@ import timestampToDate from '@/helper/timestampToDate';
 import Grid from '../Grid';
 
 const DivCustomersMapper = styled.div`
+  width: 100%;
+  transition: 0.3s;
   .customerHeader {
     display: flex;
     justify-content: space-around;
@@ -23,6 +25,10 @@ const DivCustomersMapper = styled.div`
       flex-direction: column;
       align-items: center;
     }
+  }
+  &:hover {
+    box-shadow: 0px 1px 5px 0px ${props => props.theme.colors.tertiaryColor};
+    cursor: pointer;
   }
 `;
 

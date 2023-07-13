@@ -2,8 +2,25 @@ import React from 'react';
 import styled from 'styled-components';
 
 const DivFilterSearchBox = styled.div`
-  input {
+  width: 100%;
+  .input {
     color: ${props => props.theme.colors.primaryColor};
+    border: 1px solid ${props => props.theme.colors.secondaryColor};
+    line-height: 26px;
+    padding: 2px 5px;
+    border-radius: 5px;
+    background: ${props => props.theme.colors.quintenaryColor};
+    transition: 0.2s;
+    width: 180px;
+  }
+  .input:focus, .input:hover {
+    outline: none;
+    border-color: ${props => props.theme.colors.primaryColor};
+    background: ${props => props.theme.colors.tertiaryColor};
+    box-shadow: 0 0 0 3px ${props => props.theme.colors.secondaryColor}
+  }
+  .input:-internal-autofill-selected {
+    background-color: var(--lightPink) !important;
   }
 `;
 
@@ -32,7 +49,8 @@ const FilterSearchBox = ({data, filterMethod, onClickMethod, renderItem}:PropsFi
         type="text"
         value={filterText}
         onChange={handleChange}
-        placeholder="Digite sua busca"
+        placeholder="Digite um nome"
+        className='input'
       />
       {filterText ?
         <div className='row'>
