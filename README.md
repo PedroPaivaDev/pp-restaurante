@@ -13,10 +13,10 @@ As informações dos usuários e o cardápio foram salvas em um banco de dados d
 
 O banco de dados do Firebase foi configurado com regras, que restringem o acesso de algumas informações apenas aos administradores do site. Desse modo, um cliente (usuário) consegue acessar as suas informações cadastradas no  banco de dados, mas não consegue acessar as informações de outros usuários.
 
-<img src="./src/assets/animation.gif" alt="gif"/>
+<img src="./src/assets/animation1.gif" alt="gif"/>
 
 ## Instruções
-A tela inicial (**Home**) mostras as informações de horário de funcionamento e localização do estabelecimento, além de um botão que direciona o usuário à página do cardápio e um outro botão para fazer *signin* com a sua conta do *Google*. O cabecalho da página é fixo e permite a navegação entre as rotas "Home", "Cardápio" e "Entrega".
+A tela inicial (**Home**) mostras as informações de horário de funcionamento, a localização e contato do estabelecimento, além de um botão que direciona o usuário à página do cardápio e um outro botão para fazer *signin* com a sua conta do *Google*. O cabecalho da página é fixo e permite a navegação entre as rotas "Home", "Cardápio" e "Entrega".
 
 A rota **Cardápio** mostra os produtos do cardápio do dia na rota raiz da página, permitindo que o usuário adicione os ingredientes que ele desejar em sua marmita. As informações ficam salvas no *localStorage* do *browser*, então mesmo que a página seja reiniciada, o cliente poderá continuar montando a sua marmita. Os ingredientes são classificados pelos tipos: "bases", "carnes", "hortaliças" e "preparos", que se tornam rotas aninhadas à rota raiz da página "cardápio". O cliente pode escolher quantos ingredientes quiser, exceto os tipos de carne, que é restrito a dois tipos.
 
@@ -24,7 +24,13 @@ Após escolher os ingredientes, o cliente deve clicar no botão "Revisar Marmita
 
 Antes de acessar a sacola de compras na página "entrega", o cliente é interceptado por um *Higher-Order Component (HOC)*, que verifica se há um usuário logado e se todas as informações de contato e endereço estão preenchidas. Caso essas informações não estejam preenchidas, o cliente é redirecionado para a página de "perfil", onde deverá preencher todos os dados e só então acessar a página de "entrega".
 
-A rota **Entrega** mostra todas as marmitas montadas, com seus respectivos ingredientes e tamanhos. Logo abaixo tem um formulário para que o cliente escolha a forma de pagamento e uma opção para escolher se deseja fazer a retirada das marmitas no restaurante, já que é cobrado o valor de R$5,00 para realizar a entrega no endereço cadastrado. Após clicar no botão de "Enviar Pedido", todos os dados das marmitas e os dados do cliente são armazenados em formato URL-encoded, para que o cliente seja redirecionado para o whatsapp do restaurante e então envie o seu pedido já formatado.
+A rota **Entrega** mostra todas as marmitas montadas, com seus respectivos ingredientes e tamanhos. Logo abaixo tem um formulário para que o cliente escolha a forma de pagamento e uma opção para escolher se deseja fazer a retirada das marmitas no restaurante, já que é cobrado o valor de R$5,00 para realizar a entrega no endereço cadastrado. Após clicar no botão de "Enviar Pedido", o usuário é redirecionado para a página "perfil", onde ele acompanhará o status do pedido feito.
+
+Na rota **Perfil**, é possível acompanhar os pedidos feitos no dia, ver o histórico de pedidos e alterar os dados cadastrados. Caso o cliente queira entrar em contato com o restaurante, em cada pedido feito no dia, há um botão que coleta todos os dados do pedido e os converte em formato URL-encoded, para que o cliente seja redirecionado para o whatsapp do restaurante e então envie o seu pedido já formatado.
+
+A administração do restaurante pode utilizar de um perfil autorizado pelo banco de dados, para acessar a rota protegida **Admin**, onde é possível: definir a disponibilidade dos produtos no cardápio do dia; visualizar os pedidos do dia para definir seus status; visualizar o histórico de pedidos; visualizar os clientes cadastrados e seus dados; cadastrar e excluir produtos do banco de dados.
+
+<img src="./src/assets/animation2.gif" alt="gif"/>
 
 > Caso você seja um desenvolvedor, use as instruções abaixo para instalar as dependências e sugerir alterações para a aplicação.
 
@@ -52,7 +58,7 @@ Clique nas versões abaixo, para observar a evolução do projeto ao longo do te
 | Versão | Update |
 | ------ | ------ |
 | [versão_0.1](https://pp-restaurante-git-v01-pedropaivadev.vercel.app/) | Primeira versão do projeto. |
-| [versão_0.2](https://pp-restaurante-git-v02-pedropaivadev.vercel.app/) | Versão em construção, que irá permitir o administrador do estabelecimento: fazer o cadastro de novos ingredientes; alterar o cardápio em tempo real, conforme os ingredientes se esgotam; armazenar no banco de dados os pedidos dos cleintes, para análisar as vendas; |
+| [versão_0.2](https://pp-restaurante-git-v02-pedropaivadev.vercel.app/) | Permite o administrador do estabelecimento: fazer o cadastro de novos produtos; alterar o cardápio do dia em tempo real, conforme os ingredientes se esgotam; armazenar no banco de dados os pedidos dos clintes, para análisar as vendas; |
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
