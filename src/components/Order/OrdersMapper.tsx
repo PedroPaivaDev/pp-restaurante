@@ -35,8 +35,8 @@ const OrdersMapper = ({title, orders, setModalOrder}:PropsOrderMapper) => {
   const [selectedSequence, setSelectedSequence] = React.useState<OptionsObject|null>({descending:null});
 
   const sorterSequences:OptionsObject = {
-    ascending: null,
-    descending: null,
+    crescente: null,
+    decrescente: null,
     status: null
   }
 

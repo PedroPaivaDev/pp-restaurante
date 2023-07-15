@@ -9,9 +9,9 @@ export default function sortOrdersByTime(userOrders:UserOrders, sequence:string)
   }
 
   const sortedEntries = Object.values(userOrders).sort((a, b) => {
-      if (sequence==='ascending') {
+      if (sequence==='crescente') {
         return a.orderTime - b.orderTime;
-      } else if(sequence==='descending') {
+      } else if(sequence==='decrescente') {
         return b.orderTime - a.orderTime;
       } else {
         return statusNumber[a.status] - statusNumber[b.status];

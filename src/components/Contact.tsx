@@ -48,7 +48,7 @@ const DivContact = styled.div`
   }
 `;
 
-export const contactWhatsapp = 5537999237253;
+export const contactWhatsapp = 553735211592;
 
 const Contact = () => {
 
@@ -78,6 +78,7 @@ const Contact = () => {
         <p>Av. Doutor Roberto de Melo Queiroz</p>
         <p>Número 1790, Bairro Novo São José</p>
         <p>Bom Despacho / MG</p>
+        <p>(37) 3521-1592</p>
       </div>
       <Button label='WhatsApp' onClick={redirectToWhatsapp} className='whatsapp'/>
     </DivContact>
