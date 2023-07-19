@@ -11,6 +11,7 @@ import sendOrderByWhatsapp from '@/helper/sendOrderByWhatsapp';
 import { contactWhatsapp } from '../Contact';
 import Button from '../Forms/Button';
 import OrderStatus from './OrderStatus';
+import sendMsgToCustomer from '@/helper/sendMsgToCustomer';
 
 const DivOrderDetail = styled.div`
   display: flex;
@@ -42,7 +43,18 @@ const OrderDetail = ({userOrder, setModalOrder}:PropsOrderDetail) => {
 
   return (
     <DivOrderDetail className='bgPaper'>
-      {menu && userDB && verifyPendingOrders(userDB.userOrders) && <Button label='Chamar pelo WhatsApp' onClick={() => sendOrderByWhatsapp(userOrder, menu.products, width, contactWhatsapp)}/>}
+      {userDB?.userData.admin &&
+        <Button
+          label='Chamar Cliente pelo WhatsApp'
+          onClick={() => sendMsgToCustomer(userOrder)}
+        />
+      }
+      {menu && userDB && verifyPendingOrders(userDB.userOrders) &&
+        <Button
+          label='Chamar pelo WhatsApp'
+          onClick={() => sendOrderByWhatsapp(userOrder, menu.products, width, contactWhatsapp)}
+        />
+      }
       <h2>Pedido: {userOrder.uuid}</h2>
       {userDB && <OrderStatus
         orderStatus={userOrder.status}

@@ -99,8 +99,8 @@ const Menu = () => {
   }
 
   const MarmitaSizes = {
-    Marmitex: 18,
-    Marmitinha: 15
+    Marmitex: 22,
+    Marmitinha: 20
   }
 
   React.useEffect(() => {
