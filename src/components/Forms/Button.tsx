@@ -33,15 +33,46 @@ const ContainerButton = styled.div`
   .sucess {
     color: ${props => props.theme.colors.sucess};
   }
+  .glow {
+    margin: 2px 1px;
+    @property --rotate {
+      syntax: "<angle>";
+      initial-value: 132deg;
+      inherits: false;
+    }
+    &::before {
+    content: "";
+    width: 104%;
+    height: 104%;
+    border-radius: 10px;
+    background-image: linear-gradient(
+      var(--rotate)
+      , #eeebeb, #fcdf6a 43%, #CC9132);
+      position: absolute;
+      z-index: -1;
+      top: -1%;
+      left: -2%;
+      animation: spin 1.5s linear infinite;
+    }
+    @keyframes spin {
+      0% {
+        --rotate: 0deg;
+      }
+      100% {
+        --rotate: 360deg;
+      }
+    }
+  }
 `;
 
 interface PropsButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label?: string;
   statusSubmit?: StatusSubmit;
   setStatusSubmit?: React.Dispatch<React.SetStateAction<StatusSubmit>>;
+  glow?: boolean;
 }
 
-const Button = ({label, statusSubmit, setStatusSubmit, className, ...props}:PropsButton) => {
+const Button = ({label, statusSubmit, setStatusSubmit, glow, className, ...props}:PropsButton) => {
   function handleBg() {
     if(label==='Remover') {
       return '#f31';
@@ -64,7 +95,7 @@ const Button = ({label, statusSubmit, setStatusSubmit, className, ...props}:Prop
   return (
     <ContainerButton className={className}>
       {statusSubmit?.status && <h6 className={`status ${statusSubmit.status}`}>{statusSubmit.msg}</h6>}
-      <button style={{backgroundColor:handleBg()}} {...props}>
+      <button className={glow ? 'glow' : ''} style={{backgroundColor:handleBg()}} {...props}>
         {statusSubmit?.label ? statusSubmit.label : label}
       </button>
     </ContainerButton>

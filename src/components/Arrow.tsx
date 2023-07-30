@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const ArrowButton = styled.div`
   position: absolute;
-    top: 120px;
+  top: 140px;
   z-index: 10;
   width: 100%;
   max-width: 900px;

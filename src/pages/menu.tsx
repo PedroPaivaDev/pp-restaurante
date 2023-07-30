@@ -133,9 +133,10 @@ const Menu = () => {
       {query.categoria && (marmitaPortions && marmitaPortions?.length>2) && 
         <ButtonDiv>
           <Button
-            label='Revisar Marmita'
+            label='Finalizar Marmita'
             className='submitButton'
             onClick={() => push('/menu')}
+            glow
           />
         </ButtonDiv>
       }
