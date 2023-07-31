@@ -9,6 +9,7 @@ import splitPortionId from '@/helper/splitPortionId';
 import getNameById from '@/helper/getNameById';
 
 import Button from '../Forms/Button';
+import getMarmitaPrices from '@/helper/getMarmitaPrices';
 
 const DivMarmitaDetails = styled.div`
   gap: 5px;
@@ -137,7 +138,7 @@ const OrderMarmita = ({marmita, id, bag, setBag, menu}:PropsMarmitaDetails) => {
         }
         )
       }
-      <h3>R${marmita.price.toFixed(2)}</h3>
+      <h3>R${getMarmitaPrices(marmita.size,menu.prices).toFixed(2)}</h3>
     </DivMarmitaDetails>
   )
 }

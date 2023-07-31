@@ -9,6 +9,7 @@ import handleOrderSubmit from '@/helper/handleOrderSubmit';
 import getNameById from '@/helper/getNameById';
 import getPortions from '@/helper/getPortions';
 import splitPortionId from '@/helper/splitPortionId';
+import getMarmitaPrices from '@/helper/getMarmitaPrices';
 
 import Select from '../Forms/Select';
 import Checkbox from '../Forms/Checkbox';
@@ -147,7 +148,7 @@ const Order = ({marmita, bag, setMarmita, setBag, menu}:PropsOrder) => {
     } else if(Object.keys(marmita).length>0 && !confirm("Você ainda estava montando uma marmita. Tem certeza que deseja finalizar o pedido e descartar a marmita que não foi concluída?")) {
       return
     } else {
-      userDB && handleOrderSubmit(bag, formDataEntries as FormDataEntries, totalPrice, userDB ).then(() => {
+      userDB && handleOrderSubmit(bag, formDataEntries as FormDataEntries, totalPrice, userDB, menu).then(() => {
         setUserDBChanged(Date.now());
         setMarmita({});
         setBag({});
@@ -176,18 +177,18 @@ const Order = ({marmita, bag, setMarmita, setBag, menu}:PropsOrder) => {
     let sumPrices = delivery.includes("Entregar (+R$5,00)") ? 5 : 0;
     if(payment && installmentCard && getOption(payment)==="Cartão de Crédito") {
       Object.keys(bag).length>0 && Object.keys(bag).forEach(marmitaId => {
-        sumPrices = sumPrices + bag[marmitaId].price;
+        sumPrices = sumPrices + getMarmitaPrices(bag[marmitaId].size, menu.prices);
       })
       setTotalPrice(
         sumPrices + sumPrices * (installmentCard[getOption(installmentCard)] as number)
       );
     } else {
       Object.keys(bag).length>0 && Object.keys(bag).forEach(marmitaId => {
-        sumPrices = sumPrices + bag[marmitaId].price;
+        sumPrices = sumPrices + getMarmitaPrices(bag[marmitaId].size, menu.prices);
       })
       setTotalPrice(sumPrices);
     }
-  }, [bag, payment, installmentCard, delivery]);
+  }, [bag, payment, installmentCard, delivery, menu]);
 
   return (
     <OrderContainer>

@@ -74,7 +74,6 @@ const Menu = () => {
         [Date.now()]: {
           portions: marmitaStorage.portions,
           size: Object.keys(size as object)[0],
-          price: size[Object.keys(size as object)[0]],
           id: Date.now(),
         }
       });
@@ -96,11 +95,6 @@ const Menu = () => {
       })
       return;
     }
-  }
-
-  const MarmitaSizes = {
-    Marmitex: 22,
-    Marmitinha: 20
   }
 
   React.useEffect(() => {
@@ -143,7 +137,7 @@ const Menu = () => {
       {query.categoria===undefined && menu && !marmitaPortions?.length && 
         <div className='wrapper'>
           <h1>{menu.title}</h1>
-          <p>{menu.description1}</p>
+          <p>{menu.description}</p>
           <Button
             label='Começar a Montar'
             onClick={() => push('/menu?categoria=bases')}
@@ -156,10 +150,10 @@ const Menu = () => {
             <div className="wrapper">
               <SizeOptions>
                 <h2>Escolha um tamanho:</h2>
-                <InputRadio options={MarmitaSizes} name={'marmitaSize'}
+                {menu && <InputRadio options={menu.prices.week} name={'marmitaSize'}
                   state={size} setState={setSize}
                   className='inputsOptions'
-                />
+                />}
               </SizeOptions>
               <ButtonDivFinish>
                 <Button

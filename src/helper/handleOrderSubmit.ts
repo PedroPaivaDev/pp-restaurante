@@ -2,9 +2,10 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { registerOrder } from '@/services/firebase';
 import tupleToObject from './tupleToObject';
+import getMarmitaPrices from './getMarmitaPrices';
 
 export default function handleOrderSubmit(
-  bag:Bag, formDataEntries:FormDataEntries, totalPrice:number, userDB:UserDB
+  bag:Bag, formDataEntries:FormDataEntries, totalPrice:number, userDB:UserDB, menu:Menu
 ) {
   const formData = tupleToObject(formDataEntries) as unknown as OrderChoices;
 
@@ -18,7 +19,19 @@ export default function handleOrderSubmit(
     address: `${userDB.userData.street}, ${userDB.userData.streetNumber}, Bairro ${userDB.userData.neighborhood}. Referência: ${userDB.userData.reference}`
   }
 
+  let orderBag:OrderBagDB = {};
+
+  Object.keys(bag).forEach(marmitaId => {
+    orderBag = {
+      ...orderBag,
+      marmitaId: {
+        ...bag[marmitaId],
+        price: getMarmitaPrices(bag[marmitaId].size, menu.prices)
+      }
+    }
+  });
+
   const orderUuid = uuidv4();
 
-  return registerOrder(orderUuid, userDB.uid, orderFormData, bag, totalPrice);
+  return registerOrder(orderUuid, userDB.uid, orderFormData, orderBag, totalPrice);
 }

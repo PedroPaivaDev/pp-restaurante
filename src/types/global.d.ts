@@ -1,8 +1,19 @@
 interface Menu {
   title: string;
-  description1?: string;
-  description2?: string;
+  description: string;
+  prices: MenuPrices;
   products: MenuProducts;
+}
+
+interface MenuPrices {
+  week: {
+    Marmitex: number,
+    Marmitinha: number,
+  };
+  weekend: {
+    Marmitex: number,
+    Marmitinha: number,
+  };
 }
 
 interface MenuProducts {
@@ -60,13 +71,23 @@ interface Marmita {
 
 interface MarmitaOnBag {
   id: string;
-  size: string;
+  size: 'Marmitinha'|'Marmitex';
   portions: MarmitaPortions;
-  price: number;
 }
 
 interface Bag {
   [key: string]: MarmitaOnBag;
+}
+
+interface OrderBagDB {
+  [key: string]: MarmitaOnOrderBagDB;
+}
+
+interface MarmitaOnOrderBagDB {
+  id: string;
+  size: 'Marmitinha'|'Marmitex';
+  portions: MarmitaPortions;
+  price: number;
 }
 
 interface ObjectKeyString {
@@ -122,7 +143,7 @@ interface UserOrders {
 interface UserOrder {
   uuid: string;
   orderFormData: OrderFormData;
-  orderMarmitas: Bag;
+  orderMarmitas: OrderBagDB;
   orderTime: number;
   totalPrice: number;
   status: OrderStatus;

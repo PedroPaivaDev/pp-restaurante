@@ -119,7 +119,7 @@ export function removeProduct(category:string, type:string, id:string) {
 }
 
 export function registerOrder(
-  uuid:string, uid:string, orderFormData:OrderFormData, bag:Bag, totalPrice:number
+  uuid:string, uid:string, orderFormData:OrderFormData, bag:OrderBagDB, totalPrice:number
 ) {
   const userOrdersRef = ref(db, `usuarios/${uid}/userOrders`);
   const userOrder:UserOrder = {
