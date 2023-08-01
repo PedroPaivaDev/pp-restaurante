@@ -54,7 +54,7 @@ const EditProduct = () => {
           ...objectWithEntries,
           [partWeek]: {
             ...objectWithEntries[partWeek],
-            [size]: entry[1]
+            [size]: Number(entry[1])
           }
         }
       }

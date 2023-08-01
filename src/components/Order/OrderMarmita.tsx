@@ -138,7 +138,7 @@ const OrderMarmita = ({marmita, id, bag, setBag, menu}:PropsMarmitaDetails) => {
         }
         )
       }
-      <h3>R${getMarmitaPrices(marmita.size,menu.prices).toFixed(2)}</h3>
+      <h3>R${getMarmitaPrices(marmita.size, menu.prices).toFixed(2)}</h3>
     </DivMarmitaDetails>
   )
 }
