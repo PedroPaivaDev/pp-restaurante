@@ -118,6 +118,11 @@ export function removeProduct(category:string, type:string, id:string) {
   });
 }
 
+export function changeSizesPrices(sizesPricesObject:MenuPrices) {
+  const sizePriceRef = ref(db, `cardapio/prices`);
+  return update(sizePriceRef, sizesPricesObject);
+}
+
 export function registerOrder(
   uuid:string, uid:string, orderFormData:OrderFormData, bag:OrderBagDB, totalPrice:number
 ) {

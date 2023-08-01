@@ -1,15 +1,79 @@
 import React from 'react';
+import styled from 'styled-components';
 
-import { getData } from '@/services/firebase';
+import { changeSizesPrices, getData } from '@/services/firebase';
 import getMenuProductsIdsByCategories from '@/helper/getMenuProductsIdsByCategories';
 import splitPortionId from '@/helper/splitPortionId';
 
+import InputText from '../Forms/InputText';
 import Grid from '../Grid';
 import PortionAdmin from './PortionAdmin';
+import Button from '../Forms/Button';
+
+const DivSizesPrices = styled.form`
+  gap: 20px;
+  .partsOfTheWeek {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    .sizePrices {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+  }
+  @media (max-width:640px) {
+    .partsOfTheWeek {
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
+`;
 
 const EditProduct = () => {
   const [menu, setMenu] = React.useState<Menu|null>(null);
   const [products, setProducts] = React.useState<ObjectArrayString|null>(null);
+
+  function createObjectFromEntries(entriesArray:Array<[string, string]>) {
+    let objectWithEntries:MenuPrices = {
+      week: {
+        Marmitex: menu?.prices.week.Marmitex as number,
+        Marmitinha: menu?.prices.week.Marmitinha as number
+      },
+      weekend: {
+        Marmitex: menu?.prices.weekend.Marmitex as number,
+        Marmitinha: menu?.prices.weekend.Marmitinha as number
+      }
+    };
+    entriesArray.forEach(entry => {
+      if(entry[1] !== '') {
+        const partWeek = entry[0].split('-')[0] as PartOfTheWeek;
+        const size = entry[0].split('-')[1] as MarmitaSizes;
+        objectWithEntries = {
+          ...objectWithEntries,
+          [partWeek]: {
+            ...objectWithEntries[partWeek],
+            [size]: entry[1]
+          }
+        }
+      }
+    });
+    return objectWithEntries;
+  }
+
+  function handleChangePrices(event:React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const formDataEntriesArray = Array.from(formData.entries());
+    const formObjectChangedKeys = createObjectFromEntries(formDataEntriesArray as Array<[string, string]>);
+
+    changeSizesPrices(formObjectChangedKeys).then(() => {
+      getData<Menu|null>('cardapio', setMenu);
+      alert('preços alterados')
+    });
+  }
 
   React.useEffect(() => {
     getData<Menu|null>('cardapio', setMenu)
@@ -22,6 +86,29 @@ const EditProduct = () => {
   return (
     <div>
       <h1>Editar Produtos</h1>
+      <DivSizesPrices className='wrapper' onSubmit={handleChangePrices}>
+        <div className='partsOfTheWeek'>
+          <div className='sizePrices'>
+            <h2>Preços Durante a Semana:</h2>
+            <InputText placeholder={`${menu?.prices.week.Marmitinha}`}
+              label='Marmitinha' type="text" name="week-Marmitinha"
+            />
+            <InputText placeholder={`${menu?.prices.week.Marmitex}`}
+              label='Marmitex' type="text" name="week-Marmitex"
+            />
+          </div>
+          <div className='sizePrices'>
+            <h2>Preços do Final de Semana:</h2>
+            <InputText placeholder={`${menu?.prices.weekend.Marmitinha}`}
+              label='Marmitinha' type="text" name="weekend-Marmitinha"
+            />
+            <InputText placeholder={`${menu?.prices.weekend.Marmitex}`}
+              label='Marmitex' type="text" name="weekend-Marmitex"
+            />
+          </div>
+        </div>
+        <Button label='Alterar Preços'/>
+      </DivSizesPrices>
       {products && menu &&
         <div className='envelope animeLeft'>
           {Object.keys(products).map(category =>

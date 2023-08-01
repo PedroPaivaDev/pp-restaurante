@@ -43,7 +43,6 @@ const ProfileForm = ({userDB, setUserDBChanged}:PropsProfileForm) => {
     status: null
   });
 
-
   function createObjectFromEntries(entriesArray:Array<[string, string]>) {
     let objectWithEntries:ObjectKeyString = {};
     entriesArray.forEach(entry => {

@@ -97,6 +97,17 @@ const Menu = () => {
     }
   }
 
+  function verifyDayOfTheWeek(menuPrices:MenuPrices) {
+    const today = new Date();
+    const dayOfWeek = today.getDay();
+
+    if (dayOfWeek === 0 || dayOfWeek === 6) {
+      return menuPrices.weekend;
+    } else {
+      return  menuPrices.week;
+    }
+  }
+
   React.useEffect(() => {
     getData<Menu|null>('cardapio', setMenu);
   },[]);
@@ -150,7 +161,9 @@ const Menu = () => {
             <div className="wrapper">
               <SizeOptions>
                 <h2>Escolha um tamanho:</h2>
-                {menu && <InputRadio options={menu.prices.week} name={'marmitaSize'}
+                {menu && <InputRadio
+                  options={verifyDayOfTheWeek(menu.prices)}
+                  name={'marmitaSize'}
                   state={size} setState={setSize}
                   className='inputsOptions'
                 />}

@@ -5,6 +5,10 @@ interface Menu {
   products: MenuProducts;
 }
 
+type MarmitaSizes = 'Marmitex' | 'Marmitinha';
+
+type PartOfTheWeek = 'week' | 'weekend';
+
 interface MenuPrices {
   week: {
     Marmitex: number,
@@ -71,7 +75,7 @@ interface Marmita {
 
 interface MarmitaOnBag {
   id: string;
-  size: 'Marmitinha'|'Marmitex';
+  size: MarmitaSizes;
   portions: MarmitaPortions;
 }
 
@@ -85,7 +89,7 @@ interface OrderBagDB {
 
 interface MarmitaOnOrderBagDB {
   id: string;
-  size: 'Marmitinha'|'Marmitex';
+  size: MarmitaSizes;
   portions: MarmitaPortions;
   price: number;
 }
