@@ -32,7 +32,7 @@ interface PropsOrderMapper {
 const OrdersMapper = ({title, orders, setModalOrder}:PropsOrderMapper) => {
   const {userDB, setUserDBChanged} = React.useContext(AuthGoogleContext);
   const {query} = useRouter();
-  const [selectedSequence, setSelectedSequence] = React.useState<OptionsObject|null>({descending:null});
+  const [selectedSequence, setSelectedSequence] = React.useState<OptionsObject|null>({decrescente:null});
 
   const sorterSequences:OptionsObject = {
     crescente: null,

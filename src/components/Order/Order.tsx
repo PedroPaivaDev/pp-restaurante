@@ -12,7 +12,6 @@ import splitPortionId from '@/helper/splitPortionId';
 import getMarmitaPrices from '@/helper/getMarmitaPrices';
 
 import Select from '../Forms/Select';
-import Checkbox from '../Forms/Checkbox';
 import Button from '../Forms/Button';
 import LinkButton from '../Forms/LinkButton';
 
@@ -89,7 +88,6 @@ const Order = ({marmita, bag, setMarmita, setBag, menu}:PropsOrder) => {
 
   const [payment, setPayment] = useLocalStorage<OptionsObject|null>('payment', null);
   const [installmentCard, setInstallmentCard] = React.useState<OptionsObject|null>(null);
-  const [delivery, setDelivery] = React.useState<string[]>(["Entregar (+R$5,00)"]);
 
   const paymentsForms = {
     "Transferência": null,
@@ -130,7 +128,7 @@ const Order = ({marmita, bag, setMarmita, setBag, menu}:PropsOrder) => {
         msg: 'Escolha a quantidade de parcelas'
       })
       return;
-    } else if(delivery.length>0 && (!userDB?.userData.street || !userDB?.userData.streetNumber || !userDB?.userData.neighborhood || !userDB?.userData.reference)) {
+    } else if(!userDB?.userData.street || !userDB?.userData.streetNumber || !userDB?.userData.neighborhood || !userDB?.userData.reference) {
       setStatusSubmit({
         label: 'Enviar Pedido',
         status: 'error',
@@ -174,7 +172,7 @@ const Order = ({marmita, bag, setMarmita, setBag, menu}:PropsOrder) => {
   },[bag, menu]);
 
   React.useEffect(() => {
-    let sumPrices = delivery.includes("Entregar (+R$5,00)") ? 5 : 0;
+    let sumPrices = 0;
     if(payment && installmentCard && getOption(payment)==="Cartão de Crédito") {
       Object.keys(bag).length>0 && Object.keys(bag).forEach(marmitaId => {
         sumPrices = sumPrices + getMarmitaPrices(bag[marmitaId].size, menu.prices);
@@ -188,7 +186,7 @@ const Order = ({marmita, bag, setMarmita, setBag, menu}:PropsOrder) => {
       })
       setTotalPrice(sumPrices);
     }
-  }, [bag, payment, installmentCard, delivery, menu]);
+  }, [bag, payment, installmentCard, menu]);
 
   return (
     <OrderContainer>
@@ -211,25 +209,17 @@ const Order = ({marmita, bag, setMarmita, setBag, menu}:PropsOrder) => {
                 selectedOption={installmentCard} setSelectedOption={setInstallmentCard}
               />
             }
-            <Checkbox
-              options={["Entregar (+R$5,00)"]}
-              state={delivery}
-              setState={setDelivery}
-              name="delivery"
-            />
           </div>
           <div className='deliveryAndPrice'>
-            {delivery.includes("Entregar (+R$5,00)") &&
-              <div className='deliveryAddress'>
-                <p>Endereço de entrega: {userDB?.userData.street}, 
-                  nº {userDB?.userData.streetNumber}, 
-                  Bairro {userDB?.userData.neighborhood}.
-                  <br/>
-                  Ponto de referência: {userDB?.userData.reference}.
-                </p>
-                <LinkButton label='Alterar endereço de entrega' href='perfil?categoria=Dados'/>
-              </div>
-            }
+            <div className='deliveryAddress'>
+              <p>Endereço de entrega: {userDB?.userData.street}, 
+                nº {userDB?.userData.streetNumber}, 
+                Bairro {userDB?.userData.neighborhood}.
+                <br/>
+                Ponto de referência: {userDB?.userData.reference}.
+              </p>
+              <LinkButton label='Alterar endereço de entrega' href='perfil?categoria=Dados'/>
+            </div>
             {(installmentCard && payment && getOption(payment)==="Cartão de Crédito") ?
               <h1 className='price'>
                 {numberfyInstallment(getOption(installmentCard))} Parcelas de <span>R${(totalPrice/numberfyInstallment(getOption(installmentCard))).toFixed(2)}</span>

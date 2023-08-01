@@ -29,7 +29,7 @@ export default function sendOrderByWhatsapp(order:UserOrder, menu:MenuProducts, 
   
   const header = `_Código do Pedido: ${order.uuid}_%0a_Cliente: ${order.orderFormData.client}_%0a_Contato: ${order.orderFormData.contact}_%0a`;
   const pay = `_Forma de Pagamento: ${order.orderFormData.payment}${order.orderFormData.installment ? ` ${order.orderFormData.installment}` : ''}_%0a`;
-  const deliveryAddress = order.orderFormData.delivery ? `_*Entregar no endereço*: Rua ${order.orderFormData.address}._%0a` : '_*Retirada no Restaurante*_%0a';
+  const deliveryAddress = `_*Entregar no endereço*: Rua ${order.orderFormData.address}._%0a`;
   
   const mappedProducts = mapMarmitas();
   
