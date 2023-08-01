@@ -35,15 +35,15 @@ const EditProduct = () => {
   const [menu, setMenu] = React.useState<Menu|null>(null);
   const [products, setProducts] = React.useState<ObjectArrayString|null>(null);
 
-  function createObjectFromEntries(entriesArray:Array<[string, string]>) {
+  function createObjectFromEntries(entriesArray:Array<[string, string]>, menu:Menu) {
     let objectWithEntries:MenuPrices = {
       week: {
-        Marmitex: menu?.prices.week.Marmitex as number,
-        Marmitinha: menu?.prices.week.Marmitinha as number
+        Marmitex: menu.prices.week.Marmitex,
+        Marmitinha: menu.prices.week.Marmitinha
       },
       weekend: {
-        Marmitex: menu?.prices.weekend.Marmitex as number,
-        Marmitinha: menu?.prices.weekend.Marmitinha as number
+        Marmitex: menu.prices.weekend.Marmitex,
+        Marmitinha: menu.prices.weekend.Marmitinha
       }
     };
     entriesArray.forEach(entry => {
@@ -67,7 +67,7 @@ const EditProduct = () => {
 
     const formData = new FormData(event.currentTarget);
     const formDataEntriesArray = Array.from(formData.entries());
-    const formObjectChangedKeys = createObjectFromEntries(formDataEntriesArray as Array<[string, string]>);
+    const formObjectChangedKeys = createObjectFromEntries(formDataEntriesArray as Array<[string, string]>,menu as Menu);
 
     changeSizesPrices(formObjectChangedKeys).then(() => {
       getData<Menu|null>('cardapio', setMenu);
