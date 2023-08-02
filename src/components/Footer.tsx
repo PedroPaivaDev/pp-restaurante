@@ -21,7 +21,7 @@ const ContainerFooter = styled.footer`
 const Footer = () => {
   return (
     <ContainerFooter>
-      <a href='https://github.com/PedroPaivaDev/pp-restaurante' target="_blank">Desenvolvido por PedroPaivaDev</a>
+      <a href='https://pedropaiva.vercel.app/' target="_blank">Desenvolvido por PedroPaivaDev</a>
     </ContainerFooter>
   )
 }

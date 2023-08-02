@@ -177,12 +177,6 @@ const GlobalStyles: GlobalStyleComponent<
     margin-bottom: 10px;
   }
 
-  .animeLeft {
-    opacity: 0;
-    transform: translateX(calc(-100vw * 0.2));
-    animation: animeLeft .3s forwards;
-  }
-
   .bgPaper {
     display: flex;
     flex-direction: column;
@@ -199,7 +193,19 @@ const GlobalStyles: GlobalStyleComponent<
     }
   }
 
-  @keyframes animeLeft {
+  .animeLeft {
+    opacity: 0;
+    transform: translateX(calc(-100vw * 0.2));
+    animation: animeX .3s forwards;
+  }
+
+  .animeRight {
+    opacity: 0;
+    transform: translateX(calc(100vw * 0.2));
+    animation: animeX .3s forwards;
+  }
+
+  @keyframes animeX {
     to{
         opacity: 1;
         transform: initial;

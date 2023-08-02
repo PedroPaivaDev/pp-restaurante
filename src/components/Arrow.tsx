@@ -20,9 +20,10 @@ const ArrowButton = styled.div`
 
 interface PropsArrow {
   menu: MenuProducts
+  setAnimeDirection: React.Dispatch<React.SetStateAction<string>>
 }
 
-const Arrow = ({menu}:PropsArrow) => {
+const Arrow = ({menu, setAnimeDirection}:PropsArrow) => {
   const {query, push} = useRouter();
 
   const categoryIndex = Object.keys(menu).indexOf(query.categoria as string);
@@ -36,6 +37,11 @@ const Arrow = ({menu}:PropsArrow) => {
     Object.keys(menu)[categoryIndex + 1]
   ;
 
+  function handleClick(sideCategory:string, sideAnimation:string) {
+    setAnimeDirection(sideAnimation);
+    push(`/menu?categoria=${sideCategory}`);
+  }
+
   return (
     <ArrowButton>
       <div>
@@ -45,7 +51,7 @@ const Arrow = ({menu}:PropsArrow) => {
             alt='arrowLeft'
             width={25}
             height={25}
-            onClick={() => push(`/menu?categoria=${left}`)}
+            onClick={() => handleClick(left,'animeLeft')}
           />
         }
       </div>
@@ -53,10 +59,10 @@ const Arrow = ({menu}:PropsArrow) => {
         {right &&
           <Image
             src={'./arrow-right.svg'}
-            alt='arrowLeft'
+            alt='arrowRight'
             width={25}
             height={25}
-            onClick={() => push(`/menu?categoria=${right}`)}
+            onClick={() => handleClick(right,'animeRight')}
           />
         }        
       </div>
