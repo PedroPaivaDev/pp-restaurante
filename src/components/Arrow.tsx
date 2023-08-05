@@ -8,7 +8,7 @@ const ArrowButton = styled.div`
   top: 140px;
   z-index: 10;
   width: 100%;
-  max-width: 900px;
+  max-width: 1200px;
   display: flex;
   justify-content: space-between;
   padding: 10px;

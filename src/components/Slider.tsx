@@ -1,4 +1,14 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const DivSlider = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+`;
 
 interface PropsSlider {
   onSwipe: (direction: 'right' | 'left') => void;
@@ -35,13 +45,12 @@ const Slider: React.FC<PropsSlider> = ({ onSwipe, children }) => {
   }
 
   return (
-    <div id='slider'
+    <DivSlider id='slider'
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
-      style={{ width: '100%', height: '100%'}}
     >
       {children}
-    </div>
+    </DivSlider>
   );
 };
 
