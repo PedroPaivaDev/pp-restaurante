@@ -1,20 +1,21 @@
 import { ThemeProvider } from 'styled-components';
-import { render, RenderResult } from '@testing-library/react';
+import { render, RenderResult, screen } from '@testing-library/react';
 
 import Contact from '../components/Contact';
 import theme from '../styles/theme';
 
-const renderWithTheme = (children: React.ReactNode): RenderResult =>
-  render(<ThemeProvider theme={theme}>{children}</ThemeProvider>)
+function renderWithTheme(children: React.ReactNode): RenderResult {
+  return render(
+    <ThemeProvider theme={theme}>
+      {children}
+    </ThemeProvider>
+  );
+}
 
-test('is it in the document', () => {
-  const {getByText} = renderWithTheme(<Contact />)
-  
-  expect(getByText('Localização')).toBeInTheDocument();
-})
-
-test('has a class', () => {
-  const {getByText} = renderWithTheme(<Contact />)
-  
-  expect(getByText('Localização')).toHaveAttribute('class', 'test');
-})
+describe('marmita button', () => {
+  it('should be in the document', () => {
+    renderWithTheme(<Contact />);
+    const btnMarmita = screen.getByText('Pedir Marmita');
+    expect(btnMarmita).toBeInTheDocument();
+  })
+});

@@ -53,7 +53,7 @@ export const contactWhatsapp = 553735211592;
 const Contact = () => {
 
   function redirectToWhatsapp() {
-    const urlApi = 'http://web.whatsapp.com/send';
+    const urlApi = 'http://api.whatsapp.com/send';
     
     window.open(`${urlApi}?phone=${contactWhatsapp}&text=Olá! Gostaria de fazer um pedido.`, "_blank");
   }
@@ -63,7 +63,7 @@ const Contact = () => {
       <div className="wrapper">
         <h2>Horários de Funcionamento</h2>
         <p><span>Almoço:</span> Terça a Domingo: 11:00h às 14:00h</p>
-        <p><span>Noite:</span> Quinta a Sábado: 19:00h às 00:00h</p>
+        <p><span>Noite:</span> Sexta e Sábado: 19:00h às 00:00h</p>
         <p style={{color: 'tomato'}}>Não abre na segunda-feira</p>
       </div>
       <div className="wrapper">

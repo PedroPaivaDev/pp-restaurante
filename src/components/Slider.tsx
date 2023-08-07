@@ -13,9 +13,10 @@ const DivSlider = styled.div`
 interface PropsSlider {
   onSwipe: (direction: 'right' | 'left') => void;
   children: React.ReactNode;
+  className?: string;
 }
 
-const Slider: React.FC<PropsSlider> = ({ onSwipe, children }) => {
+const Slider: React.FC<PropsSlider> = ({ onSwipe, children, className }) => {
   const startXRef = React.useRef<number | null>(null);
   const startYRef = React.useRef<number | null>(null);
 
@@ -48,6 +49,7 @@ const Slider: React.FC<PropsSlider> = ({ onSwipe, children }) => {
     <DivSlider id='slider'
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
+      className={className}
     >
       {children}
     </DivSlider>
