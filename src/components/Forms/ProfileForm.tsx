@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 import { changeUserData } from '@/services/firebase';
+import createObjectFromEntries from '@/helper/createObjectFromEntries';
+import useForm from '@/hooks/useForm';
 
 import InputText from './InputText';
 import Button from './Button';
-import useForm from '@/hooks/useForm';
 
 const FormContainer = styled.form`
   display: flex;
@@ -42,19 +43,6 @@ const ProfileForm = ({userDB, setUserDBChanged}:PropsProfileForm) => {
     msg: null,
     status: null
   });
-
-  function createObjectFromEntries(entriesArray:Array<[string, string]>) {
-    let objectWithEntries:ObjectKeyString = {};
-    entriesArray.forEach(entry => {
-      if(entry[1] !== '') {
-        objectWithEntries = {
-          ...objectWithEntries,
-          [entry[0]]: entry[1]
-        }
-      }
-    });
-    return objectWithEntries;
-  }
 
   function handleChangeProfile(event:React.FormEvent<HTMLFormElement>) {
     event.preventDefault();

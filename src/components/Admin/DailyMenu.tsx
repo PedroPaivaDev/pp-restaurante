@@ -2,12 +2,25 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { changeProductAvailability, getData } from '@/services/firebase';
-import Checkbox from '../Forms/Checkbox';
-import Grid from '../Grid';
 import getMenuProductsIdsByCategories from '@/helper/getMenuProductsIdsByCategories';
+import createObjectFromEntries from '@/helper/createObjectFromEntries';
 import splitPortionId from '@/helper/splitPortionId';
+import sendMenuToWhatsapp from '@/helper/sendMenuToWhatsapp';
+
+import Grid from '../Grid';
+import Checkbox from '../Forms/Checkbox';
+import InputText from '../Forms/InputText';
+import Button from '../Forms/Button';
 
 const DivDailyMenu = styled.div`
+  form {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
   .categories {
     display: flex;
   }
@@ -43,6 +56,14 @@ const DailyMenu = () => {
   const [menuOptionsIds, setMenuOptionsIds] = React.useState<ObjectArrayString|null>(null);
   const [available, setAvailable] = React.useState<string[]>([]);
 
+  function handleSubmitMenuMsg(event:React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const formDataEntriesArray = Array.from(formData.entries());
+    const formObjectChangedKeys = createObjectFromEntries(formDataEntriesArray as Array<[string, string]>);
+    menu && sendMenuToWhatsapp(formObjectChangedKeys, available, menu.products)
+  }
+
   function getAvailableProducts(menuProducts:MenuProducts):string[] {
     const arrayAllPortionsAvailables:string[] = [];
     Object.keys(menuProducts).forEach(category =>
@@ -75,6 +96,10 @@ const DailyMenu = () => {
   return (
     <DivDailyMenu className='envelope animeLeft'>
       <h1>Cardápio do Dia</h1>
+      <form onSubmit={handleSubmitMenuMsg}>
+        <InputText label='Mensagem do Dia:' type="text" name="day-msg"/>
+        <Button label='Enviar pelo WhatsApp'/>
+      </form>
       {menuOptionsIds && <div className='row'>
         {Object.keys(menuOptionsIds).map(category =>
           <Grid key={category}
