@@ -11,6 +11,7 @@ import Grid from '../Grid';
 import Checkbox from '../Forms/Checkbox';
 import InputText from '../Forms/InputText';
 import Button from '../Forms/Button';
+import Select from '../Forms/Select';
 
 const DivDailyMenu = styled.div`
   form {
@@ -55,13 +56,22 @@ const DailyMenu = () => {
   const [menu, setMenu] = React.useState<Menu|null>(null);
   const [menuOptionsIds, setMenuOptionsIds] = React.useState<ObjectArrayString|null>(null);
   const [available, setAvailable] = React.useState<string[]>([]);
+  const [selectedWeather, setSelectedWeather] = React.useState<OptionsObject|null>(null);
+  const [phoneNumbers, setPhoneNumbes] = React.useState<ObjectKeyString|null>(null);
+
+  const weatherOptions = {
+    sol: '%E2%9B%85 %E2%98%80%EF%B8%8F',
+    nublado: '%F0%9F%8C%A5%EF%B8%8F %F0%9F%92%A8',
+    chuva: '%F0%9F%8C%A7%EF%B8%8F %E2%98%94',
+    tempestade: '%E2%9B%88%EF%B8%8F %E2%9A%A1'
+  }
 
   function handleSubmitMenuMsg(event:React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const formDataEntriesArray = Array.from(formData.entries());
     const formObjectChangedKeys = createObjectFromEntries(formDataEntriesArray as Array<[string, string]>);
-    menu && sendMenuToWhatsapp(formObjectChangedKeys, available, menu.products)
+    menu && phoneNumbers && sendMenuToWhatsapp(formObjectChangedKeys, available, menu.products, selectedWeather, phoneNumbers)
   }
 
   function getAvailableProducts(menuProducts:MenuProducts):string[] {
@@ -82,7 +92,8 @@ const DailyMenu = () => {
   }
 
   React.useEffect(() => {
-    getData<Menu|null>('cardapio', setMenu)
+    getData<Menu|null>('cardapio', setMenu);
+    getData<ObjectKeyString|null>('phoneNumbers', setPhoneNumbes);
   },[]);
 
   React.useEffect(() => {
@@ -97,7 +108,18 @@ const DailyMenu = () => {
     <DivDailyMenu className='envelope animeLeft'>
       <h1>Cardápio do Dia</h1>
       <form onSubmit={handleSubmitMenuMsg}>
-        <InputText label='Mensagem do Dia:' type="text" name="day-msg"/>
+        <InputText
+          label='Mensagem do Dia:'
+          type="text" name="day-msg"
+          placeholder='Escreva algo'
+        />
+        <Select
+          name="weather"
+          label="Como está o céu:"
+          initial="Selecione aqui"
+          options={weatherOptions}
+          selectedOption={selectedWeather} setSelectedOption={setSelectedWeather}
+        />
         <Button label='Enviar pelo WhatsApp'/>
       </form>
       {menuOptionsIds && <div className='row'>

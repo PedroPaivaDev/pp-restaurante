@@ -5,7 +5,7 @@ export default function timestampToShortDate(timestamp: number): string {
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const year = date.getFullYear();
 
-  return `${weekDay}, ${day}/${month}/${year}`;
+  return `${weekDay}_%0a${day}/${month}/${year}`;
 }
 
 function getWeekDay(day: number): string {

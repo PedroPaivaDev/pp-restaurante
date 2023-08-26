@@ -1,3 +1,4 @@
-export default function getOptionValue(objectOption:ObjectKeyString):string {
+export default function getOptionValue(objectOption:ObjectKeyString|OptionsObject)
+:string {
   return Object.values(objectOption)[0] as string;
 }
