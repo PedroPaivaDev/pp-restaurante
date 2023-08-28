@@ -59,6 +59,7 @@ Clique nas versões abaixo, para observar a evolução do projeto ao longo do te
 | ------ | ------ |
 | [versão_0.1](https://pp-restaurante-git-v01-pedropaivadev.vercel.app/) | Primeira versão do projeto. |
 | [versão_0.2](https://pp-restaurante-git-v02-pedropaivadev.vercel.app/) | Permite o administrador do estabelecimento: fazer o cadastro de novos produtos; alterar o cardápio do dia em tempo real, conforme os ingredientes se esgotam; armazenar no banco de dados os pedidos dos clintes, para análisar as vendas; |
+| [versão_0.3](https://pp-restaurante-git-v03-pedropaivadev.vercel.app/) | Em desenvolvimento: Inserir os testes automatizados dos componentes; Permitir admin ver o peril do cliente, clicando no nome do mesmo no pedido; Aba na página de admin, para controlar pagamentos; |
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
